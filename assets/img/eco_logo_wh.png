@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<title>SK 에코플랜트</title>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+		<meta name="viewport" content="width=device-width">
+		<meta name="format-detection" content="telephone=no">
+		<link rel="shortcut icon" href="/path/favicon.ico">
+		
+		<link rel="stylesheet" href="/css/menu.css" />
+		<link rel="stylesheet" href="/css/common.css" />
+		<link rel="stylesheet" href="/css/content.css" />
+    </head>
+    
+	<body>
+	   
+
+	<div class="error_wrap">
+		<div class="logo">
+			<a href="/"><img src="/img/common/logo_color.png" alt="로고" /></a>
+		</div>
+		<div class="box_wrap">
+			<div class="tit">
+				<img src="/img/common/ico_error.png" alt="">
+				<p>죄송합니다. <br>요청하신 페이지를 찾을 수 없습니다.</p>
+			</div>
+			<div class="txt">
+				페이지 주소가 잘못 입력되었거나 변경되어 사용할 수 없습니다. <br>
+				요청한 페이지의 주소가 정확한지 확인하십시오.
+			</div>
+			<div class="btn_basic">
+				<a href="/main">메인으로</a>
+			</div>
+		</div>
+		<p class="copyr">COPYRIGHTⓒ2021 BY SK ECOPLANT CO. LTD. ALL RIGHTS RESERVED</p>
+	</div>
+
+    
+	</body>
+	
+	
+
+</html>

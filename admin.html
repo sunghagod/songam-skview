@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>관리자 페이지 | 송암공원 SK VIEW</title>
+  <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="css/fa.local.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+<!-- ══════════════════════════════════
+     로그인 화면
+══════════════════════════════════ -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">
+      <small>Admin Panel</small>
+      <img src="assets/img/logo.png" alt="송암공원 중흥S-클래스 SK VIEW" style="height:28px;width:auto;object-fit:contain;filter:brightness(0) invert(1);opacity:.85;">
+    </div>
+    <p class="login-sub">관리자 비밀번호를 입력해주세요</p>
+    <label for="adminPw">비밀번호</label>
+    <input type="password" id="adminPw" placeholder="••••••••" autocomplete="current-password">
+    <p class="login-err" id="loginErr"><i class="fa-solid fa-circle-exclamation"></i> 비밀번호가 올바르지 않습니다.</p>
+    <button class="btn-login" id="btnLogin">로그인</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     관리자 앱
+══════════════════════════════════ -->
+<div id="adminApp">
+
+  <!-- 사이드바 -->
+  <aside class="sidebar">
+    <div class="sb-logo">
+      <small>SK VIEW Admin</small>
+      <strong>콘텐츠 관리</strong>
+    </div>
+    <nav class="sb-nav">
+      <p class="sb-section">메뉴</p>
+      <div class="sb-item active" data-panel="dashboard">
+        <i class="fa-solid fa-gauge"></i>대시보드
+      </div>
+      <div class="sb-item" data-panel="hero">
+        <i class="fa-solid fa-image"></i>히어로 섹션
+      </div>
+      <div class="sb-item" data-panel="brand">
+        <i class="fa-solid fa-building"></i>브랜드 섹션
+      </div>
+      <div class="sb-item" data-panel="location">
+        <i class="fa-solid fa-location-dot"></i>입지안내
+      </div>
+      <div class="sb-item" data-panel="community">
+        <i class="fa-solid fa-people-group"></i>커뮤니티
+      </div>
+      <div class="sb-item" data-panel="contact">
+        <i class="fa-solid fa-phone"></i>홍보센터 · 문의
+      </div>
+      <p class="sb-section">시스템</p>
+      <div class="sb-item" data-panel="settings">
+        <i class="fa-solid fa-gear"></i>설정 · 초기화
+      </div>
+    </nav>
+    <div class="sb-foot">
+      <button class="btn-logout" id="btnLogout">
+        <i class="fa-solid fa-right-from-bracket"></i> 로그아웃
+      </button>
+    </div>
+  </aside>
+
+  <!-- 메인 콘텐츠 -->
+  <main class="admin-main">
+
+    <!-- ── 대시보드 ────────────────────── -->
+    <div class="panel active" id="panel-dashboard">
+      <div class="page-head">
+        <h1>대시보드</h1>
+        <p>저장된 콘텐츠 현황을 확인하고 빠르게 편집하세요.</p>
+      </div>
+
+      <div class="dash-grid">
+        <div class="dash-card">
+          <small>수정된 텍스트</small>
+          <b id="dashTextCount">0개</b>
+          <p>localStorage 저장</p>
+        </div>
+        <div class="dash-card">
+          <small>수정된 이미지</small>
+          <b id="dashImgCount">0개</b>
+          <p>localStorage 저장</p>
+        </div>
+        <div class="dash-card">
+          <small>홈페이지</small>
+          <b style="font-size:18px">바로가기</b>
+          <p><a href="index.html" target="_blank" style="color:var(--gold)">index.html 열기 →</a></p>
+        </div>
+      </div>
+
+      <div class="quick-links">
+        <div class="quick-link" data-goto="hero"><i class="fa-solid fa-image"></i>히어로 편집</div>
+        <div class="quick-link" data-goto="brand"><i class="fa-solid fa-building"></i>브랜드 편집</div>
+        <div class="quick-link" data-goto="location"><i class="fa-solid fa-location-dot"></i>입지 편집</div>
+        <div class="quick-link" data-goto="community"><i class="fa-solid fa-people-group"></i>커뮤니티 편집</div>
+        <div class="quick-link" data-goto="contact"><i class="fa-solid fa-phone"></i>문의 편집</div>
+      </div>
+
+      <div class="sec-card open">
+        <div class="sec-card-head">
+          <h3><i class="fa-solid fa-circle-info"></i>사용 안내 <span class="badge">GUIDE</span></h3>
+          <i class="fa-solid fa-chevron-down toggle"></i>
+        </div>
+        <div class="sec-card-body" style="color:var(--gray-lt);font-size:13px;line-height:1.9">
+          <p>1. 각 섹션에서 텍스트를 수정하고 <strong style="color:var(--gold)">저장</strong> 버튼을 누르세요.</p>
+          <p>2. 이미지는 <strong style="color:var(--gold)">파일 선택</strong> 버튼으로 업로드하면 자동으로 미리보기가 표시됩니다.</p>
+          <p>3. 저장된 내용은 홈페이지에 즉시 반영됩니다 (localStorage 기반).</p>
+          <p>4. 원하는 섹션의 <strong style="color:var(--gold)">미리보기</strong> 버튼으로 홈페이지를 새 탭에서 확인할 수 있습니다.</p>
+          <p style="margin-top:12px;color:var(--gray)">※ 이미지는 Base64 형태로 저장됩니다. 고해상도 이미지는 용량에 주의하세요.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 히어로 섹션 ─────────────────── -->
+    <div class="panel" id="panel-hero">
+      <div class="page-head">
+        <h1>히어로 섹션 편집</h1>
+        <p>메인 화면 (S0) 의 텍스트와 배경 이미지를 수정합니다.</p>
+      </div>
+
+      <!-- 배경 이미지 -->
+      <div class="sec-card open">
+        <div class="sec-card-head">
+          <h3><i class="fa-solid fa-image"></i>배경 이미지</h3>
+          <i class="fa-solid fa-chevron-down toggle"></i>
+        </div>
+        <div class="sec-card-body">
+          <div data-img-field="hero-bg" class="fg">
+            <label>히어로 배경 이미지</label>
+            <div class="img-upload-wrap">
+              <div class="img-preview">
+                <img alt="hero-bg">
+                <span class="no-img">이미지 없음<br>기본 이미지 사용</span>
+              </div>
+              <div class="img-upload-ctrl">
+                <label class="btn-upload">
+                  <i class="fa-solid fa-upload"></i>파일 선택
+                  <input type="file" accept="image/*" style="display:none">
+                </label>
+                <button class="btn-img-reset">기본 이미지로 초기화</button>
+                <p class="img-hint">권장: 1920×1080 이상 JPG<br>어둡고 강렬한 이미지 권장</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 텍스트 편집 -->
+      <div class="sec-card open">
+        <div class="sec-card-head">
+          <h3><i class="fa-solid fa-pen"></i>텍스트 편집</h3>
+          <i class="fa-solid fa-chevron-down toggle"></i>
+        </div>
+        <div class="sec-card-body">
+          <div class="fg">
+            <label>위치 문구 (로고 위 대형 텍스트)</label>
+            <input type="text" data-field="hero-eyebrow" placeholder="충북 청주시 서원구 · 송암공원 인접">
+            <span style="font-size:11px;color:var(--gray);margin-top:4px;display:block">히어로 배너 로고 상단에 크게 표시됩니다</span>
+          </div>
+          <div class="fg-grid2">
+            <div class="fg">
+              <label>타이틀 1 (한글)</label>
+              <input type="text" data-field="hero-title1" placeholder="송암공원">
+            </div>
+            <div class="fg">
+              <label>타이틀 2 (영문)</label>
+              <input type="text" data-field="hero-title2" placeholder="SK &lt;em&gt;VIEW&lt;/em&gt;">
+            </div>
+          </div>
+          <div class="fg">
+            <label>서브 카피</label>
+            <input type="text" data-field="hero-sub" placeholder="자연이 선사하는 프리미엄 라이프의 시작">
+          </div>
+          <div class="fg">
+            <label>OVERVIEW 타이틀 (2번째 화면)</label>
+            <input type="text" data-field="hero2-title" placeholder="프리미엄 브랜드 아파트의 새 기준">
+          </div>
+          <div class="fg-grid2">
+            <div class="fg">
+              <label>총 세대수</label>
+              <input type="text" data-field="stat-units" placeholder="847">
+            </div>
+            <div class="fg">
+              <label>최고 층수</label>
+              <input type="text" data-field="stat-floors" placeholder="35">
+            </div>
+          </div>
+          <div class="fg-grid2">
+            <div class="fg">
+              <label>총 동수</label>
+              <input type="text" data-field="stat-bldgs" placeholder="5">
+            </div>
+            <div class="fg">
+              <label>전용면적 범위</label>
+              <input type="text" data-field="stat-area" placeholder="84~115">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn-save"><i class="fa-solid fa-floppy-disk"></i>저장</button>
+        <button class="btn-preview"><i class="fa-solid fa-eye"></i>홈페이지 미리보기</button>
+      </div>
+    </div>
+
+    <!-- ── 브랜드 섹션 ─────────────────── -->
+    <div class="panel" id="panel-brand">
+      <div class="page-head">
+        <h1>브랜드 섹션 편집</h1>
+        <p>S1 · 브랜드 스토리 섹션의 이미지와 텍스트를 수정합니다.</p>
+      </div>
+
+      <div class="sec-card open">
+        <div class="sec-card-head">
+          <h3><i class="fa-solid fa-image"></i>섹션 이미지</h3>
+          <i class="fa-solid fa-chevron-down toggle"></i>
+        </div>
+        <div class="sec-card-body">
+          <div data-img-field="brand-img" class="fg">
+            <label>브랜드 좌측 이미지</label>
+            <div class="img-upload-wrap">
+              <div class="img-preview">
+                <img alt="brand-img">
+                <span class="no-img">이미지 없음<br>기본 이미지 사용</span>
+              </div>
+              <div class="img-upload-ctrl">
+                <label class="btn-upload">
+                  <i class="fa-solid fa-upload"></i>파일 선택
+                  <input type="file" accept="image/*" style="display:none">
+                </label>
+                <button class="btn-img-reset">기본 이미지로 초기화</button>
+                <p class="img-hint">권장: 세로형 또는 1:1 비율<br>건물 외관 이미지 권장</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sec-card open">
+        <div class="sec-card-head">
+          <h3><i class="fa-solid fa-pen"></i>텍스트 편집</h3>
+          <i class="fa-solid fa-chevron-down toggle"></i>
+        </div>
+        <div class="sec-card-body">
+          <div class="fg">
+            <label>브랜드 메인 타이틀</label>
+            <textarea data-field="brand-title" placeholder="SK VIEW,&#10;새로운 주거 문화를&#10;선도합니다"></textarea>
+          </div>
+          <div class="fg">
+            <label>브랜드 설명 문구</label>
+            <textarea data-field="brand-desc" placeholder="SK에코플랜트가 시공하는 송암공원 SK VIEW는..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn-save"><i class="fa-solid fa-floppy-disk"></i>저장</button>
+        <button class="btn-preview"><i class="fa-solid fa-eye"></i>홈페이지 미리보기</button>
+      </div>
+    </div>
+
+    <!-- ── 입지안내 ───────────────────── -->
+    <div class="panel" id="panel-location">
+      <div class="page-head">
+        <h1>입지안내 섹션 편집</h1>
+        <p>S2 · 4단계 입지 정보의 이미지를 교체합니다.</p>
+      </div>
+
+      <div class="sec-card open">
+        <div class="sec-card-head">
+          <h3><i class="fa-solid fa-image"></i>배경 이미지</h3>
+          <i class="fa-solid fa-chevron-down toggle"></i>
+        </div>
+        <div class="sec-card-body">
+          <div data-img-field="loc-bg" class="fg">
+            <label>입지안내 배경 이미지</label>
+            <div class="img-upload-wrap">
+              <div class="img-preview">
+                <img alt="loc-bg">
+                <span class="no-img">이미지 없음<br>기본 이미지 사용</span>
+              </div>
+              <div class="img-upload-ctrl">
+                <label class="btn-upload">
+                  <i class="fa-solid fa-upload"></i>파일 선택
+                  <input type="file" accept="image/*" style="display:none">
+                </label>
+                <button class="btn-img-reset">기본 이미지로 초기화</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 자연환경 -->
+      <div class="sec-card open">
+        <div class="sec-card-head">
+          <h3><i class="fa-solid fa-tree"></i>LOCATION 01 · 자연환경 이미지</h3>
+          <i class="fa-solid fa-chevron-down toggle"></i>
+        </div>
+        <div class="sec-card-body">
+          <div data-img-field="loc-img1" class="fg">
+            <label>자연환경 이미지</label>
+            <div class="img-upload-wrap">
+              <div class="img-preview">
+                <img alt="loc-img1">
+                <span class="no-img">이미지 없음</span>
+              </div>
+              <div class="img-upload-ctrl">
+                <label class="btn-upload"><i class="fa-solid fa-upload"></i>파일 선택<input type="file" accept="image/*" style="display:none"></label>
+                <button class="btn-img-reset">초기화</button>
+                <p class="img-hint">공원 · 녹지 이미지 권장</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 교통 -->
+      <div class="sec-card">
+        <div class="sec-card-head">
+          <h3><i class="fa-solid fa-road"></i>LOCATION 02 · 교통 이미지</h3>
+          <i class="fa-solid fa-chevron-down toggle"></i>
+        </div>
+        <div class="sec-card-body">
+          <div data-img-field="loc-img2" class="fg">
+            <label>교통 이미지</label>
+            <div class="img-upload-wrap">
+              <div class="img-preview">
+                <img alt="loc-img2">
+                <span class="no-img">이미지 없음</span>
+              </div>
+              <div class="img-upload-ctrl">
+                <label class="btn-upload"><i class="fa-solid fa-upload"></i>파일 선택<input type="file" accept="image/*" style="display:none"></label>
+                <button class="btn-img-reset">초기화</button>
+                <p class="img-hint">도로 · 교통망 이미지 권장</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 학군 -->
+      <div class="sec-card">
+        <div class="sec-card-head">
+          <h3><i class="fa-solid fa-school"></i>LOCATION 03 · 학군 이미지</h3>
+          <i class="fa-solid fa-chevron-down toggle"></i>
+        </div>
+        <div class="sec-card-body">
+          <div data-img-field="loc-img3" class="fg">
+            <label>학군 이미지</label>
+            <div class="img-upload-wrap">
+              <div class="img-preview">
+                <img alt="loc-img3">
+                <span class="no-img">이미지 없음</span>
+              </div>
+              <div class="img-upload-ctrl">
+                <label class="btn-upload"><i class="fa-solid fa-upload"></i>파일 선택<input type="file" accept="image/*" style="display:none"></label>
+                <button class="btn-img-reset">초기화</button>
+                <p class="img-hint">학교 · 교육시설 이미지 권장</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 생활인프라 -->
+      <div class="sec-card">
+        <div class="sec-card-head">
+          <h3><i class="fa-solid fa-store"></i>LOCATION 04 · 생활인프라 이미지</h3>
+          <i class="fa-solid fa-chevron-down toggle"></i>
+        </div>
+        <div class="sec-card-body">
+          <div data-img-field="loc-img4" class="fg">
+            <label>생활인프라 이미지</label>
+            <div class="img-upload-wrap">
+              <div class="img-preview">
+                <img alt="loc-img4">
+                <span class="no-img">이미지 없음</span>
+              </div>
+              <div class="img-upload-ctrl">
+                <label class="btn-upload"><i class="fa-solid fa-upload"></i>파일 선택<input type="file" accept="image/*" style="display:none"></label>
+                <button class="btn-img-reset">초기화</button>
+                <p class="img-hint">마트 · 쇼핑 이미지 권장</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn-save"><i class="fa-solid fa-floppy-disk"></i>저장</button>
+        <button class="btn-preview"><i class="fa-solid fa-eye"></i>홈페이지 미리보기</button>
+      </div>
+    </div>
+
+    <!-- ── 커뮤니티 ───────────────────── -->
+    <div class="panel" id="panel-community">
+      <div class="page-head">
+        <h1>커뮤니티 섹션 편집</h1>
+        <p>S4 · 6개 커뮤니티 시설의 이미지와 명칭을 수정합니다.</p>
+      </div>
+
+      <div class="comm-grid">
+        <!-- 카드 1~6 -->
+        <div class="sec-card open comm-item">
+          <div class="sec-card-head">
+            <h3><i class="fa-solid fa-dumbbell"></i>커뮤니티 01</h3>
+            <i class="fa-solid fa-chevron-down toggle"></i>
+          </div>
+          <div class="sec-card-body">
+            <div data-img-field="comm-img1" class="fg">
+              <label>이미지</label>
+              <div class="img-upload-wrap">
+                <div class="img-preview"><img alt="comm1"><span class="no-img">이미지 없음</span></div>
+                <div class="img-upload-ctrl">
+                  <label class="btn-upload"><i class="fa-solid fa-upload"></i>파일 선택<input type="file" accept="image/*" style="display:none"></label>
+                  <button class="btn-img-reset">초기화</button>
+                </div>
+              </div>
+            </div>
+            <div class="fg"><label>시설명</label><input type="text" data-field="comm-name1" placeholder="피트니스센터"></div>
+            <div class="fg"><label>설명</label><input type="text" data-field="comm-desc1" placeholder="최신 운동기구와 PT룸을 갖춘 프리미엄 피트니스"></div>
+          </div>
+        </div>
+
+        <div class="sec-card comm-item">
+          <div class="sec-card-head">
+            <h3><i class="fa-solid fa-water"></i>커뮤니티 02</h3>
+            <i class="fa-solid fa-chevron-down toggle"></i>
+          </div>
+          <div class="sec-card-body">
+            <div data-img-field="comm-img2" class="fg">
+              <label>이미지</label>
+              <div class="img-upload-wrap">
+                <div class="img-preview"><img alt="comm2"><span class="no-img">이미지 없음</span></div>
+                <div class="img-upload-ctrl">
+                  <label class="btn-upload"><i class="fa-solid fa-upload"></i>파일 선택<input type="file" accept="image/*" style="display:none"></label>
+                  <button class="btn-img-reset">초기화</button>
+                </div>
+              </div>
+            </div>
+            <div class="fg"><label>시설명</label><input type="text" data-field="comm-name2" placeholder="인피니티풀"></div>
+            <div class="fg"><label>설명</label><input type="text" data-field="comm-desc2" placeholder="전망이 탁 트인 루프탑 수영장"></div>
+          </div>
+        </div>
+
+        <div class="sec-card comm-item">
+          <div class="sec-card-head">
+            <h3><i class="fa-solid fa-mountain"></i>커뮤니티 03</h3>
+            <i class="fa-solid fa-chevron-down toggle"></i>
+          </div>
+          <div class="sec-card-body">
+            <div data-img-field="comm-img3" class="fg">
+              <label>이미지</label>
+              <div class="img-upload-wrap">
+                <div class="img-preview"><img alt="comm3"><span class="no-img">이미지 없음</span></div>
+                <div class="img-upload-ctrl">
+                  <label class="btn-upload"><i class="fa-solid fa-upload"></i>파일 선택<input type="file" accept="image/*" style="display:none"></label>
+                  <button class="btn-img-reset">초기화</button>
+                </div>
+              </div>
+            </div>
+            <div class="fg"><label>시설명</label><input type="text" data-field="comm-name3" placeholder="클라이밍"></div>
+            <div class="fg"><label>설명</label><input type="text" data-field="comm-desc3" placeholder="실내 클라이밍 벽과 스포츠 시설"></div>
+          </div>
+        </div>
+
+        <div class="sec-card comm-item">
+          <div class="sec-card-head">
+            <h3><i class="fa-solid fa-basketball"></i>커뮤니티 04</h3>
+            <i class="fa-solid fa-chevron-down toggle"></i>
+          </div>
+          <div class="sec-card-body">
+            <div data-img-field="comm-img4" class="fg">
+              <label>이미지</label>
+              <div class="img-upload-wrap">
+                <div class="img-preview"><img alt="comm4"><span class="no-img">이미지 없음</span></div>
+                <div class="img-upload-ctrl">
+                  <label class="btn-upload"><i class="fa-solid fa-upload"></i>파일 선택<input type="file" accept="image/*" style="display:none"></label>
+                  <button class="btn-img-reset">초기화</button>
+                </div>
+              </div>
+            </div>
+            <div class="fg"><label>시설명</label><input type="text" data-field="comm-name4" placeholder="다목적 체육관"></div>
+            <div class="fg"><label>설명</label><input type="text" data-field="comm-desc4" placeholder="농구·배드민턴 등 다목적 스포츠 공간"></div>
+          </div>
+        </div>
+
+        <div class="sec-card comm-item">
+          <div class="sec-card-head">
+            <h3><i class="fa-solid fa-vr-cardboard"></i>커뮤니티 05</h3>
+            <i class="fa-solid fa-chevron-down toggle"></i>
+          </div>
+          <div class="sec-card-body">
+            <div data-img-field="comm-img5" class="fg">
+              <label>이미지</label>
+              <div class="img-upload-wrap">
+                <div class="img-preview"><img alt="comm5"><span class="no-img">이미지 없음</span></div>
+                <div class="img-upload-ctrl">
+                  <label class="btn-upload"><i class="fa-solid fa-upload"></i>파일 선택<input type="file" accept="image/*" style="display:none"></label>
+                  <button class="btn-img-reset">초기화</button>
+                </div>
+              </div>
+            </div>
+            <div class="fg"><label>시설명</label><input type="text" data-field="comm-name5" placeholder="VR 체험관"></div>
+            <div class="fg"><label>설명</label><input type="text" data-field="comm-desc5" placeholder="최신 VR 기기를 갖춘 디지털 체험 공간"></div>
+          </div>
+        </div>
+
+        <div class="sec-card comm-item">
+          <div class="sec-card-head">
+            <h3><i class="fa-solid fa-mug-hot"></i>커뮤니티 06</h3>
+            <i class="fa-solid fa-chevron-down toggle"></i>
+          </div>
+          <div class="sec-card-body">
+            <div data-img-field="comm-img6" class="fg">
+              <label>이미지</label>
+              <div class="img-upload-wrap">
+                <div class="img-preview"><img alt="comm6"><span class="no-img">이미지 없음</span></div>
+                <div class="img-upload-ctrl">
+                  <label class="btn-upload"><i class="fa-solid fa-upload"></i>파일 선택<input type="file" accept="image/*" style="display:none"></label>
+                  <button class="btn-img-reset">초기화</button>
+                </div>
+              </div>
+            </div>
+            <div class="fg"><label>시설명</label><input type="text" data-field="comm-name6" placeholder="카페테리아"></div>
+            <div class="fg"><label>설명</label><input type="text" data-field="comm-desc6" placeholder="라운지형 카페테리아와 테라스"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn-save"><i class="fa-solid fa-floppy-disk"></i>저장</button>
+        <button class="btn-preview"><i class="fa-solid fa-eye"></i>홈페이지 미리보기</button>
+      </div>
+    </div>
+
+    <!-- ── 홍보센터 · 문의 ────────────── -->
+    <div class="panel" id="panel-contact">
+      <div class="page-head">
+        <h1>홍보센터 · 문의 편집</h1>
+        <p>S5 · 연락처 섹션의 이미지와 문구를 수정합니다.</p>
+      </div>
+
+      <div class="sec-card open">
+        <div class="sec-card-head">
+          <h3><i class="fa-solid fa-image"></i>섹션 이미지</h3>
+          <i class="fa-solid fa-chevron-down toggle"></i>
+        </div>
+        <div class="sec-card-body">
+          <div data-img-field="contact-img" class="fg">
+            <label>홍보센터 좌측 이미지</label>
+            <div class="img-upload-wrap">
+              <div class="img-preview">
+                <img alt="contact-img">
+                <span class="no-img">이미지 없음<br>기본 이미지 사용</span>
+              </div>
+              <div class="img-upload-ctrl">
+                <label class="btn-upload">
+                  <i class="fa-solid fa-upload"></i>파일 선택
+                  <input type="file" accept="image/*" style="display:none">
+                </label>
+                <button class="btn-img-reset">기본 이미지로 초기화</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sec-card open">
+        <div class="sec-card-head">
+          <h3><i class="fa-solid fa-pen"></i>연락처 정보</h3>
+          <i class="fa-solid fa-chevron-down toggle"></i>
+        </div>
+        <div class="sec-card-body">
+          <div class="fg">
+            <label>대표 전화번호</label>
+            <input type="text" data-field="contact-tel" placeholder="1600-0000">
+          </div>
+          <div class="fg">
+            <label>운영시간</label>
+            <input type="text" data-field="contact-hours" placeholder="평일 · 주말 09:00 ~ 18:00">
+          </div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn-save"><i class="fa-solid fa-floppy-disk"></i>저장</button>
+        <button class="btn-preview"><i class="fa-solid fa-eye"></i>홈페이지 미리보기</button>
+      </div>
+    </div>
+
+    <!-- ── 설정 · 초기화 ──────────────── -->
+    <div class="panel" id="panel-settings">
+      <div class="page-head">
+        <h1>설정 · 초기화</h1>
+        <p>저장된 콘텐츠를 관리하고 초기화합니다.</p>
+      </div>
+
+      <div class="sec-card open">
+        <div class="sec-card-head">
+          <h3><i class="fa-solid fa-circle-info"></i>저장 현황</h3>
+          <i class="fa-solid fa-chevron-down toggle"></i>
+        </div>
+        <div class="sec-card-body" style="color:var(--gray-lt);font-size:13px;line-height:2">
+          <p>수정된 텍스트: <strong id="settingsTextCount" style="color:var(--gold)">0개</strong></p>
+          <p>수정된 이미지: <strong id="settingsImgCount" style="color:var(--gold)">0개</strong></p>
+          <p style="margin-top:8px;color:var(--gray)">※ 모든 데이터는 브라우저 localStorage에 저장됩니다.<br>같은 브라우저에서만 적용되며, 브라우저 데이터 삭제 시 초기화됩니다.</p>
+        </div>
+      </div>
+
+      <div class="sec-card open">
+        <div class="sec-card-head">
+          <h3><i class="fa-solid fa-link"></i>Google Sheets 연동</h3>
+          <i class="fa-solid fa-chevron-down toggle"></i>
+        </div>
+        <div class="sec-card-body">
+          <p style="font-size:13px;color:var(--gray-lt);margin-bottom:14px;line-height:1.7">
+            Google Apps Script 배포 URL을 입력하면 관심고객 등록 폼이<br>
+            Google Sheets에 자동으로 저장됩니다.<br>
+            <a href="docs/구글시트-연동-가이드.md" target="_blank" style="color:var(--gold);font-size:12px">설정 가이드 보기 →</a>
+          </p>
+          <div class="field-row">
+            <label>Apps Script URL</label>
+            <input type="url" data-field="form-script-url"
+                   placeholder="https://script.google.com/macros/s/.../exec"
+                   style="font-size:12px">
+          </div>
+          <div style="display:flex;gap:10px;margin-top:10px">
+            <button class="btn-save btn-sm"><i class="fa-solid fa-floppy-disk"></i> 저장</button>
+            <button class="btn-test-form btn-sm btn-outline" id="btnTestForm">
+              <i class="fa-solid fa-paper-plane"></i> 테스트 전송
+            </button>
+          </div>
+          <p id="testFormResult" style="font-size:12px;margin-top:8px;display:none"></p>
+        </div>
+      </div>
+
+      <div class="danger-zone">
+        <h3><i class="fa-solid fa-triangle-exclamation"></i> 전체 초기화</h3>
+        <p>저장된 모든 텍스트 수정 내용과 이미지를 삭제하고 기본값으로 되돌립니다.<br>이 작업은 되돌릴 수 없습니다.</p>
+        <button class="btn-danger" id="btnResetAll">
+          <i class="fa-solid fa-trash"></i> 전체 초기화
+        </button>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ── 토스트 ──────────────────────────────── -->
+<div class="a-toast" id="aToast">
+  <i class="fa-solid fa-circle-check"></i>
+  <span>저장되었습니다.</span>
+</div>
+
+<script src="js/admin.js"></script>
+</body>
+</html>
