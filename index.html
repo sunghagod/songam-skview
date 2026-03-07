@@ -142,10 +142,10 @@
           <div class="hero-stats"
                data-fx="stagger" data-delay="0.85" data-pre="0.2"
                data-stagger="0.14" data-kid-y="28" data-main="0.9">
-            <div class="hstat"><b data-cid="stat-units">847</b><span>세대</span><p>총 세대수</p></div>
-            <div class="hstat"><b data-cid="stat-floors">35</b><span>층</span><p>최고 층수</p></div>
-            <div class="hstat"><b data-cid="stat-bldgs">5</b><span>개동</span><p>총 동수</p></div>
-            <div class="hstat"><b data-cid="stat-area">84~115</b><span>㎡</span><p>전용면적</p></div>
+            <div class="hstat"><b data-cid="stat-units">1,575</b><span>세대</span><p>총 세대수</p></div>
+            <div class="hstat"><b data-cid="stat-floors">27</b><span>층</span><p>최고 층수</p></div>
+            <div class="hstat"><b data-cid="stat-bldgs">17</b><span>개동</span><p>총 동수</p></div>
+            <div class="hstat"><b data-cid="stat-area">84·108</b><span>㎡</span><p>전용면적</p></div>
           </div>
           <div class="s0-btns"
                data-fx="fade-up" data-delay="1.5" data-pre="0.2" data-main="0.8">
@@ -172,9 +172,7 @@
         BRAND STORY
       </p>
       <h2 data-fx="mask-up" data-delay="0.2" data-pre="0.2" data-main="1.0"
-          data-cid="brand-title">
-        SK VIEW,<br>새로운 주거 문화를<br>선도합니다
-      </h2>
+          data-cid="brand-title">SK VIEW, 새로운 주거 문화를 선도합니다</h2>
       <span class="gline"
             data-fx="expand" data-delay="0.5" data-pre="0.1" data-main="0.9"></span>
       <p class="desc"
@@ -188,17 +186,17 @@
            data-fx="stagger" data-delay="0.9" data-pre="0.2"
            data-stagger="0.12" data-kid-y="22" data-main="0.9">
         <div class="stat">
-          <b class="cnt" data-to="847">0</b><span>세대</span>
+          <div class="stat-num"><b class="cnt" data-to="1575">0</b><span class="stat-unit">세대</span></div>
           <p>총 세대수</p>
         </div>
         <hr>
         <div class="stat">
-          <b class="cnt" data-to="35">0</b><span>층</span>
+          <div class="stat-num"><b class="cnt" data-to="27">0</b><span class="stat-unit">층</span></div>
           <p>최고 층수</p>
         </div>
         <hr>
         <div class="stat">
-          <b class="cnt" data-to="5">0</b><span>개동</span>
+          <div class="stat-num"><b class="cnt" data-to="17">0</b><span class="stat-unit">개동</span></div>
           <p>총 동수</p>
         </div>
       </div>
@@ -214,126 +212,84 @@
     <div class="ov-progress">
       <span class="ov-dot on"></span>
       <span class="ov-dot"></span>
-      <span class="ov-dot"></span>
-      <span class="ov-dot"></span>
     </div>
     <div class="overlay-stage">
 
-      <!-- step 0 : 자연환경 -->
+      <!-- step 0 : 자연환경 + 교통 -->
       <div class="overlay-panel s2-panel" data-step="0" data-header="dark">
         <div class="s2-body">
           <div class="s2-head">
             <p class="label wh"
                data-fx="fade-up" data-delay="0.1" data-pre="0.25" data-main="0.75">
-              LOCATION 01
+              LOCATION
             </p>
             <h2 class="wh"
-                data-fx="mask-up" data-delay="0.25" data-pre="0.2" data-main="0.95">
-              송암공원 도보 5분
-            </h2>
+                data-fx="mask-up" data-delay="0.25" data-pre="0.2" data-main="0.95">어디에도 없는 최상의 입지</h2>
           </div>
-          <div class="s2-content">
-            <div class="loc-img li0"
-                 data-fx="move" data-x="-60" data-delay="0.4" data-pre="0.3" data-main="1.0"></div>
-            <div class="loc-info">
-              <h3 data-fx="fade-left" data-delay="0.5" data-pre="0.25" data-main="0.85">자연환경</h3>
-              <ul data-fx="stagger" data-delay="0.65" data-pre="0.2"
-                  data-stagger="0.1" data-kid-y="18" data-main="0.8">
-                <li><i class="fa-solid fa-circle-check"></i>단지 바로 앞 송암공원 (약 300m)</li>
-                <li><i class="fa-solid fa-circle-check"></i>미래공원, 어린이공원 인접</li>
-                <li><i class="fa-solid fa-circle-check"></i>무등산 조망 가능</li>
-                <li><i class="fa-solid fa-circle-check"></i>쾌적한 녹지율 64% 단지설계</li>
-              </ul>
+          <div class="s2-dual">
+            <div class="s2-card" data-fx="fade-up" data-delay="0.4" data-pre="0.25" data-main="0.9">
+              <div class="loc-img li0"></div>
+              <div class="loc-info">
+                <h3>자연환경</h3>
+                <ul>
+                  <li><i class="fa-solid fa-circle-check"></i>단지 바로 앞 송암공원 (약 300m)</li>
+                  <li><i class="fa-solid fa-circle-check"></i>미래공원, 어린이공원 인접</li>
+                  <li><i class="fa-solid fa-circle-check"></i>무등산 조망 가능</li>
+                  <li><i class="fa-solid fa-circle-check"></i>쾌적한 녹지율 64% 단지설계</li>
+                </ul>
+              </div>
+            </div>
+            <div class="s2-card" data-fx="fade-up" data-delay="0.6" data-pre="0.25" data-main="0.9">
+              <div class="loc-img li1"></div>
+              <div class="loc-info">
+                <h3>교통</h3>
+                <ul>
+                  <li><i class="fa-solid fa-circle-check"></i>서광주IC 약 5분 거리</li>
+                  <li><i class="fa-solid fa-circle-check"></i>광주 BRT 노선 인접</li>
+                  <li><i class="fa-solid fa-circle-check"></i>광주송정역 KTX 약 20분</li>
+                  <li><i class="fa-solid fa-circle-check"></i>남해고속도로 편리한 접근</li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- step 1 : 교통 -->
+      <!-- step 1 : 학군 + 생활인프라 -->
       <div class="overlay-panel s2-panel" data-step="1" data-header="dark">
         <div class="s2-body">
           <div class="s2-head">
             <p class="label wh"
                data-fx="fade-up" data-delay="0.1" data-pre="0.25" data-main="0.75">
-              LOCATION 02
+              LOCATION
             </p>
             <h2 class="wh"
-                data-fx="mask-up" data-delay="0.25" data-pre="0.2" data-main="0.95">
-              사통팔달 교통망
-            </h2>
+                data-fx="mask-up" data-delay="0.25" data-pre="0.2" data-main="0.95">어디에도 없는 최상의 입지</h2>
           </div>
-          <div class="s2-content">
-            <div class="loc-img li1"
-                 data-fx="move" data-x="-60" data-delay="0.4" data-pre="0.3" data-main="1.0"></div>
-            <div class="loc-info">
-              <h3 data-fx="fade-left" data-delay="0.5" data-pre="0.25" data-main="0.85">교통</h3>
-              <ul data-fx="stagger" data-delay="0.65" data-pre="0.2"
-                  data-stagger="0.1" data-kid-y="18" data-main="0.8">
-                <li><i class="fa-solid fa-circle-check"></i>서광주IC 약 5분 거리</li>
-                <li><i class="fa-solid fa-circle-check"></i>광주 BRT 노선 인접</li>
-                <li><i class="fa-solid fa-circle-check"></i>광주송정역 KTX 약 20분</li>
-                <li><i class="fa-solid fa-circle-check"></i>남해고속도로 편리한 접근</li>
-              </ul>
+          <div class="s2-dual">
+            <div class="s2-card" data-fx="fade-up" data-delay="0.4" data-pre="0.25" data-main="0.9">
+              <div class="loc-img li2"></div>
+              <div class="loc-info">
+                <h3>학군</h3>
+                <ul>
+                  <li><i class="fa-solid fa-circle-check"></i>송암초·대촌중 도보권</li>
+                  <li><i class="fa-solid fa-circle-check"></i>광주제일고·대성여고 인접</li>
+                  <li><i class="fa-solid fa-circle-check"></i>전남대학교 약 15분</li>
+                  <li><i class="fa-solid fa-circle-check"></i>대형 학원가 밀집 지역</li>
+                </ul>
+              </div>
             </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- step 2 : 학군 -->
-      <div class="overlay-panel s2-panel" data-step="2" data-header="dark">
-        <div class="s2-body">
-          <div class="s2-head">
-            <p class="label wh"
-               data-fx="fade-up" data-delay="0.1" data-pre="0.25" data-main="0.75">
-              LOCATION 03
-            </p>
-            <h2 class="wh"
-                data-fx="mask-up" data-delay="0.25" data-pre="0.2" data-main="0.95">
-              명품 학세권
-            </h2>
-          </div>
-          <div class="s2-content">
-            <div class="loc-img li2"
-                 data-fx="move" data-x="-60" data-delay="0.4" data-pre="0.3" data-main="1.0"></div>
-            <div class="loc-info">
-              <h3 data-fx="fade-left" data-delay="0.5" data-pre="0.25" data-main="0.85">학군</h3>
-              <ul data-fx="stagger" data-delay="0.65" data-pre="0.2"
-                  data-stagger="0.1" data-kid-y="18" data-main="0.8">
-                <li><i class="fa-solid fa-circle-check"></i>송암초·대촌중 도보권</li>
-                <li><i class="fa-solid fa-circle-check"></i>광주제일고·대성여고 인접</li>
-                <li><i class="fa-solid fa-circle-check"></i>전남대학교 약 15분</li>
-                <li><i class="fa-solid fa-circle-check"></i>대형 학원가 밀집 지역</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- step 3 : 생활인프라 -->
-      <div class="overlay-panel s2-panel" data-step="3" data-header="dark">
-        <div class="s2-body">
-          <div class="s2-head">
-            <p class="label wh"
-               data-fx="fade-up" data-delay="0.1" data-pre="0.25" data-main="0.75">
-              LOCATION 04
-            </p>
-            <h2 class="wh"
-                data-fx="mask-up" data-delay="0.25" data-pre="0.2" data-main="0.95">
-              완벽한 생활 인프라
-            </h2>
-          </div>
-          <div class="s2-content">
-            <div class="loc-img li3"
-                 data-fx="move" data-x="-60" data-delay="0.4" data-pre="0.3" data-main="1.0"></div>
-            <div class="loc-info">
-              <h3 data-fx="fade-left" data-delay="0.5" data-pre="0.25" data-main="0.85">생활인프라</h3>
-              <ul data-fx="stagger" data-delay="0.65" data-pre="0.2"
-                  data-stagger="0.1" data-kid-y="18" data-main="0.8">
-                <li><i class="fa-solid fa-circle-check"></i>이마트·롯데마트 근거리</li>
-                <li><i class="fa-solid fa-circle-check"></i>전남대학교병원 약 15분</li>
-                <li><i class="fa-solid fa-circle-check"></i>광주시청·남구청 인접</li>
-                <li><i class="fa-solid fa-circle-check"></i>광주복합쇼핑몰 차량 10분</li>
-              </ul>
+            <div class="s2-card" data-fx="fade-up" data-delay="0.6" data-pre="0.25" data-main="0.9">
+              <div class="loc-img li3"></div>
+              <div class="loc-info">
+                <h3>생활인프라</h3>
+                <ul>
+                  <li><i class="fa-solid fa-circle-check"></i>이마트·롯데마트 근거리</li>
+                  <li><i class="fa-solid fa-circle-check"></i>전남대학교병원 약 15분</li>
+                  <li><i class="fa-solid fa-circle-check"></i>광주시청·남구청 인접</li>
+                  <li><i class="fa-solid fa-circle-check"></i>광주복합쇼핑몰 차량 10분</li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
@@ -367,7 +323,7 @@
               <div class="pcard-img pc1"><span>01</span></div>
               <div class="pcard-body">
                 <h3>스카이 커뮤니티</h3>
-                <p>최고층 스카이라운지에서 청주 전경을 감상하며 일상을 특별하게</p>
+                <p>최고층 스카이라운지에서 광주 전경을 감상하며 일상을 특별하게</p>
               </div>
             </article>
             <article class="pcard"
@@ -405,7 +361,7 @@
               <div class="pcard-img pc4"><span>04</span></div>
               <div class="pcard-body">
                 <h3>특화 설계 평면</h3>
-                <p>84·101·115㎡ 중대형 위주 4베이 판상형 설계</p>
+                <p>84·108㎡ 중대형 위주 4베이 판상형 설계</p>
               </div>
             </article>
           </div>
@@ -418,34 +374,126 @@
   <!-- ========================================
        S4 · COMMUNITY
        ======================================== -->
-  <section class="sec s4" data-theme="dark">
+  <section class="sec s4" data-theme="dark" data-overlay="on">
+    <!-- 배경 이미지 레이어 -->
+    <div class="s4-bgs">
+      <div class="s4-bg active cc1" data-cid-bg="comm-img1"></div>
+      <div class="s4-bg cc2" data-cid-bg="comm-img2"></div>
+      <div class="s4-bg cc3" data-cid-bg="comm-img3"></div>
+      <div class="s4-bg cc4" data-cid-bg="comm-img4"></div>
+      <div class="s4-bg cc5" data-cid-bg="comm-img5"></div>
+      <div class="s4-bg cc6" data-cid-bg="comm-img6"></div>
+      <div class="s4-bg s4-bg-map"></div>
+      <div class="s4-bg-overlay"></div>
+    </div>
+
+    <!-- 지도 레이어 (07번 활성 시 표시) -->
+    <div class="s4-map" id="s4Map">
+      <iframe
+        src="https://maps.google.com/maps?q=35.1175,126.892&z=15&output=embed&hl=ko"
+        allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <!-- 마커 오버레이 -->
+      <div class="map-marker map-marker--apt">
+        <span class="map-pin"><i class="fa-solid fa-building"></i></span>
+        <span class="map-label">송암공원 중흥S-클래스<br>SK VIEW (아파트)</span>
+      </div>
+      <div class="map-marker map-marker--park">
+        <span class="map-pin map-pin--green"><i class="fa-solid fa-tree"></i></span>
+        <span class="map-label">송암근린공원</span>
+      </div>
+      <div class="map-marker map-marker--center">
+        <span class="map-pin map-pin--blue"><i class="fa-solid fa-dumbbell"></i></span>
+        <span class="map-label">송암 복합 문화센터<br>(단지 내)</span>
+      </div>
+      <div class="map-legend">
+        <p><span class="ml-dot ml-dot--gold"></span>아파트 단지</p>
+        <p><span class="ml-dot ml-dot--green"></span>송암근린공원 (도보 5분)</p>
+        <p><span class="ml-dot ml-dot--blue"></span>복합 문화센터 (단지 내)</p>
+      </div>
+    </div>
+
+    <!-- 고정 UI: 라벨 + 제목 + 탭 리스트 -->
     <div class="s4-body">
-      <div class="s4-head">
-        <div>
-          <p class="label wh"
-             data-fx="fade-up" data-pre="0.25" data-main="0.8">COMMUNITY</p>
-          <h2 class="wh"
-              data-fx="mask-up" data-delay="0.2" data-pre="0.2" data-main="0.95">
-            일상이 특별해지는<br>커뮤니티
-          </h2>
-        </div>
-        <div class="s4-nav" data-fx="fade-up" data-delay="0.3" data-pre="0.2" data-main="0.7">
-          <button id="slPrev" aria-label="이전"><i class="fa-solid fa-chevron-left"></i></button>
-          <button id="slNext" aria-label="다음"><i class="fa-solid fa-chevron-right"></i></button>
-          <span class="swipe-hint"><i class="fa-solid fa-hand-pointer"></i>스와이프</span>
+      <div class="s4-left">
+        <p class="label wh"
+           data-fx="fade-up" data-pre="0.25" data-main="0.8">COMMUNITY</p>
+        <h2 class="wh"
+            data-fx="mask-up" data-delay="0.2" data-pre="0.2" data-main="0.95">송암 복합 문화센터</h2>
+        <div class="s4-list" data-fx="fade-up" data-delay="0.4" data-pre="0.25" data-main="0.85">
+          <div class="s4-item active" data-comm="0">
+            <span class="s4-item-num">01</span>
+            <div class="s4-item-info">
+              <h4 data-cid="comm-name1">피트니스센터</h4>
+              <p data-cid="comm-desc1">최신 운동기구와 PT룸을 갖춘 프리미엄 피트니스</p>
+            </div>
+          </div>
+          <div class="s4-item" data-comm="1">
+            <span class="s4-item-num">02</span>
+            <div class="s4-item-info">
+              <h4 data-cid="comm-name2">인피니티풀</h4>
+              <p data-cid="comm-desc2">전망이 탁 트인 루프탑 수영장</p>
+            </div>
+          </div>
+          <div class="s4-item" data-comm="2">
+            <span class="s4-item-num">03</span>
+            <div class="s4-item-info">
+              <h4 data-cid="comm-name3">클라이밍</h4>
+              <p data-cid="comm-desc3">실내 클라이밍 벽과 스포츠 시설</p>
+            </div>
+          </div>
+          <div class="s4-item" data-comm="3">
+            <span class="s4-item-num">04</span>
+            <div class="s4-item-info">
+              <h4 data-cid="comm-name4">다목적 체육관</h4>
+              <p data-cid="comm-desc4">농구·배드민턴 등 다목적 스포츠 공간</p>
+            </div>
+          </div>
+          <div class="s4-item" data-comm="4">
+            <span class="s4-item-num">05</span>
+            <div class="s4-item-info">
+              <h4 data-cid="comm-name5">VR 체험관</h4>
+              <p data-cid="comm-desc5">최신 VR 기기를 갖춘 디지털 체험 공간</p>
+            </div>
+          </div>
+          <div class="s4-item" data-comm="5">
+            <span class="s4-item-num">06</span>
+            <div class="s4-item-info">
+              <h4 data-cid="comm-name6">카페테리아</h4>
+              <p data-cid="comm-desc6">라운지형 카페테리아와 테라스</p>
+            </div>
+          </div>
+          <div class="s4-item" data-comm="6">
+            <span class="s4-item-num">07</span>
+            <div class="s4-item-info">
+              <h4>위치안내</h4>
+              <p>광주광역시 남구 송암동 일원</p>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="sl-wrap"
-           data-fx="fade-up" data-delay="0.4" data-pre="0.25" data-main="0.85">
-        <div class="sl" id="sl">
-          <div class="ccard"><div class="ccard-img cc1" data-cid-bg="comm-img1"></div><div class="ccard-body"><h4 data-cid="comm-name1">피트니스센터</h4><p data-cid="comm-desc1">최신 운동기구와 PT룸을 갖춘 프리미엄 피트니스</p></div></div>
-          <div class="ccard"><div class="ccard-img cc2" data-cid-bg="comm-img2"></div><div class="ccard-body"><h4 data-cid="comm-name2">인피니티풀</h4><p data-cid="comm-desc2">전망이 탁 트인 루프탑 수영장</p></div></div>
-          <div class="ccard"><div class="ccard-img cc3" data-cid-bg="comm-img3"></div><div class="ccard-body"><h4 data-cid="comm-name3">클라이밍</h4><p data-cid="comm-desc3">실내 클라이밍 벽과 스포츠 시설</p></div></div>
-          <div class="ccard"><div class="ccard-img cc4" data-cid-bg="comm-img4"></div><div class="ccard-body"><h4 data-cid="comm-name4">다목적 체육관</h4><p data-cid="comm-desc4">농구·배드민턴 등 다목적 스포츠 공간</p></div></div>
-          <div class="ccard"><div class="ccard-img cc5" data-cid-bg="comm-img5"></div><div class="ccard-body"><h4 data-cid="comm-name5">VR 체험관</h4><p data-cid="comm-desc5">최신 VR 기기를 갖춘 디지털 체험 공간</p></div></div>
-          <div class="ccard"><div class="ccard-img cc6" data-cid-bg="comm-img6"></div><div class="ccard-body"><h4 data-cid="comm-name6">카페테리아</h4><p data-cid="comm-desc6">라운지형 카페테리아와 테라스</p></div></div>
-        </div>
+      <div class="s4-right">
+        <div class="s4-img-frame"></div>
       </div>
+    </div>
+
+    <!-- 더미 overlay 패널 (스크롤 단계 전환용) -->
+    <div class="overlay-panel is-active" data-step="0"></div>
+    <div class="overlay-panel" data-step="1"></div>
+    <div class="overlay-panel" data-step="2"></div>
+    <div class="overlay-panel" data-step="3"></div>
+    <div class="overlay-panel" data-step="4"></div>
+    <div class="overlay-panel" data-step="5"></div>
+    <div class="overlay-panel" data-step="6"></div>
+
+    <!-- 진행 dot -->
+    <div class="ov-progress s4-dots">
+      <span class="ov-dot on"></span>
+      <span class="ov-dot"></span>
+      <span class="ov-dot"></span>
+      <span class="ov-dot"></span>
+      <span class="ov-dot"></span>
+      <span class="ov-dot"></span>
+      <span class="ov-dot"></span>
     </div>
   </section>
 
@@ -480,9 +528,10 @@
             <label>관심 평형</label>
             <select name="size">
               <option value="">평형 선택</option>
-              <option>84㎡ (34평형)</option>
-              <option>101㎡ (41평형)</option>
-              <option>115㎡ (47평형)</option>
+              <option>84㎡A (25평형)</option>
+              <option>84㎡B (25평형)</option>
+              <option>84㎡C (25평형)</option>
+              <option>108㎡ (32평형)</option>
             </select>
           </div>
           <div class="fg"><label>문의 내용</label><textarea name="message" rows="3" placeholder="문의 내용을 입력해주세요"></textarea></div>
@@ -536,8 +585,18 @@
 
 <!-- ── 플로팅 CTA ──────────────────────────── -->
 <a class="float-btn" id="floatBtn" data-go="5">
-  <i class="fa-solid fa-pen-to-square"></i>
-  <span>관심<br>등록</span>
+  <svg class="float-btn__ring" viewBox="0 0 200 200">
+    <defs>
+      <path id="circlePath" d="M 100,100 m -80,0 a 80,80 0 1,1 160,0 a 80,80 0 1,1 -160,0" />
+    </defs>
+    <text class="float-btn__text">
+      <textPath href="#circlePath">자연이 선사하는 프리미엄 라이프의 시작 · 자연이 선사하는 프리미엄 라이프의 시작 ·</textPath>
+    </text>
+  </svg>
+  <div class="float-btn__center">
+    <i class="fa-solid fa-pen-to-square"></i>
+    <span>관심<br>등록</span>
+  </div>
 </a>
 
 <!-- ── 토스트 ──────────────────────────────── -->

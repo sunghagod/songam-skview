@@ -619,54 +619,58 @@
   });
 
   /* ══════════════════════════════════════════════════════
-     COMMUNITY SLIDER (s4)
+     COMMUNITY GALLERY (s4) — Overlay-synced Tab Switcher
      ══════════════════════════════════════════════════════ */
-  var slEl   = document.getElementById('sl');
-  var slPrev = document.getElementById('slPrev');
-  var slNext = document.getElementById('slNext');
-  var slOff  = 0;
-  var isDrag = false, dragX0 = 0, dragOff0 = 0;
+  var commItems = Array.prototype.slice.call(document.querySelectorAll('.s4-item'));
+  var commBgs   = Array.prototype.slice.call(document.querySelectorAll('.s4-bg'));
+  var commMap   = document.getElementById('s4Map');
 
-  function cardW() {
-    var c = slEl && slEl.querySelector('.ccard');
-    if (!c) return 360;
-    return c.offsetWidth + (parseInt(getComputedStyle(slEl).gap) || 20);
-  }
-  function slMax() {
-    if (!slEl) return 0;
-    return Math.max(0, slEl.scrollWidth - slEl.parentElement.offsetWidth);
-  }
-  function moveSl(offset, instant) {
-    if (!slEl) return;
-    slOff = Math.max(-slMax(), Math.min(0, offset));
-    slEl.style.transition = instant ? 'none' : 'transform .6s cubic-bezier(0.16,1,0.3,1)';
-    slEl.style.transform  = 'translateX(' + slOff + 'px)';
+  function switchComm(idx) {
+    commItems.forEach(function (item, i) { item.classList.toggle('active', i === idx); });
+    commBgs.forEach(function (bg, i)     { bg.classList.toggle('active', i === idx); });
+    /* 07번(idx=6) 지도 토글 — 배경은 유지, 우측에 지도 표시 */
+    if (commMap) commMap.classList.toggle('active', idx === 6);
   }
 
-  if (slPrev) slPrev.addEventListener('click', function () { moveSl(slOff + cardW()); });
-  if (slNext) slNext.addEventListener('click', function () { moveSl(slOff - cardW()); });
+  /* 클릭으로도 전환 + overlay state 동기화 */
+  commItems.forEach(function (item, i) {
+    item.addEventListener('click', function () {
+      switchComm(i);
+      /* overlay state도 동기화 */
+      var s4Idx = SECTIONS.indexOf(document.querySelector('.s4'));
+      if (overlayState[s4Idx]) overlayState[s4Idx].step = i;
+      _updateOverlayProgress(s4Idx, i, 5);
+    });
+  });
 
-  if (slEl) {
-    slEl.addEventListener('mousedown', function (e) {
-      isDrag = true; dragX0 = e.clientX; dragOff0 = slOff; e.preventDefault();
-    });
-    document.addEventListener('mousemove', function (e) {
-      if (!isDrag) return; moveSl(dragOff0 + (e.clientX - dragX0), true);
-    });
-    document.addEventListener('mouseup', function () {
-      if (!isDrag) return; isDrag = false;
-      var snapped = Math.round(slOff / cardW()) * cardW();
-      moveSl(snapped);
-    });
-    slEl.addEventListener('touchstart', function (e) {
-      dragX0 = e.touches[0].clientX; dragOff0 = slOff;
-    }, { passive: true });
-    slEl.addEventListener('touchmove', function (e) {
-      moveSl(dragOff0 + (e.touches[0].clientX - dragX0), true);
-    }, { passive: true });
-    slEl.addEventListener('touchend', function () {
-      moveSl(Math.round(slOff / cardW()) * cardW());
-    });
+  /* overlay 시스템 감시 → 커뮤니티 배경/탭 동기화 */
+  var s4Sec    = document.querySelector('.s4');
+  var s4BodyEl = s4Sec ? s4Sec.querySelector('.s4-body') : null;
+
+  var _origRenderOverlay = renderOverlay;
+  renderOverlay = function (idx) {
+    _origRenderOverlay(idx);
+    if (SECTIONS[idx] === s4Sec && overlayState[idx]) {
+      switchComm(overlayState[idx].step);
+      /* 최초 진입 시 body FX 실행 */
+      if (s4BodyEl && !s4BodyEl._fxDone && window.AnimateFx) {
+        s4BodyEl._fxDone = true;
+        window.AnimateFx.play(s4BodyEl);
+      }
+    }
+  };
+
+  /* s4를 떠날 때 리셋 — 기존 afterLoad의 reset에 훅 */
+  var _origResetFx = window.AnimateFx ? window.AnimateFx.reset : null;
+  if (_origResetFx) {
+    window.AnimateFx.reset = function (container) {
+      _origResetFx(container);
+      if (container === s4Sec && s4BodyEl) {
+        s4BodyEl._fxDone = false;
+        _origResetFx(s4BodyEl);
+        switchComm(0);
+      }
+    };
   }
 
   /* ══════════════════════════════════════════════════════
@@ -717,6 +721,9 @@
           panels.forEach(function (p) {
             if (window.AnimateFx) window.AnimateFx.prep(p);
           });
+          /* s4 커뮤니티: body 내 data-fx 요소도 prep */
+          var bodyEl = sec.querySelector('.s4-body');
+          if (bodyEl && window.AnimateFx) window.AnimateFx.prep(bodyEl);
         }
       } else if (isHSlide(sec)) {
         var hs = ensureHSlide(i);
