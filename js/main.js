@@ -485,6 +485,7 @@
         var idx = SECTIONS.indexOf(en.target);
         _updateDots(idx);
         if (idx === 1) runCounters();
+        if (floatBtn) floatBtn.classList.toggle('show', idx > 0 && idx < SEC_COUNT - 1);
       });
     }, { threshold: 0.45 });
 
