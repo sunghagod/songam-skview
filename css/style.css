@@ -1031,6 +1031,11 @@ footer { max-width: 1600px; margin: 0 auto; padding: 72px 80px 48px; width: 100%
 /* ── mask-up 스플릿 래퍼 ──────────────────────────────── */
 .sp-w-wrap { display: inline-block; overflow: hidden; vertical-align: bottom; }
 .sp-w      { display: inline-block; }
+/* 모바일: 들여쓰기 방지 */
+@media (max-width: 768px) {
+  .s0-p2 h2 .sp-w-wrap { display: inline !important; overflow: visible !important; }
+  .s0-p2 h2 .sp-w      { display: inline !important; }
+}
 
 /* ── S0 hero 타이틀 ───────────────────────────────────── */
 .s0-body h1 {
@@ -1722,24 +1727,51 @@ body.mobile-mode .s2b {
   }
   body.mobile-mode .overlay-panel:last-child { border-bottom: none; }
   body.mobile-mode .s0-panel { min-height: 100svh; display: flex; align-items: center; }
-  body.mobile-mode .s0 { height: auto; }
-  body.mobile-mode .s0-bg,
-  body.mobile-mode .s0-veil,
+  body.mobile-mode .s0-panel[data-step="0"] .s0-body {
+    padding-top: 0;
+  }
+  body.mobile-mode .s0 { height: auto; position: relative; }
   body.mobile-mode .s2-bg,
   body.mobile-mode .s2-veil {
     position: absolute; inset: 0;
     width: 100%; height: 100%;
     pointer-events: none;
   }
-  /* 모바일 s0-veil: 상단 텍스트만 어둡게, 하단 건물 노출 */
-  body.mobile-mode .s0-veil {
-    background: linear-gradient(to bottom, rgba(11,11,11,.7) 0%, rgba(11,11,11,.3) 35%, transparent 55%, rgba(11,11,11,.15) 100%);
+
+  /* ── 모바일 히어로: 공통 배경 숨기고, 패널 개별 배경 적용 ── */
+  body.mobile-mode .s0-bg,
+  body.mobile-mode .s0-veil { display: none; }
+
+  body.mobile-mode .s0-panel {
+    position: relative;
+    overflow: hidden;
   }
-  body.mobile-mode .s0-bg {
-    background-image: url('../assets/img/hero-bg-m.jpg');
-    background-position: center bottom;
-    background-size: cover;
-    background-color: #7a9ab5;
+  body.mobile-mode .s0-panel::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: #8aafc8 url('../assets/img/hero-bg-m.png') center bottom / cover no-repeat !important;
+    z-index: 0;
+  }
+  body.mobile-mode .s0-panel::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: rgba(11,11,11,.45) !important;
+    z-index: 1;
+  }
+  body.mobile-mode .s0-panel[data-step="1"]::after {
+    background: rgba(11,11,11,.6) !important;
+  }
+  body.mobile-mode .s0-panel .s0-body {
+    position: relative;
+    z-index: 2;
+  }
+  /* 패널 경계선 제거 */
+  body.mobile-mode .s0 .overlay-panel { border-bottom: none; }
+
+  /* 2번 패널: 초기 상태 숨김 (GSAP으로 애니메이션) */
+  body.mobile-mode .s0-panel[data-step="1"] .s0-body {
+    opacity: 0;
+    transform: translateY(60px);
   }
   body.mobile-mode .s2 { height: auto; }
   body.mobile-mode .s2-panel { min-height: 100svh; }

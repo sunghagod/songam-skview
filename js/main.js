@@ -474,6 +474,44 @@
     document.body.classList.add('mobile-mode');
     wrap.style.transform = '';
 
+    /* 모바일 히어로 패널 전환 애니메이션 (GSAP) */
+    var heroPanel0 = document.querySelector('.s0-panel[data-step="0"]');
+    var heroPanel1 = document.querySelector('.s0-panel[data-step="1"]');
+    var heroP1Body = heroPanel1 ? heroPanel1.querySelector('.s0-body') : null;
+    var heroP0Body = heroPanel0 ? heroPanel0.querySelector('.s0-body') : null;
+    var heroAnimPlayed = false;
+
+    if (heroPanel0) {
+      var io0 = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (!en.isIntersecting && heroP0Body && gsap) {
+            gsap.to(heroP0Body, { opacity: 0, y: -30, duration: 0.5, ease: 'power2.in' });
+          }
+        });
+      }, { threshold: 0.15 });
+      io0.observe(heroPanel0);
+    }
+    if (heroPanel1) {
+      var io1 = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting && !heroAnimPlayed && heroP1Body && gsap) {
+            heroAnimPlayed = true;
+            // 배경 오버레이 전환
+            var after1 = heroPanel1;
+            // 콘텐츠 순차 등장
+            var children = heroP1Body.children;
+            gsap.to(heroP1Body, { opacity: 1, y: 0, duration: 0 });
+            var tl = gsap.timeline();
+            for (var i = 0; i < children.length; i++) {
+              gsap.set(children[i], { opacity: 0, y: 40 });
+              tl.to(children[i], { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, i * 0.15);
+            }
+          }
+        });
+      }, { threshold: 0.2 });
+      io1.observe(heroPanel1);
+    }
+
     if (window.AnimateFx) {
       window.AnimateFx.initIO();
       return;

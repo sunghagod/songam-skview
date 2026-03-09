@@ -98,8 +98,8 @@
     el.dataset.wsplit = '1';
     var text = el.textContent;
     el.innerHTML = text.split(' ').map(function (w) {
-      return '<span class="sp-w-wrap" style="display:inline-block;overflow:hidden;vertical-align:bottom">' +
-             '<span class="sp-w" style="display:inline-block">' + w + '</span></span>';
+      return '<span class="sp-w-wrap">' +
+             '<span class="sp-w">' + w + '</span></span>';
     }).join(' ');
   }
 
