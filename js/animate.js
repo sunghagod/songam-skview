@@ -96,11 +96,18 @@
   function splitWords(el) {
     if (el.dataset.wsplit) return;
     el.dataset.wsplit = '1';
-    var text = el.textContent;
-    el.innerHTML = text.split(' ').map(function (w) {
-      return '<span class="sp-w-wrap">' +
-             '<span class="sp-w">' + w + '</span></span>';
-    }).join(' ');
+    var html = el.innerHTML.trim();
+    /* <br> 기준으로 줄 분리 → 각 줄에서 텍스트 노드만 단어 분리 */
+    el.innerHTML = html.split(/<br\s*\/?>/gi).map(function (line) {
+      /* HTML 태그(<span> 등)와 텍스트를 분리해서 처리 */
+      return line.replace(/((?:<[^>]+>)+)|([^<]+)/g, function (m, tag, text) {
+        if (tag) return tag;                       /* 태그는 그대로 유지 */
+        return text.trim().split(/\s+/).filter(function (w) { return w; }).map(function (w) {
+          return '<span class="sp-w-wrap">' +
+                 '<span class="sp-w">' + w + '</span></span>';
+        }).join(' ');
+      });
+    }).join('<br>');
   }
 
   /* ══════════════════════════════════════════════════════

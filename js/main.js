@@ -481,10 +481,14 @@
     var heroP0Body = heroPanel0 ? heroPanel0.querySelector('.s0-body') : null;
     var heroAnimPlayed = false;
 
-    if (heroPanel0) {
+    if (heroPanel0 && heroP0Body) {
+      /* 초기 상태: 패널 0 본문 보이기 */
+      gsap.set(heroP0Body, { opacity: 1, y: 0 });
       var io0 = new IntersectionObserver(function (entries) {
         entries.forEach(function (en) {
-          if (!en.isIntersecting && heroP0Body && gsap) {
+          if (en.isIntersecting) {
+            gsap.to(heroP0Body, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' });
+          } else {
             gsap.to(heroP0Body, { opacity: 0, y: -30, duration: 0.5, ease: 'power2.in' });
           }
         });
@@ -512,11 +516,6 @@
       io1.observe(heroPanel1);
     }
 
-    if (window.AnimateFx) {
-      window.AnimateFx.initIO();
-      return;
-    }
-
     mobileIO = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
         if (!en.isIntersecting) return;
@@ -525,9 +524,13 @@
         if (idx === 1) runCounters();
         if (floatBtn) floatBtn.classList.toggle('show', idx > 0 && idx < SEC_COUNT - 1);
       });
-    }, { threshold: 0.45 });
+    }, { threshold: 0.35 });
 
     SECTIONS.forEach(function (s) { mobileIO.observe(s); });
+
+    if (window.AnimateFx) {
+      window.AnimateFx.initIO();
+    }
   }
 
   function destroyMobile() {
@@ -663,10 +666,18 @@
   var commItems = Array.prototype.slice.call(document.querySelectorAll('.s4-item'));
   var commBgs   = Array.prototype.slice.call(document.querySelectorAll('.s4-bg'));
   var commMap   = document.getElementById('s4Map');
+  var commPreviewImgs = Array.prototype.slice.call(document.querySelectorAll('.s4-preview-img'));
+  var commPreviewTag  = document.getElementById('s4PreviewTag');
+  var commPreviewBox  = document.getElementById('s4Preview');
+  var commTitles = ['피트니스센터','실내 수영장','클라이밍월','스포츠 멀티존','VR 체험존','카페 라운지','단지 위치'];
 
   function switchComm(idx) {
     commItems.forEach(function (item, i) { item.classList.toggle('active', i === idx); });
     commBgs.forEach(function (bg, i)     { bg.classList.toggle('active', i === idx); });
+    /* mobile preview sync */
+    commPreviewImgs.forEach(function (img, i) { img.classList.toggle('active', i === idx); });
+    if (commPreviewTag) commPreviewTag.textContent = commTitles[idx] || '';
+    if (commPreviewBox) commPreviewBox.classList.toggle('hide', idx === 6);
     /* 07번(idx=6) 지도 토글 — 배경은 유지, 우측에 지도 표시 */
     if (commMap) commMap.classList.toggle('active', idx === 6);
   }
@@ -733,7 +744,7 @@
         window.addEventListener('touchend',   onTouchEnd,   { passive: true });
         goTo(0);
       }
-      moveSl(slOff);
+      if (typeof moveSl === 'function') moveSl(slOff);
     }, 250);
   });
 
