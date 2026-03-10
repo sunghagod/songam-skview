@@ -19,11 +19,11 @@
   /* ══════════════════════════════════════════════════════
      CONFIG
      ══════════════════════════════════════════════════════ */
-  var SCROLL_SPEED     = 1000;   // ms — 섹션 전환 속도
-  var OVERLAY_STEP_MS  = 900;    // ms — overlay 단계 전환 잠금
-  var WHEEL_THRESHOLD  = 50;     // 누적 wheel 임계값
-  var WHEEL_RESET_MS   = 180;    // wheel 누적 리셋 타이머
-  var COOLDOWN_MS      = 200;    // afterLoad 쿨다운
+  var SCROLL_SPEED     = 420;    // ms — 섹션 전환 속도
+  var OVERLAY_STEP_MS  = 380;    // ms — overlay 단계 전환 잠금
+  var WHEEL_THRESHOLD  = 20;     // 누적 wheel 임계값
+  var WHEEL_RESET_MS   = 100;    // wheel 누적 리셋 타이머
+  var COOLDOWN_MS      = 60;     // afterLoad 쿨다운
   var MOBILE_BP        = 768;    // 모바일 기준 px
 
   /* ══════════════════════════════════════════════════════
@@ -757,6 +757,22 @@
       else { isFPMoving = true; block(SCROLL_SPEED); goTo(0); }
     });
   }
+
+  /* ══════════════════════════════════════════════════════
+     FLOOR PLAN TABS (sfp)
+     ══════════════════════════════════════════════════════ */
+  var fpTabs   = Array.prototype.slice.call(document.querySelectorAll('.sfp-tab'));
+  var fpPanels = Array.prototype.slice.call(document.querySelectorAll('.sfp-panel'));
+
+  fpTabs.forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      var idx = parseInt(tab.getAttribute('data-fptab'), 10);
+      fpTabs.forEach(function (t) { t.classList.toggle('active', t === tab); });
+      fpPanels.forEach(function (p) {
+        p.classList.toggle('active', parseInt(p.getAttribute('data-fppanel'), 10) === idx);
+      });
+    });
+  });
 
   /* ══════════════════════════════════════════════════════
      BOOT
