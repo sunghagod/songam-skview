@@ -593,6 +593,7 @@ body.mobile-mode .sec { height: auto; min-height: 100svh; }
 }
 .stat-num {
   display: flex; align-items: flex-end; gap: 3px;
+  white-space: nowrap;
 }
 .stat b.cnt {
   font-family: var(--ff-en); font-size: clamp(32px, 2.8vw, 46px);
@@ -793,14 +794,14 @@ body.mobile-mode .sec { height: auto; min-height: 100svh; }
 .pcard-body p  { font-size: 13px; color: rgba(245,243,239,.45); line-height: 1.75; }
 
 /* ═══════════════════════════════════════════════════════
-   S4 — COMMUNITY  (Bento Grid)
+   S4 — COMMUNITY  (Map + Grid Split)
    ═══════════════════════════════════════════════════════ */
 .s4 {
   background: var(--dark);
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   padding: 0;
-  overflow-y: auto;
+  overflow: hidden;
 }
 body.mobile-mode .s4 { height: auto; min-height: 0; }
 
@@ -808,121 +809,119 @@ body.mobile-mode .s4 { height: auto; min-height: 0; }
   width: 100%;
   max-width: 1480px;
   margin: 0 auto;
-  padding: 80px 80px 60px;
+  padding: calc(var(--hd-h) + 20px) 80px 28px;
+  display: flex; flex-direction: column;
+  height: 100%;
+  justify-content: center;
 }
 
-.s4-head { margin-bottom: 40px; }
-.s4-head h2 { margin-top: 4px; margin-bottom: 12px; }
+.s4-head { margin-bottom: 24px; }
+.s4-head h2 { margin-top: 4px; margin-bottom: 8px; }
 .s4-sub {
   font-size: 14px;
   color: rgba(245,243,239,.4);
   letter-spacing: .02em;
 }
 
-/* ── Bento Grid ──────────────────────── */
+/* ── Split: Map Left + Cards Right ──── */
+.s4-split {
+  display: grid;
+  grid-template-columns: 38% 1fr;
+  gap: 14px;
+  flex: 1;
+  min-height: 0;
+}
+
+/* ── Map Column ─────────────────────── */
+.s4-map-col {
+  display: flex; flex-direction: column;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.08);
+}
+.s4-map {
+  flex: 1;
+  position: relative;
+  min-height: 0;
+}
+.s4-map iframe {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  filter: brightness(.85) contrast(1.1) saturate(.8);
+}
+.s4-map-info {
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 20px;
+  background: rgba(11,11,11,.7);
+  border-top: 1px solid rgba(255,255,255,.06);
+  font-size: 12px;
+  color: rgba(245,243,239,.55);
+}
+.s4-map-info i {
+  color: var(--gold);
+  font-size: 13px;
+}
+
+/* ── Cards Grid (3×2) ───────────────── */
 .s4-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: 230px;
-  gap: 14px;
+  grid-template-rows: 1fr 1fr;
+  gap: 10px;
 }
 
-/* ── Card Base ───────────────────────── */
+/* ── Card Base ──────────────────────── */
 .s4-card {
   position: relative;
   border-radius: 6px;
   overflow: hidden;
   border: 1px solid rgba(255,255,255,.06);
 }
-.s4-card--feat {
-  grid-column: 1 / 3;
-  grid-row: 1 / 3;
-}
-
 .s4-card-bg {
   position: absolute; inset: 0;
   background-size: cover;
   background-position: center;
   transition: transform .7s var(--ease-out);
 }
-.s4-card:hover .s4-card-bg { transform: scale(1.06); }
+.s4-card:hover .s4-card-bg { transform: scale(1.08); }
 
 .s4-card-dim {
   position: absolute; inset: 0;
-  background: linear-gradient(to top, rgba(11,11,11,.88) 0%, rgba(11,11,11,.25) 50%, rgba(11,11,11,.12) 100%);
+  background: linear-gradient(to top, rgba(11,11,11,.85) 0%, rgba(11,11,11,.2) 55%, rgba(11,11,11,.1) 100%);
   transition: background .4s;
 }
-.s4-card--feat .s4-card-dim {
-  background: linear-gradient(to top, rgba(11,11,11,.82) 0%, rgba(11,11,11,.15) 45%, rgba(11,11,11,.08) 100%);
-}
 .s4-card:hover .s4-card-dim {
-  background: linear-gradient(to top, rgba(11,11,11,.75) 0%, rgba(11,11,11,.15) 50%, rgba(11,11,11,.08) 100%);
+  background: linear-gradient(to top, rgba(11,11,11,.7) 0%, rgba(11,11,11,.12) 55%, rgba(11,11,11,.05) 100%);
 }
 
 .s4-card-body {
   position: absolute; inset: 0;
   display: flex; flex-direction: column;
   justify-content: flex-end;
-  padding: 22px;
+  padding: 16px 18px;
   z-index: 2;
 }
-.s4-card--feat .s4-card-body { padding: 36px; }
 
 /* Card Label */
 .s4-card-label {
   position: absolute;
-  top: 18px; left: 22px;
+  top: 12px; left: 18px;
   font-family: var(--ff-en);
-  font-size: 9px; font-weight: 500;
+  font-size: 8px; font-weight: 500;
   letter-spacing: .2em;
-  color: rgba(245,243,239,.35);
+  color: rgba(245,243,239,.3);
   text-transform: uppercase;
-}
-.s4-card--feat .s4-card-label {
-  top: 28px; left: 36px;
-  font-size: 10px;
-  color: rgba(245,243,239,.45);
 }
 
 /* Card Content */
 .s4-card-body h3 {
   font-family: var(--ff-ko);
-  font-size: 17px; font-weight: 700;
+  font-size: 15px; font-weight: 700;
   color: var(--cream);
-  margin-bottom: 4px;
-}
-.s4-card--feat .s4-card-body h3 {
-  font-size: clamp(24px, 2.5vw, 34px);
-  margin-bottom: 10px;
+  text-shadow: 0 1px 6px rgba(0,0,0,.5);
 }
 
-.s4-card-body p {
-  font-size: 12px; line-height: 1.6;
-  color: rgba(245,243,239,.45);
-}
-.s4-card--feat .s4-card-body p {
-  font-size: 14px;
-  color: rgba(245,243,239,.5);
-  max-width: 480px;
-  line-height: 1.7;
-}
-
-/* Tags (featured card only) */
-.s4-card-tags {
-  display: flex; gap: 8px;
-  margin-top: 16px;
-}
-.s4-card-tags span {
-  padding: 6px 14px;
-  font-size: 11px;
-  color: rgba(245,243,239,.65);
-  border: 1px solid rgba(255,255,255,.12);
-  border-radius: 3px;
-  letter-spacing: .02em;
-  backdrop-filter: blur(4px);
-}
-
-/* Background images (reuse) */
+/* Background images */
 .cc1 { background-image: url('../assets/img/comm-fitness.jpg'); }
 .cc2 { background-image: url('../assets/img/comm-pool.jpg'); }
 .cc3 { background-image: url('../assets/img/comm-climbing.jpg'); }
@@ -2149,7 +2148,7 @@ body.mobile-mode .s2b {
   .s1-txt      { padding: 60px 60px 60px 52px; }
   .s2-body     { padding: calc(var(--hd-h) + 24px) 56px 40px; }
   .s3-body     { padding: calc(var(--hd-h) + 32px) 56px 52px; }
-  .s4-inner    { padding: calc(var(--hd-h) + 28px) 56px 48px; }
+  .s4-inner    { padding: calc(var(--hd-h) + 16px) 48px 24px; }
   footer       { padding: 72px 56px 48px; }
   .hs-progress { right: 56px; }
   .loc-img     { height: 280px; }
@@ -2399,29 +2398,18 @@ body.mobile-mode .s2b {
   .pcard-body p  { font-size: 13px; }
   .hs-progress { right: 24px; bottom: 20px; }
 
-  /* ── S4 Community (Bento) ──────────────── */
-  .s4-inner { padding: calc(var(--hd-h) + 24px) 24px 40px; }
-  .s4-head { margin-bottom: 24px; }
+  /* ── S4 Community ─────────────────────── */
+  .s4-inner { padding: calc(var(--hd-h) + 20px) 20px 28px; }
+  .s4-head { margin-bottom: 20px; }
   .s4-head h2 { font-size: clamp(22px, 5vw, 32px); }
   .s4-sub { font-size: 13px; }
-  .s4-grid {
-    grid-template-columns: 1fr 1fr;
-    grid-auto-rows: 200px;
-    gap: 10px;
-  }
-  .s4-card--feat {
-    grid-column: 1 / -1;
-    grid-row: auto;
-    min-height: 280px;
-  }
-  .s4-card--feat .s4-card-body { padding: 24px; }
-  .s4-card--feat .s4-card-label { top: 18px; left: 24px; }
-  .s4-card--feat .s4-card-body h3 { font-size: 22px; }
-  .s4-card--feat .s4-card-body p { font-size: 13px; }
-  .s4-card-body h3 { font-size: 15px; }
-  .s4-card-body p { font-size: 11px; }
-  .s4-card-body { padding: 16px; }
-  .s4-card-label { top: 12px; left: 16px; font-size: 8px; }
+  .s4-split { grid-template-columns: 1fr; gap: 16px; }
+  .s4-map-col { min-height: 200px; }
+  .s4-grid { grid-template-columns: repeat(3, 1fr); grid-template-rows: 1fr 1fr; gap: 8px; }
+  .s4-card-body h3 { font-size: 13px; }
+  .s4-card-body { padding: 12px 14px; }
+  .s4-card-label { font-size: 7px; top: 8px; left: 12px; }
+  .s4-map-info { padding: 10px 16px; font-size: 11px; }
 
   /* ── SFP 평형안내 ──────────────────────── */
   .sfp-inner { padding: calc(var(--hd-h) + 24px) 24px 40px; }
@@ -2494,9 +2482,10 @@ body.mobile-mode .s2b {
   .s3-body { padding: calc(var(--hd-h) + 20px) 20px 32px; }
   .pcard-img { height: 56vw; }
 
-  .s4-inner { padding: calc(var(--hd-h) + 20px) 16px 32px; }
-  .s4-grid { grid-template-columns: 1fr; grid-auto-rows: 180px; gap: 8px; }
-  .s4-card--feat { grid-column: auto; min-height: 240px; }
+  .s4-inner { padding: calc(var(--hd-h) + 16px) 16px 24px; }
+  .s4-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+  .s4-card-body h3 { font-size: 12px; }
+  .s4-map-col { min-height: 160px; }
 
   .s5-form-wrap { padding: calc(var(--hd-h) + 20px) 22px 40px; }
 
