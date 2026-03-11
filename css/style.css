@@ -1705,17 +1705,31 @@ body.mobile-mode .s4 { height: auto; min-height: 0; }
 /* Info */
 .sfp-info h3 {
   font-family: var(--ff-ko);
-  font-size: clamp(24px, 2.5vw, 36px);
+  font-size: clamp(30px, 3vw, 44px);
   font-weight: 800;
-  color: var(--cream);
+  color: var(--gold);
   letter-spacing: -0.02em;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
+}
+.sfp-info h3 small {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  color: rgba(192,155,106,.7);
+  margin-left: 0;
+  margin-top: 8px;
+  letter-spacing: .06em;
 }
 .sfp-desc {
-  font-size: 14px;
-  line-height: 1.8;
-  color: rgba(245,243,239,.5);
-  margin-bottom: 24px;
+  font-size: 16px;
+  line-height: 1.85;
+  color: rgba(245,243,239,.65);
+  margin-bottom: 28px;
+  font-weight: 400;
+}
+.sfp-desc strong {
+  font-weight: 600;
+  color: var(--gold);
 }
 
 /* Specs */
@@ -1724,13 +1738,13 @@ body.mobile-mode .s4 { height: auto; min-height: 0; }
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 14px 0;
-  border-bottom: 1px solid rgba(255,255,255,.06);
+  padding: 15px 0;
+  border-bottom: 1px solid rgba(255,255,255,.08);
 }
 .sfp-spec span {
   font-size: 13px;
   font-weight: 600;
-  color: rgba(245,243,239,.45);
+  color: rgba(245,243,239,.5);
 }
 .sfp-spec b {
   font-size: 14px;
@@ -1739,7 +1753,7 @@ body.mobile-mode .s4 { height: auto; min-height: 0; }
 }
 .sfp-spec em {
   font-style: normal;
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 700;
   color: var(--gold);
 }
@@ -1750,17 +1764,19 @@ body.mobile-mode .s4 { height: auto; min-height: 0; }
   display: block;
   font-size: 12px;
   font-weight: 600;
-  color: rgba(245,243,239,.4);
+  color: rgba(245,243,239,.45);
   letter-spacing: .05em;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 .sfp-feat-list { display: flex; gap: 8px; flex-wrap: wrap; }
 .sfp-feat {
-  padding: 7px 16px;
+  padding: 8px 18px;
   font-size: 13px;
+  font-weight: 600;
   color: var(--gold);
-  border: 1px solid rgba(192,155,106,.35);
-  border-radius: 3px;
+  background: rgba(192,155,106,.08);
+  border: 1px solid rgba(192,155,106,.3);
+  border-radius: 6px;
 }
 
 /* CTA */
