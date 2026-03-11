@@ -5,8 +5,8 @@
 (function () {
   'use strict';
 
-  /* ── 비밀번호 ─────────────────────────── */
-  var ADMIN_PW = 'cynegod';
+  /* ── 비밀번호 (SHA-256 해시) ────────────── */
+  var ADMIN_PW_HASH = '746e577d5d803cb1016b1932ab64f911353850b8a0b18e68a1666a1b6e06ad4e';
 
   /* ── 로컬스토리지 키 ─────────────────── */
   var STORE_KEY = 'skview_content';
@@ -44,17 +44,46 @@
     var input = $('#adminPw');
     var err   = $('#loginErr');
 
+    var loginAttempts = 0;
+    var lockoutUntil = 0;
+
     function tryLogin() {
-      if (input.value === ADMIN_PW) {
-        $('#loginScreen').style.display = 'none';
-        $('#adminApp').classList.add('on');
-        initApp();
-      } else {
+      // 로그인 시도 횟수 제한 (5회 실패 시 30초 잠금)
+      var now = Date.now();
+      if (now < lockoutUntil) {
+        var remain = Math.ceil((lockoutUntil - now) / 1000);
+        err.textContent = remain + '초 후에 다시 시도해주세요.';
         err.classList.add('show');
-        input.value = '';
-        input.focus();
         setTimeout(function() { err.classList.remove('show'); }, 2000);
+        return;
       }
+
+      if (!window.Security || !window.Security.sha256) {
+        alert('보안 모듈을 불러오지 못했습니다.');
+        return;
+      }
+
+      window.Security.sha256(input.value).then(function(hash) {
+        if (hash === ADMIN_PW_HASH) {
+          loginAttempts = 0;
+          $('#loginScreen').style.display = 'none';
+          $('#adminApp').classList.add('on');
+          initApp();
+        } else {
+          loginAttempts++;
+          if (loginAttempts >= 5) {
+            lockoutUntil = Date.now() + 30000;
+            loginAttempts = 0;
+            err.querySelector('i') && (err.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> 5회 실패. 30초 후 재시도 가능합니다.');
+          } else {
+            err.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> 비밀번호가 올바르지 않습니다. (' + loginAttempts + '/5)';
+          }
+          err.classList.add('show');
+          input.value = '';
+          input.focus();
+          setTimeout(function() { err.classList.remove('show'); }, 3000);
+        }
+      });
     }
 
     btn.addEventListener('click', tryLogin);

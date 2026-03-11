@@ -186,6 +186,34 @@ h4 { font-size: 16px; font-weight: 700; letter-spacing: -.01em; }
 }
 .gnb a:hover, .gnb a.act { color: var(--gold); }
 .gnb a:hover::after, .gnb a.act::after { width: 100%; }
+
+/* 관심고객 CTA 버튼 강조 */
+.gnb a.gnb-cta {
+  color: #fff;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dk));
+  padding: 6px 18px;
+  border-radius: 20px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  box-shadow: 0 0 12px rgba(192,155,106,.35);
+  transition: all .3s var(--ease-out);
+}
+.gnb a.gnb-cta::after { display: none; }
+.gnb a.gnb-cta:hover {
+  color: #fff;
+  background: linear-gradient(135deg, var(--gold-lt), var(--gold));
+  box-shadow: 0 0 20px rgba(192,155,106,.55);
+  transform: translateY(-1px);
+}
+#header[data-theme="light"] .gnb a.gnb-cta {
+  color: #fff;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dk));
+}
+#header[data-theme="light"] .gnb a.gnb-cta:hover {
+  color: #fff;
+  background: linear-gradient(135deg, var(--gold-lt), var(--gold));
+}
+
 #header[data-theme="light"] .gnb a { color: rgba(11,11,11,.6); }
 #header[data-theme="light"] .gnb a:hover,
 #header[data-theme="light"] .gnb a.act { color: var(--dark); }

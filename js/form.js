@@ -1,6 +1,7 @@
 /* ═══════════════════════════════════════════════
    form.js — 송암공원 SK VIEW 관심고객 등록
    Google Apps Script → Google Sheets 연동
+   + 입력 검증, 레이트 리미팅, XSS 방지
    ═══════════════════════════════════════════════ */
 
 (function () {
@@ -28,9 +29,92 @@
     }
   }
 
+  /* ── 입력값 검증 ──────────────────────────── */
+  function validateForm() {
+    var S = window.Security;
+    var errors = [];
+
+    // 이름 검증
+    var nameVal = form.querySelector('[name="name"]').value;
+    if (S && S.validate.name) {
+      var nameResult = S.validate.name(nameVal);
+      if (!nameResult.valid) errors.push(nameResult.msg);
+    } else if (!nameVal.trim()) {
+      errors.push('이름을 입력해주세요.');
+    }
+
+    // 전화번호 검증
+    var phoneVal = form.querySelector('[name="phone"]').value;
+    if (S && S.validate.phone) {
+      var phoneResult = S.validate.phone(phoneVal);
+      if (!phoneResult.valid) errors.push(phoneResult.msg);
+    } else if (!phoneVal.trim()) {
+      errors.push('연락처를 입력해주세요.');
+    }
+
+    // 메시지 검증
+    var msgVal = form.querySelector('[name="message"]').value;
+    if (S && S.validate.message) {
+      var msgResult = S.validate.message(msgVal);
+      if (!msgResult.valid) errors.push(msgResult.msg);
+    }
+
+    return errors;
+  }
+
+  /* ── 안전한 데이터 수집 ───────────────────── */
+  function collectData() {
+    var S = window.Security;
+    var nameVal  = form.querySelector('[name="name"]').value.trim();
+    var phoneVal = form.querySelector('[name="phone"]').value.trim();
+    var sizeVal  = form.querySelector('[name="size"]').value;
+    var msgVal   = form.querySelector('[name="message"]').value.trim();
+
+    // Security 모듈 있으면 검증된 값 사용
+    if (S && S.validate.name) {
+      var nr = S.validate.name(nameVal);
+      if (nr.valid) nameVal = nr.value;
+    }
+    if (S && S.validate.phone) {
+      var pr = S.validate.phone(phoneVal);
+      if (pr.valid) phoneVal = pr.value;
+    }
+    if (S && S.validate.message) {
+      var mr = S.validate.message(msgVal);
+      if (mr.valid) msgVal = mr.value;
+    }
+
+    // select 값 화이트리스트 검증
+    var allowedSizes = ['', '84A', '84B', '84C', '108', 'etc'];
+    if (allowedSizes.indexOf(sizeVal) === -1) sizeVal = '';
+
+    return {
+      name:    nameVal,
+      phone:   phoneVal,
+      size:    sizeVal,
+      message: msgVal
+    };
+  }
+
   /* ── 제출 핸들러 ─────────────────────────── */
   form.addEventListener('submit', function (e) {
     e.preventDefault();
+
+    // 레이트 리미팅: 30초에 1회만 허용
+    var S = window.Security;
+    if (S && S.rateLimit) {
+      if (!S.rateLimit('form-submit', 30000, 1)) {
+        showResult('error', '너무 자주 전송하고 있습니다.\n30초 후 다시 시도해주세요.');
+        return;
+      }
+    }
+
+    // 입력값 검증
+    var errors = validateForm();
+    if (errors.length > 0) {
+      showResult('error', errors.join('\n'));
+      return;
+    }
 
     var scriptUrl = getScriptUrl();
     if (!scriptUrl) {
@@ -38,12 +122,7 @@
       return;
     }
 
-    var data = {
-      name:    form.querySelector('[name="name"]').value.trim(),
-      phone:   form.querySelector('[name="phone"]').value.trim(),
-      size:    form.querySelector('[name="size"]').value,
-      message: form.querySelector('[name="message"]').value.trim()
-    };
+    var data = collectData();
 
     setLoading(true);
 
@@ -76,7 +155,13 @@
   function showResult(type, msg) {
     if (!resultEl) return;
     resultEl.className = 'form-result form-result--' + type;
-    resultEl.innerHTML = msg.replace(/\n/g, '<br>');
+    // XSS 방지: textContent 사용 후 줄바꿈만 <br>로 처리
+    resultEl.textContent = '';
+    var lines = msg.split('\n');
+    for (var i = 0; i < lines.length; i++) {
+      if (i > 0) resultEl.appendChild(document.createElement('br'));
+      resultEl.appendChild(document.createTextNode(lines[i]));
+    }
     resultEl.style.display = 'block';
     resultEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     if (type === 'success') {

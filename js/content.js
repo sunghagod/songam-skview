@@ -17,29 +17,51 @@
     try { return JSON.parse(localStorage.getItem(IMG_KEY)) || {}; } catch(e) { return {}; }
   }
 
-  /* ── 텍스트 data-cid 적용 ─────────────── */
+  /* ── 텍스트 data-cid 적용 (XSS 방지) ──── */
   function applyText(data) {
     Object.keys(data).forEach(function(cid) {
+      // CSS 선택자 인젝션 방지: data-cid 값 검증
+      if (!/^[a-zA-Z0-9\-_]+$/.test(cid)) return;
       var el = document.querySelector('[data-cid="' + cid + '"]');
       if (!el) return;
-      el.innerHTML = data[cid];
+      // Security 모듈 사용 가능 시 새니타이즈, 아니면 textContent
+      if (window.Security && window.Security.sanitizeHTML) {
+        el.innerHTML = window.Security.sanitizeHTML(data[cid]);
+      } else {
+        el.textContent = data[cid];
+      }
     });
   }
 
-  /* ── 이미지 data-cid-bg 적용 ─────────── */
+  /* ── 이미지 URL 안전성 검증 ──────────── */
+  function isSafeImageUrl(url) {
+    if (!url || typeof url !== 'string') return false;
+    // data:image/* (base64) 또는 https:// 또는 상대 경로만 허용
+    if (/^data:image\/[a-zA-Z+]+;base64,/.test(url)) return true;
+    if (/^https?:\/\//.test(url)) return true;
+    if (/^assets\//.test(url) || /^\.\//.test(url)) return true;
+    // javascript:, vbscript: 등 차단
+    return false;
+  }
+
+  /* ── 이미지 data-cid-bg 적용 (URL 검증) ── */
   function applyImages(imgs) {
     Object.keys(imgs).forEach(function(cid) {
+      if (!/^[a-zA-Z0-9\-_]+$/.test(cid)) return;
+      var url = imgs[cid];
+      if (!isSafeImageUrl(url)) return;
+
       /* bg 이미지 (data-cid-bg) */
       var el = document.querySelector('[data-cid-bg="' + cid + '"]');
-      if (el) el.style.backgroundImage = 'url(' + imgs[cid] + ')';
+      if (el) el.style.backgroundImage = 'url(' + url + ')';
 
       /* src 이미지 (data-cid-img) */
       var img = document.querySelector('[data-cid-img="' + cid + '"]');
-      if (img) img.src = imgs[cid];
+      if (img) img.src = url;
 
       /* section 배경 (data-cid-section-bg) */
       var sec = document.querySelector('[data-cid-section-bg="' + cid + '"]');
-      if (sec) sec.style.backgroundImage = 'url(' + imgs[cid] + ')';
+      if (sec) sec.style.backgroundImage = 'url(' + url + ')';
     });
   }
 
@@ -57,6 +79,7 @@
     };
     Object.keys(sectionBgMap).forEach(function(cid) {
       if (!imgs[cid]) return;
+      if (!isSafeImageUrl(imgs[cid])) return;
       var el = document.querySelector(sectionBgMap[cid]);
       if (el) el.style.backgroundImage = 'url(' + imgs[cid] + ')';
     });
