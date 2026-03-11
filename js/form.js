@@ -100,8 +100,23 @@
   form.addEventListener('submit', function (e) {
     e.preventDefault();
 
-    // 레이트 리미팅: 30초에 1회만 허용
     var S = window.Security;
+
+    // 허니팟 봇 탐지: 숨겨진 필드에 값이 있으면 봇
+    if (S && S.honeypot && S.honeypot.isFilled(form)) {
+      // 봇에게는 성공한 것처럼 보여줌 (재시도 방지)
+      showResult('success', '관심고객 등록이 완료되었습니다.\n빠른 시일 내에 연락드리겠습니다.');
+      form.reset();
+      return;
+    }
+
+    // 타이밍 봇 탐지: 3초 이내 제출은 사람이 아님
+    if (S && S.timing && S.timing.isTooFast()) {
+      showResult('error', '잠시 후 다시 시도해주세요.');
+      return;
+    }
+
+    // 레이트 리미팅: 30초에 1회만 허용
     if (S && S.rateLimit) {
       if (!S.rateLimit('form-submit', 30000, 1)) {
         showResult('error', '너무 자주 전송하고 있습니다.\n30초 후 다시 시도해주세요.');

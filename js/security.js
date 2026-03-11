@@ -193,6 +193,245 @@
 
 
   /* ══════════════════════════════════════════════
+     6. 허니팟 봇 탐지
+     ══════════════════════════════════════════════ */
+
+  /**
+   * 허니팟 필드 삽입 — 사람 눈에 보이지 않는 가짜 필드.
+   * 봇은 모든 input을 채우므로, 이 필드에 값이 있으면 = 봇
+   */
+  function injectHoneypot(formEl) {
+    if (!formEl || formEl.querySelector('.hp-wrap')) return;
+    var wrap = document.createElement('div');
+    wrap.className = 'hp-wrap';
+    // 시각적으로 완전히 숨김 (display:none은 똑똑한 봇이 건너뛰므로 다른 방법 사용)
+    wrap.setAttribute('style',
+      'position:absolute;left:-9999px;top:-9999px;' +
+      'width:1px;height:1px;overflow:hidden;opacity:0;' +
+      'pointer-events:none;tab-index:-1;'
+    );
+    wrap.setAttribute('aria-hidden', 'true');
+    var input = document.createElement('input');
+    input.type = 'text';
+    input.name = 'website';       // 봇이 좋아하는 필드명
+    input.tabIndex = -1;
+    input.autocomplete = 'off';
+    wrap.appendChild(input);
+    formEl.appendChild(wrap);
+  }
+
+  function isHoneypotFilled(formEl) {
+    if (!formEl) return false;
+    var hp = formEl.querySelector('[name="website"]');
+    return hp && hp.value.length > 0;
+  }
+
+
+  /* ══════════════════════════════════════════════
+     7. 타이밍 봇 탐지
+     ══════════════════════════════════════════════ */
+
+  var formLoadTime = 0;
+  var MIN_FILL_TIME = 3000; // 사람이 폼을 채우는 최소 시간 (3초)
+
+  function markFormLoaded() {
+    formLoadTime = Date.now();
+  }
+
+  function isTooFast() {
+    if (!formLoadTime) return false;
+    return (Date.now() - formLoadTime) < MIN_FILL_TIME;
+  }
+
+
+  /* ══════════════════════════════════════════════
+     8. 클릭재킹 방어 (Framebusting)
+     ══════════════════════════════════════════════ */
+
+  function preventFraming() {
+    // 이 페이지가 iframe 안에 있으면 탈출
+    try {
+      if (window.self !== window.top) {
+        // iframe 안에 갇혀 있음 → 최상위로 이동
+        window.top.location = window.self.location;
+      }
+    } catch (e) {
+      // cross-origin iframe → 접근 차단, 화면 가림
+      document.body.innerHTML =
+        '<div style="position:fixed;inset:0;background:#000;color:#fff;' +
+        'display:flex;align-items:center;justify-content:center;font-size:20px;z-index:99999">' +
+        '이 페이지는 직접 접속해야 합니다.</div>';
+    }
+  }
+
+
+  /* ══════════════════════════════════════════════
+     9. DevTools 감지 & 콘솔 경고
+     ══════════════════════════════════════════════ */
+
+  function initConsoleWarning() {
+    // 콘솔에 경고 메시지 표시 (페이스북 스타일)
+    var warnStyle = 'color:#e53e3e;font-size:24px;font-weight:bold;';
+    var infoStyle = 'color:#666;font-size:14px;';
+    console.log('%c경고!', warnStyle);
+    console.log(
+      '%c이 브라우저 기능은 개발자용입니다.\n' +
+      '누군가 여기에 코드를 붙여넣으라고 했다면\n' +
+      '사기 피해를 입을 수 있습니다.\n' +
+      '본인이 무엇을 하는지 모른다면 이 창을 닫아주세요.',
+      infoStyle
+    );
+  }
+
+  /** DOM 변조 감시 — 핵심 수치(세대수, 가격 등)가 조작되면 경고 */
+  var protectedCids = ['stat-units', 'stat-floors', 'stat-bldgs', 'stat-area'];
+  var originalValues = {};
+
+  function snapshotProtectedValues() {
+    protectedCids.forEach(function (cid) {
+      var el = document.querySelector('[data-cid="' + cid + '"]');
+      if (el) originalValues[cid] = el.textContent;
+    });
+  }
+
+  function watchDOMTampering() {
+    if (typeof MutationObserver === 'undefined') return;
+
+    var observer = new MutationObserver(function (mutations) {
+      mutations.forEach(function (m) {
+        var el = m.target;
+        if (!el || !el.dataset) return;
+        var cid = el.dataset.cid;
+        if (!cid || protectedCids.indexOf(cid) === -1) return;
+
+        var original = originalValues[cid];
+        if (original && el.textContent !== original) {
+          // 변조 감지 → 원래 값 복원
+          el.textContent = original;
+          console.warn('[보안] 콘텐츠 변조가 감지되어 원래 값으로 복원되었습니다: ' + cid);
+        }
+      });
+    });
+
+    protectedCids.forEach(function (cid) {
+      var el = document.querySelector('[data-cid="' + cid + '"]');
+      if (el) {
+        observer.observe(el, { childList: true, characterData: true, subtree: true });
+      }
+    });
+  }
+
+
+  /* ══════════════════════════════════════════════
+     10. 우클릭 / 드래그 / 복사 방지 (콘텐츠 보호)
+     ══════════════════════════════════════════════ */
+
+  function enableContentProtection() {
+    // 우클릭 방지
+    document.addEventListener('contextmenu', function (e) {
+      // input, textarea는 허용
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      e.preventDefault();
+    });
+
+    // 텍스트 선택 방지 (CSS도 병행)
+    document.addEventListener('selectstart', function (e) {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      e.preventDefault();
+    });
+
+    // 드래그 방지 (이미지 끌어가기 차단)
+    document.addEventListener('dragstart', function (e) {
+      if (e.target.tagName === 'IMG') {
+        e.preventDefault();
+      }
+    });
+
+    // 키보드 단축키 차단 (Ctrl+S, Ctrl+U, Ctrl+Shift+I, F12)
+    document.addEventListener('keydown', function (e) {
+      var dominated = e.ctrlKey || e.metaKey;
+      // Ctrl+U (소스보기), Ctrl+S (저장)
+      if (dominated && (e.key === 'u' || e.key === 'U' || e.key === 's' || e.key === 'S')) {
+        e.preventDefault();
+      }
+      // Ctrl+Shift+I (개발자도구), Ctrl+Shift+J (콘솔)
+      if (dominated && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j')) {
+        e.preventDefault();
+      }
+      // F12
+      if (e.key === 'F12') {
+        e.preventDefault();
+      }
+    });
+  }
+
+
+  /* ══════════════════════════════════════════════
+     11. 이미지 보호 (오버레이 방식)
+     ══════════════════════════════════════════════ */
+
+  function protectImages() {
+    // 모든 주요 이미지에 투명 오버레이를 씌워 직접 저장 방지
+    var images = document.querySelectorAll(
+      '.s0-bg, .s1-img-inner, .s2-bg, .s5-img, .pcard-img, .s4-card-bg'
+    );
+    images.forEach(function (img) {
+      if (img.querySelector('.img-shield')) return;
+      var shield = document.createElement('div');
+      shield.className = 'img-shield';
+      shield.setAttribute('style',
+        'position:absolute;inset:0;z-index:2;' +
+        'background:transparent;pointer-events:auto;'
+      );
+      if (getComputedStyle(img).position === 'static') {
+        img.style.position = 'relative';
+      }
+      img.appendChild(shield);
+    });
+  }
+
+
+  /* ══════════════════════════════════════════════
+     12. 자동 초기화 (페이지 로드 시 실행)
+     ══════════════════════════════════════════════ */
+
+  function autoInit() {
+    // 클릭재킹 방어
+    preventFraming();
+
+    // 콘솔 경고
+    initConsoleWarning();
+
+    // admin.html이 아닌 경우에만 콘텐츠 보호 적용
+    var isAdmin = window.location.pathname.indexOf('admin') !== -1;
+    if (!isAdmin) {
+      enableContentProtection();
+      protectImages();
+    }
+
+    // 폼 허니팟
+    var form = document.getElementById('form');
+    if (form) {
+      injectHoneypot(form);
+      markFormLoaded();
+    }
+
+    // DOM 변조 감시 (약간의 딜레이 후 원본값 스냅샷)
+    setTimeout(function () {
+      snapshotProtectedValues();
+      watchDOMTampering();
+    }, 3000);
+  }
+
+  // DOM 로드 후 자동 실행
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', autoInit);
+  } else {
+    autoInit();
+  }
+
+
+  /* ══════════════════════════════════════════════
      공개 API
      ══════════════════════════════════════════════ */
 
@@ -205,6 +444,14 @@
     csrf: {
       generate: generateCSRFToken,
       get: getCSRFToken
+    },
+    honeypot: {
+      inject: injectHoneypot,
+      isFilled: isHoneypotFilled
+    },
+    timing: {
+      markLoaded: markFormLoaded,
+      isTooFast: isTooFast
     }
   };
 

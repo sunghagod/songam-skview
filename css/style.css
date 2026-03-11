@@ -6,6 +6,20 @@
 /* ── RESET & ROOT VARS ─────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+/* ── 콘텐츠 보호 (텍스트 선택·복사 방지) ──────────── */
+body {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+/* 입력 필드는 선택 허용 */
+input, textarea, select { -webkit-user-select: text; user-select: text; }
+/* 이미지 드래그 방지 */
+img { -webkit-user-drag: none; user-drag: none; pointer-events: none; }
+/* 이미지 위의 shield 레이어 */
+.img-shield { cursor: default; }
+
 :root {
   --dark:    #0B0B0B;
   --dark2:   #141414;
