@@ -1364,6 +1364,48 @@ body.mobile-mode .s4 { height: auto; min-height: 0; }
 }
 
 /* ═══════════════════════════════════════════════════════
+   IMAGE LIGHTBOX — 입지 이미지 확대
+   ═══════════════════════════════════════════════════════ */
+.img-lightbox {
+  position: fixed; inset: 0; z-index: 99999;
+  display: flex; align-items: center; justify-content: center;
+  pointer-events: none; opacity: 0;
+  transition: opacity .3s ease;
+}
+.img-lightbox.open { pointer-events: auto; opacity: 1; }
+
+.img-lb-backdrop {
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,.85);
+  backdrop-filter: blur(6px);
+}
+.img-lb-wrap {
+  position: relative; z-index: 1;
+  max-width: 92vw; max-height: 90vh;
+  transform: scale(.9);
+  transition: transform .35s cubic-bezier(.22,1,.36,1);
+}
+.img-lightbox.open .img-lb-wrap { transform: scale(1); }
+
+.img-lb-img {
+  display: block;
+  max-width: 92vw; max-height: 88vh;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 16px 60px rgba(0,0,0,.5);
+}
+.img-lb-close {
+  position: absolute; top: -16px; right: -16px; z-index: 2;
+  width: 40px; height: 40px;
+  background: rgba(255,255,255,.15);
+  border: none; border-radius: 50%;
+  color: #fff; font-size: 24px; line-height: 40px;
+  text-align: center; cursor: pointer;
+  transition: background .2s;
+}
+.img-lb-close:hover { background: rgba(255,255,255,.3); }
+
+/* ═══════════════════════════════════════════════════════
    S5 — CONTACT  (Premium Dark)
    ═══════════════════════════════════════════════════════ */
 .s5 {
@@ -2436,8 +2478,8 @@ body.mobile-mode .slide { height: auto; min-height: 100svh; }
   background: linear-gradient(to top, rgba(11,11,11,.5) 0%, transparent 60%);
 }
 .li0 { background: url('../assets/img/loc-nature.jpg') center/cover no-repeat; }
-.li1 { background: url('../assets/img/loc-aerial.jpg') center/cover no-repeat; }
-.li2 { background: url('../assets/img/loc-school.jpg') center/cover no-repeat; }
+.li1 { background: url('../assets/img/loc-transport-map.png') center/cover no-repeat; }
+.li2 { background: url('../assets/img/loc-park-aerial.png') center/cover no-repeat; }
 .li3 { background: url('../assets/img/site-plan.jpg') center/cover no-repeat; }
 
 .s2-panel .loc-info {
@@ -2554,20 +2596,23 @@ body.mobile-mode .s2b {
   align-items: start;
 }
 
-/* 패널1: 차트 중앙 정렬 */
+/* 패널1: 차트 중앙 정렬 — 화면 꽉 차게 */
 .s2b-inner--chart {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100%;
+  min-height: 100vh;
+  padding-top: var(--hd-h, 70px);
+  padding-bottom: 40px;
+  box-sizing: border-box;
 }
 .s2b-inner--chart .s2b-chart {
-  max-width: 760px;
+  max-width: min(90vw, 1100px);
   width: 100%;
 }
 .s2b-inner--chart .s2b-disclaimers {
-  max-width: 760px;
+  max-width: min(90vw, 1100px);
   width: 100%;
 }
 

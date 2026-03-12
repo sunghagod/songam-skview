@@ -838,6 +838,52 @@
     backdrop.addEventListener('click', closeModal);
   })();
 
+  /* ── 입지 이미지 클릭 → 라이트박스 확대 ──────── */
+  (function () {
+    var lb = document.createElement('div');
+    lb.className = 'img-lightbox';
+    lb.innerHTML =
+      '<div class="img-lb-backdrop"></div>' +
+      '<div class="img-lb-wrap">' +
+        '<button class="img-lb-close" aria-label="닫기">&times;</button>' +
+        '<img class="img-lb-img" src="" alt="">' +
+      '</div>';
+    document.body.appendChild(lb);
+
+    var backdrop = lb.querySelector('.img-lb-backdrop');
+    var closeBtn = lb.querySelector('.img-lb-close');
+    var lbImg    = lb.querySelector('.img-lb-img');
+
+    function open(bgUrl) {
+      lbImg.src = bgUrl;
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function close() {
+      lb.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    // loc-img 클릭 이벤트
+    var locImgs = document.querySelectorAll('.loc-img');
+    for (var i = 0; i < locImgs.length; i++) {
+      locImgs[i].style.cursor = 'pointer';
+      locImgs[i].addEventListener('click', function () {
+        var style = window.getComputedStyle(this);
+        var bg = style.backgroundImage;
+        var match = bg.match(/url\(["']?([^"')]+)["']?\)/);
+        if (match) open(match[1]);
+      });
+    }
+
+    closeBtn.addEventListener('click', close);
+    backdrop.addEventListener('click', close);
+    // ESC 키로 닫기
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && lb.classList.contains('open')) close();
+    });
+  })();
+
   /* ══════════════════════════════════════════════════════
      BOOT
      ══════════════════════════════════════════════════════ */
