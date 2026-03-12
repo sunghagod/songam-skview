@@ -455,7 +455,7 @@
     e.preventDefault();
     var idx = parseInt(el.getAttribute('data-go'), 10);
     if (isMobile) {
-      var t = SECTIONS[idx];
+      var t = (idx === 7 && document.getElementById('form')) || SECTIONS[idx];
       if (t) t.scrollIntoView({ behavior: 'smooth' });
     } else {
       isFPMoving = true;
