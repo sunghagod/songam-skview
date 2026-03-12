@@ -774,6 +774,70 @@
     });
   });
 
+  /* ── 모바일 평형 카드 터치 → 플로팅 상세 모달 ─── */
+  (function () {
+    // 모달 DOM 생성
+    var modal = document.createElement('div');
+    modal.className = 'sfp-modal';
+    modal.innerHTML =
+      '<div class="sfp-modal-backdrop"></div>' +
+      '<div class="sfp-modal-sheet">' +
+        '<button class="sfp-modal-close" aria-label="닫기">&times;</button>' +
+        '<div class="sfp-modal-content"></div>' +
+      '</div>';
+    document.body.appendChild(modal);
+
+    var backdrop = modal.querySelector('.sfp-modal-backdrop');
+    var sheet    = modal.querySelector('.sfp-modal-sheet');
+    var content  = modal.querySelector('.sfp-modal-content');
+    var closeBtn = modal.querySelector('.sfp-modal-close');
+
+    function isMobile() {
+      return window.innerWidth <= 768;
+    }
+
+    function openModal(panel) {
+      // 패널 내용 복제
+      var clone = panel.cloneNode(true);
+      clone.style.display = 'grid';
+      clone.style.gridTemplateColumns = '1fr';
+      clone.style.gap = '20px';
+      // 숨겨진 요소 모두 표시
+      var hidden = clone.querySelectorAll('.sfp-desc, .sfp-specs, .sfp-features, .sfp-cta');
+      for (var i = 0; i < hidden.length; i++) {
+        hidden[i].style.display = '';
+      }
+      // specs 내부 개별 항목도 표시
+      var specs = clone.querySelectorAll('.sfp-spec');
+      for (var j = 0; j < specs.length; j++) {
+        specs[j].style.display = '';
+      }
+      content.innerHTML = '';
+      content.appendChild(clone);
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      modal.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    // 카드 클릭 이벤트
+    fpPanels.forEach(function (panel) {
+      panel.addEventListener('click', function (e) {
+        if (!isMobile()) return;
+        // CTA 링크 클릭은 모달 대신 전화 연결
+        if (e.target.closest('.sfp-cta')) return;
+        e.preventDefault();
+        openModal(panel);
+      });
+    });
+
+    closeBtn.addEventListener('click', closeModal);
+    backdrop.addEventListener('click', closeModal);
+  })();
+
   /* ══════════════════════════════════════════════════════
      BOOT
      ══════════════════════════════════════════════════════ */

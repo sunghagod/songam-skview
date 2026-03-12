@@ -327,6 +327,10 @@
      ══════════════════════════════════════════════ */
 
   function enableContentProtection() {
+    // localhost(개발 환경)에서는 보호 비활성화
+    var host = window.location.hostname;
+    if (host === 'localhost' || host === '127.0.0.1') return;
+
     // 우클릭 방지
     document.addEventListener('contextmenu', function (e) {
       // input, textarea는 허용
@@ -402,9 +406,11 @@
     // 콘솔 경고
     initConsoleWarning();
 
-    // admin.html이 아닌 경우에만 콘텐츠 보호 적용
+    // localhost가 아니고 admin이 아닌 경우에만 콘텐츠 보호 적용
+    var isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
     var isAdmin = window.location.pathname.indexOf('admin') !== -1;
-    if (!isAdmin) {
+    if (!isAdmin && !isLocal) {
+      document.body.classList.add('protected');
       enableContentProtection();
       protectImages();
     }

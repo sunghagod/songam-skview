@@ -6,18 +6,17 @@
 /* ── RESET & ROOT VARS ─────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* ── 콘텐츠 보호 (텍스트 선택·복사 방지) ──────────── */
-body {
+/* ── 콘텐츠 보호 (프로덕션에서만 적용, body.protected 클래스 필요) ── */
+body.protected {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
 }
-/* 입력 필드는 선택 허용 */
-input, textarea, select { -webkit-user-select: text; user-select: text; }
-/* 이미지 드래그 방지 */
-img { -webkit-user-drag: none; user-drag: none; pointer-events: none; }
-/* 이미지 위의 shield 레이어 */
+body.protected input,
+body.protected textarea,
+body.protected select { -webkit-user-select: text; user-select: text; }
+body.protected img { -webkit-user-drag: none; user-drag: none; pointer-events: none; }
 .img-shield { cursor: default; }
 
 :root {
@@ -183,7 +182,7 @@ h4 { font-size: 16px; font-weight: 700; letter-spacing: -.01em; }
   opacity: .65;
 }
 
-.gnb { display: flex; gap: 36px; }
+.gnb { display: flex; align-items: center; gap: 36px; }
 .gnb a {
   font-size: 13px; font-weight: 500;
   letter-spacing: .04em; color: rgba(245,243,239,.7);
@@ -602,7 +601,7 @@ body.mobile-mode .sec { height: auto; min-height: 100svh; width: 100%; }
 
 .s1-txt {
   display: flex; flex-direction: column; justify-content: center;
-  padding: 80px 80px 80px 72px; position: relative; z-index: 1;
+  padding: 100px 80px 40px 72px; position: relative; z-index: 1;
 }
 .s1-txt .desc {
   font-size: clamp(14px, 1.0vw, 15px); line-height: 2.0;
@@ -611,8 +610,8 @@ body.mobile-mode .sec { height: auto; min-height: 100svh; width: 100%; }
 
 /* ── S1 하이라이트 박스 ─────────────────────────── */
 .s1-highlight {
-  margin-bottom: 28px;
-  padding: 20px 24px;
+  margin-bottom: 20px;
+  padding: 16px 24px;
   background: rgba(192,155,106,.06);
   border-left: 3px solid var(--gold);
   border-radius: 0 6px 6px 0;
@@ -637,11 +636,11 @@ body.mobile-mode .sec { height: auto; min-height: 100svh; width: 100%; }
 .s1-cards {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-bottom: 36px;
+  gap: 10px;
+  margin-bottom: 24px;
 }
 .s1-card {
-  padding: 20px 16px;
+  padding: 16px 16px;
   background: rgba(255,255,255,.03);
   border: 1px solid rgba(192,155,106,.1);
   border-radius: 6px;
@@ -939,10 +938,10 @@ body.mobile-mode .sec { height: auto; min-height: 100svh; width: 100%; }
   content: ''; position: absolute; inset: 0;
   background: linear-gradient(to top, rgba(11,11,11,.7) 0%, rgba(11,11,11,.1) 50%, transparent 100%);
 }
-.pc1 { background: url('../assets/img/premium-sky.jpg') center/cover no-repeat; }
-.pc2 { background: url('../assets/img/premium-smart.jpg') center/cover no-repeat; }
-.pc3 { background: url('../assets/img/premium-landscape.jpg') center/cover no-repeat; }
-.pc4 { background: url('../assets/img/premium-plan.jpg') center/cover no-repeat; }
+.pc1 { background: url('../assets/img/premium-gym.jpg') center/cover no-repeat; }
+.pc2 { background: url('../assets/img/premium-fitness.jpg') center/cover no-repeat; }
+.pc3 { background: url('../assets/img/premium-cafe.jpg') center/cover no-repeat; }
+.pc4 { background: url('../assets/img/premium-park.jpg') center/cover no-repeat; }
 
 .pcard-body {
   padding: 24px 24px 28px;
@@ -1151,6 +1150,218 @@ body.mobile-mode .s4 { height: auto; min-height: 0; }
 .cc4 { background-image: url('../assets/img/loc-nature.jpg'); }
 .cc5 { background-image: url('../assets/img/comm-vr.jpg'); }
 .cc6 { background-image: url('../assets/img/comm-cafe.jpg'); }
+
+/* ═══════════════════════════════════════════════════════
+   HOOK — 긴급 혜택 안내
+   ═══════════════════════════════════════════════════════ */
+.shook {
+  position: relative;
+  overflow: hidden;
+  background: var(--dark);
+}
+.shook-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 80px 40px;
+  text-align: center;
+}
+
+/* 배경 글로우 — 크고 부드럽게 */
+.shook-glow {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 900px; height: 900px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(192,155,106,.15) 0%, rgba(192,155,106,.05) 40%, transparent 70%);
+  pointer-events: none;
+  animation: shookGlow 4s ease-in-out infinite;
+}
+@keyframes shookGlow {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  50% { transform: translate(-50%, -50%) scale(1.15); opacity: .7; }
+}
+
+/* 긴급 뱃지 — 더 크고 강렬하게 */
+.shook-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #ff6b6b;
+  background: rgba(255,107,107,.1);
+  border: 1.5px solid rgba(255,107,107,.35);
+  border-radius: 30px;
+  padding: 12px 30px;
+  margin-bottom: 40px;
+  animation: shookBadgeBounce 2s ease-in-out infinite;
+}
+.shook-pulse {
+  width: 10px; height: 10px;
+  background: #ff6b6b;
+  border-radius: 50%;
+  animation: shookPulse 1.2s ease-in-out infinite;
+}
+@keyframes shookPulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(255,107,107,.6); }
+  50% { opacity: .6; box-shadow: 0 0 0 12px rgba(255,107,107,0); }
+}
+@keyframes shookBadgeBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* 메인 타이포 */
+.shook-title {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 52px;
+}
+.shook-t1 {
+  font-family: var(--ff-ko);
+  font-size: clamp(32px, 5vw, 60px);
+  font-weight: 800;
+  color: var(--cream);
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+.shook-t2 {
+  font-family: var(--ff-ko);
+  font-size: clamp(40px, 6vw, 76px);
+  font-weight: 900;
+  color: var(--cream);
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+.shook-t2 em {
+  font-style: normal;
+  color: var(--gold);
+  background: linear-gradient(135deg, var(--gold-lt), var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* 혜택 카드 — 크고 빛나는 보더 */
+.shook-cards {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 52px;
+  width: 100%;
+  max-width: 800px;
+}
+.shook-card {
+  flex: 1;
+  position: relative;
+  background: rgba(255,255,255,.04);
+  border: 1.5px solid rgba(255,255,255,.1);
+  border-radius: 20px;
+  padding: 44px 32px;
+  text-align: center;
+  transition: transform .3s, border-color .3s, box-shadow .3s;
+  overflow: hidden;
+}
+.shook-card::before {
+  content: '';
+  position: absolute; inset: -1px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, transparent 30%, rgba(192,155,106,.3) 50%, transparent 70%);
+  background-size: 200% 200%;
+  animation: shookShimmer 3s ease-in-out infinite;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity .4s;
+}
+.shook-card:hover::before { opacity: 1; }
+.shook-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(192,155,106,.4);
+  box-shadow: 0 12px 40px rgba(192,155,106,.15);
+}
+@keyframes shookShimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+.shook-card--accent {
+  background: linear-gradient(145deg, rgba(192,155,106,.12), rgba(192,155,106,.04));
+  border-color: rgba(192,155,106,.3);
+  animation: shookCardGlow 3s ease-in-out infinite;
+}
+@keyframes shookCardGlow {
+  0%, 100% { box-shadow: 0 0 20px rgba(192,155,106,.08); }
+  50% { box-shadow: 0 0 40px rgba(192,155,106,.2); }
+}
+.shook-card-label {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.shook-card-sub {
+  display: inline-block;
+  font-size: 14px;
+  color: #ff6b6b;
+  font-weight: 600;
+  margin-bottom: 12px;
+  animation: shookBadgeBounce 2.5s ease-in-out infinite;
+}
+.shook-card-main {
+  font-family: var(--ff-ko);
+  font-size: clamp(22px, 3vw, 32px);
+  font-weight: 700;
+  color: var(--cream);
+  line-height: 1.5;
+}
+.shook-card-main em {
+  font-style: normal;
+  font-size: 1.35em;
+  font-weight: 900;
+  color: var(--gold);
+  text-shadow: 0 0 20px rgba(192,155,106,.3);
+  white-space: nowrap;
+}
+.shook-card-note {
+  display: block;
+  font-size: 12px;
+  color: rgba(245,243,239,.45);
+  margin-top: 14px;
+}
+
+/* CTA 버튼 — 더 크고 글로우 */
+.shook-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 22px 56px;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--dark);
+  background: linear-gradient(135deg, var(--gold-lt), var(--gold));
+  border-radius: 50px;
+  text-decoration: none;
+  transition: transform .3s, box-shadow .3s;
+  box-shadow: 0 4px 20px rgba(192,155,106,.25);
+  animation: shookCtaPulse 2.5s ease-in-out infinite;
+}
+.shook-cta:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 40px rgba(192,155,106,.45);
+}
+@keyframes shookCtaPulse {
+  0%, 100% { box-shadow: 0 4px 20px rgba(192,155,106,.25); }
+  50% { box-shadow: 0 6px 32px rgba(192,155,106,.4); }
+}
 
 /* ═══════════════════════════════════════════════════════
    S5 — CONTACT  (Premium Dark)
@@ -1684,6 +1895,7 @@ body.mobile-mode .s4 { height: auto; min-height: 0; }
   letter-spacing: -0.02em;
   margin-bottom: 12px;
 }
+.sfp-tap-hint { display: none; }
 .sfp-sub {
   font-size: 14px;
   color: rgba(245,243,239,.4);
@@ -2109,6 +2321,12 @@ body.mobile-mode .slide { height: auto; min-height: 100svh; }
   padding: calc(var(--hd-h) + 40px) 80px 60px;
   margin: 0 auto;
 }
+@media (max-width: 768px) {
+  .s3-body { padding: calc(var(--hd-h) + 20px) 16px 36px !important; }
+}
+@media (max-width: 480px) {
+  .s3-body { padding: calc(var(--hd-h) + 16px) 12px 28px !important; }
+}
 .s3-head { margin-bottom: 40px; }
 .s3-head h2 {
   color: var(--cream);
@@ -2123,7 +2341,7 @@ body.mobile-mode .slide { height: auto; min-height: 100svh; }
 }
 
 /* ── pcard overlay variant (사진 위 텍스트) ── */
-.pcard--ov { position: relative; min-height: 400px; border-radius: 10px; }
+.pcard--ov { position: relative; min-height: 60vh; border-radius: 10px; }
 .pcard--ov .pcard-img {
   position: absolute; inset: 0; height: 100% !important;
   border-radius: 10px;
@@ -2971,17 +3189,17 @@ body.mobile-mode .s2b {
 
   /* ── S3 Premium (hslide 스택) ─────────── */
   body.mobile-mode .hslide-track {
-    position: relative; flex-direction: column; transform: none !important;
+    position: relative; flex-direction: column; transform: none !important; width: 100%;
   }
-  body.mobile-mode .slide { width: 100%; flex: none; }
+  body.mobile-mode .slide { width: 100vw; flex: none; }
   body.mobile-mode .slide { height: auto; min-height: 0; }
 
-  .s3-body { padding: calc(var(--hd-h) + 24px) 24px 36px; }
-  .s3-head { margin-bottom: 24px; }
+  .s3-body { padding: calc(var(--hd-h) + 20px) 16px 36px; }
+  .s3-head { margin-bottom: 20px; }
   .s3-head h2 { font-size: clamp(22px, 5vw, 32px); }
   .pgrid   { grid-template-columns: 1fr 1fr; gap: 10px; }
-  .pgrid-2 { grid-template-columns: 1fr 1fr; gap: 10px; }
-  .pcard-img { height: 28vw; min-height: 100px; }
+  .pgrid-2 { grid-template-columns: 1fr; gap: 14px; }
+  .pcard-img { height: 42vw; min-height: 150px; }
   .pcard-img span { font-size: 9px; bottom: 8px; left: 10px; }
   .pcard-img::before { font-size: 24px; top: 8px; right: 10px; }
   .pcard-body { padding: 10px 10px 12px; }
@@ -2991,10 +3209,11 @@ body.mobile-mode .s2b {
   .pcard-list { padding-left: 14px; }
 
   /* overlay card mobile */
-  .pcard--ov { min-height: 240px; border-radius: 8px; }
-  .pcard--ov .pcard-over { padding: 12px 14px 14px; }
-  .pcard--ov .pcard-over h3 { font-size: 13px; margin-bottom: 4px; }
-  .pcard--ov .pcard-over p  { font-size: 10px; line-height: 1.5; }
+  .pgrid-2 { grid-template-columns: 1fr; gap: 14px; }
+  .pcard--ov { min-height: 52vw; border-radius: 8px; }
+  .pcard--ov .pcard-over { padding: 14px 16px 16px; }
+  .pcard--ov .pcard-over h3 { font-size: 15px; margin-bottom: 6px; }
+  .pcard--ov .pcard-over p  { font-size: 12px; line-height: 1.6; }
 
   /* summary mobile */
   .s3b-summary { margin-top: 20px; padding: 18px 16px; border-radius: 10px; }
@@ -3024,7 +3243,7 @@ body.mobile-mode .s2b {
   .s4-card {
     position: relative;
     border-radius: 14px;
-    min-height: 180px !important;
+    min-height: 38vw !important;
     border: 1px solid rgba(255,255,255,.07);
     overflow: hidden;
   }
@@ -3049,7 +3268,7 @@ body.mobile-mode .s2b {
     width: 38px; height: 38px;
     border-radius: 10px;
     font-size: 17px;
-    margin-bottom: 8px;
+    margin-bottom: auto;
     border: 1px solid rgba(255,255,255,.15);
     box-shadow: 0 2px 8px rgba(0,0,0,.35);
   }
@@ -3088,22 +3307,120 @@ body.mobile-mode .s2b {
   .s4-map { border-radius: 14px 14px 0 0; }
   .s4-map-info { padding: 10px 16px; font-size: 11px; }
 
-  /* ── SFP 평형안내 ──────────────────────── */
-  .sfp-inner { padding: calc(var(--hd-h) + 24px) 24px 40px; }
-  .sfp-head { margin-bottom: 24px; }
+  /* ── SFP 평형안내 (2x2 그리드) ─────────── */
+  .sfp-inner { padding: calc(var(--hd-h) + 24px) 16px 40px; }
+  .sfp-head { margin-bottom: 20px; }
   .sfp-label { font-size: 11px; margin-bottom: 10px; gap: 10px; }
   .sfp-label-line { width: 28px; }
   .sfp-head h2 { font-size: clamp(24px, 6vw, 34px); }
-  .sfp-tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 24px; }
-  .sfp-tab { padding: 10px 20px; font-size: 13px; white-space: nowrap; }
-  .sfp-panel.active { grid-template-columns: 1fr; gap: 28px; }
-  .sfp-img { border-radius: 6px; }
-  .sfp-info h3 { font-size: clamp(22px, 5vw, 30px); }
-  .sfp-desc { font-size: 13px; margin-bottom: 20px; }
-  .sfp-specs { margin-bottom: 18px; }
-  .sfp-spec { padding: 12px 0; }
-  .sfp-spec b { font-size: 13px; }
-  .sfp-cta { padding: 15px; font-size: 13px; }
+  .sfp-sub { font-size: 13px; }
+  .sfp-tabs { display: none !important; }
+  .sfp-body { display: grid !important; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .sfp-panel { display: block !important; }
+  .sfp-panel.active { display: block !important; }
+  .sfp-img { border-radius: 6px; margin-bottom: 10px; }
+  .sfp-info h3 { font-size: 14px; margin-bottom: 6px; }
+  .sfp-info h3 small { font-size: 11px; }
+  .sfp-panel {
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 10px;
+    padding: 10px;
+    overflow: hidden;
+  }
+  .sfp-desc { display: none; }
+  .sfp-specs { margin-bottom: 0; }
+  .sfp-spec { display: none; padding: 6px 0; }
+  .sfp-spec:last-child { display: flex; border: none; }
+  .sfp-spec span { font-size: 10px; min-width: 50px; }
+  .sfp-spec b { font-size: 12px; }
+  .sfp-spec em { font-size: 13px; }
+  .sfp-features { display: none; }
+  .sfp-cta { display: none; }
+  .sfp-panel { cursor: pointer; }
+  .sfp-tap-hint {
+    display: inline-block;
+    font-size: 15px; font-weight: 600;
+    color: var(--gold);
+    background: rgba(201,171,113,.15);
+    border: 1.5px solid rgba(201,171,113,.45);
+    border-radius: 24px;
+    padding: 6px 18px;
+    margin-left: 10px;
+    vertical-align: middle;
+    animation: sfpHintPulse 1.8s ease-in-out infinite;
+  }
+  @keyframes sfpHintPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .5; }
+  }
+
+  /* ── SFP 모달 (플로팅 상세) ──────────── */
+  .sfp-modal {
+    position: fixed; inset: 0; z-index: 9999;
+    display: flex; align-items: flex-end; justify-content: center;
+    pointer-events: none; opacity: 0;
+    transition: opacity .3s ease;
+  }
+  .sfp-modal.open { pointer-events: auto; opacity: 1; }
+
+  .sfp-modal-backdrop {
+    position: absolute; inset: 0;
+    background: rgba(0,0,0,.65);
+    backdrop-filter: blur(4px);
+  }
+
+  .sfp-modal-sheet {
+    position: relative; z-index: 1;
+    width: 100%; max-height: 90vh;
+    background: var(--dark2, #1a1a1a);
+    border-radius: 20px 20px 0 0;
+    padding: 20px 20px 32px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    transform: translateY(100%);
+    transition: transform .35s cubic-bezier(.22,1,.36,1);
+  }
+  .sfp-modal.open .sfp-modal-sheet { transform: translateY(0); }
+
+  .sfp-modal-close {
+    position: sticky; top: 0; float: right; z-index: 2;
+    width: 36px; height: 36px;
+    background: rgba(255,255,255,.1);
+    border: none; border-radius: 50%;
+    color: var(--cream, #f5f3ef); font-size: 22px; line-height: 36px;
+    text-align: center; cursor: pointer;
+  }
+
+  .sfp-modal-content .sfp-panel {
+    background: none; border: none; padding: 0; cursor: default;
+  }
+  .sfp-modal-content .sfp-img { margin-bottom: 16px; }
+  .sfp-modal-content .sfp-info h3 { font-size: clamp(22px, 5vw, 30px); margin-bottom: 10px; }
+  .sfp-modal-content .sfp-info h3 small { font-size: 14px; }
+  .sfp-modal-content .sfp-desc { display: block; font-size: 13px; margin-bottom: 18px; line-height: 1.8; color: rgba(245,243,239,.7); }
+  .sfp-modal-content .sfp-specs { display: block; margin-bottom: 18px; }
+  .sfp-modal-content .sfp-spec { display: flex; padding: 10px 0; font-size: 13px; border-bottom: 1px solid rgba(255,255,255,.08); }
+  .sfp-modal-content .sfp-spec:last-child { border-bottom: none; }
+  .sfp-modal-content .sfp-spec span { font-size: 12px; min-width: 70px; }
+  .sfp-modal-content .sfp-spec b { font-size: 13px; }
+  .sfp-modal-content .sfp-features { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; align-items: center; }
+  .sfp-modal-content .sfp-cta { display: block; padding: 15px; font-size: 14px; text-align: center; }
+
+  /* ── HOOK 긴급혜택 ────────────────────── */
+  .shook-inner { padding: calc(var(--hd-h) + 28px) 16px 48px; min-height: 100svh; }
+  .shook-glow { width: 420px; height: 420px; }
+  .shook-badge { font-size: 15px; padding: 10px 24px; margin-bottom: 28px; }
+  .shook-t1 { font-size: clamp(26px, 8vw, 40px); }
+  .shook-t2 { font-size: clamp(32px, 10vw, 50px); }
+  .shook-title { margin-bottom: 28px; }
+  .shook-cards { flex-direction: column; gap: 16px; margin-bottom: 32px; }
+  .shook-card { padding: 32px 24px; border-radius: 18px; }
+  .shook-card-label { font-size: 12px; }
+  .shook-card-sub { font-size: 13px; }
+  .shook-card-main { font-size: clamp(20px, 6vw, 28px); }
+  .shook-card-main em { font-size: 1.3em; }
+  .shook-cta { padding: 18px 36px; font-size: 16px; width: 100%; justify-content: center; border-radius: 16px; }
 
   /* ── S5 Contact ────────────────────────── */
   .s5 { grid-template-columns: 1fr; }
@@ -3156,13 +3473,13 @@ body.mobile-mode .s2b {
   .s1-img { height: 56vw; }
   .s1-txt { padding: 28px 20px 36px; }
 
-  .s3-body { padding: calc(var(--hd-h) + 20px) 16px 32px; }
+  .s3-body { padding: calc(var(--hd-h) + 16px) 12px 28px; }
   .pgrid { gap: 8px; }
-  .pcard-img { height: 26vw; min-height: 90px; }
+  .pcard-img { height: 40vw; min-height: 130px; }
 
   .s4-inner { padding: calc(var(--hd-h) + 16px) 16px 24px; }
   .s4-grid { gap: 6px; }
-  .s4-card { min-height: 160px !important; }
+  .s4-card { min-height: 36vw !important; }
   .s4-card-body { padding: 10px 12px; }
   .s4-card-ico { width: 32px; height: 32px; font-size: 14px; border-radius: 8px; margin-bottom: 5px; }
   .s4-card-body h3 { font-size: 12px; }
