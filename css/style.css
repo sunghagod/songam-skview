@@ -503,6 +503,80 @@ body.mobile-mode .sec { height: auto; min-height: 100svh; width: 100%; }
   width: clamp(220px, 26vw, 360px);
 }
 
+/* ── 후킹 단지소개 ──────────────────────── */
+.s0-body--hook,
+.s0-body--hook * {
+  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif !important;
+}
+.s0-body--hook {
+  text-align: left;
+}
+.hero-top-label {
+  font-size: clamp(13px, 1.2vw, 17px);
+  color: rgba(255,255,255,.65);
+  letter-spacing: .06em;
+  font-weight: 600;
+  text-shadow: 0 2px 12px rgba(0,0,0,.7);
+  margin-bottom: 12px;
+}
+.hero-hook {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  line-height: 1.15;
+  margin: 0;
+}
+.hero-hook-sub {
+  display: block;
+  font-size: clamp(22px, 2.8vw, 42px);
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 2px 20px rgba(0,0,0,.7);
+}
+.hero-hook-main {
+  display: block;
+  font-size: clamp(42px, 5.5vw, 82px);
+  font-weight: 900;
+  color: #FFD700;
+  text-shadow: 0 0 40px rgba(255,215,0,.35), 0 4px 24px rgba(0,0,0,.6);
+  letter-spacing: -.02em;
+  line-height: 1.1;
+}
+.hero-badges {
+  display: flex;
+  gap: 14px;
+  margin-top: 28px;
+  flex-wrap: wrap;
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  background: rgba(255,255,255,.1);
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 40px;
+  color: #fff;
+  font-size: clamp(12px, 1vw, 15px);
+  font-weight: 600;
+  backdrop-filter: blur(8px);
+  text-shadow: 0 1px 6px rgba(0,0,0,.5);
+}
+.hero-badge i,
+.hb-chk {
+  color: var(--gold);
+  font-size: 12px;
+  font-weight: 700;
+}
+.hero-stats--hook {
+  margin-top: 28px;
+}
+.hero-stats--hook .hstat b,
+.hero-stats--hook .hstat span,
+.hero-stats--hook .hstat p {
+  font-family: 'Pretendard', sans-serif !important;
+}
+
 .s0-sub {
   margin-top: 4px;
   font-size: clamp(11px, .95vw, 13px);
@@ -573,7 +647,7 @@ body.mobile-mode .sec { height: auto; min-height: 100svh; width: 100%; }
 .s1-img-inner {
   position: absolute; inset: 0;
   background: linear-gradient(135deg, #1a2a1e 0%, #0f1f14 50%, #2a1a0a 100%);
-  background-image: url('../assets/img/brand-building.jpg');
+  background-image: url('../assets/img/brand-building3.jpg');
   background-size: cover; background-position: center;
   transform-origin: center;
 }
@@ -1017,6 +1091,25 @@ body.mobile-mode .s4 { height: auto; min-height: 0; }
   width: 100%; height: 100%;
   filter: brightness(.85) contrast(1.1) saturate(.8);
 }
+.s4-map--img {
+  flex: none;
+}
+.s4-map--img img {
+  width: 100%; height: auto;
+  display: block;
+  border-radius: 8px 8px 0 0;
+}
+.s4-map-disclaimer {
+  padding: 12px 16px;
+  background: rgba(11,11,11,.7);
+  border-top: 1px solid rgba(255,255,255,.06);
+}
+.s4-map-disclaimer p {
+  font-size: 9px;
+  color: rgba(245,243,239,.35);
+  line-height: 1.7;
+  margin: 0;
+}
 .s4-map-info {
   display: flex; align-items: center; gap: 10px;
   padding: 14px 20px;
@@ -1150,6 +1243,262 @@ body.mobile-mode .s4 { height: auto; min-height: 0; }
 .cc4 { background-image: url('../assets/img/loc-nature.jpg'); }
 .cc5 { background-image: url('../assets/img/comm-vr.jpg'); }
 .cc6 { background-image: url('../assets/img/comm-cafe.jpg'); }
+
+/* ── S4 Park Intro Override ────────── */
+.s4--park {
+  padding: 0;
+}
+.s4--park .s4-inner {
+  justify-content: flex-start;
+  padding-top: calc(var(--hd-h) + 20px);
+  padding-bottom: 20px;
+}
+
+/* park map */
+.s4-park-map {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto 16px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.08);
+  background: rgba(255,255,255,.03);
+}
+.s4-park-map img {
+  width: 100%;
+  height: auto;
+  max-height: 38vh;
+  object-fit: contain;
+  display: block;
+}
+
+/* zones wrapper — 2 col */
+.s4-zones {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* zone block */
+.s4-zone {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 10px;
+  padding: 16px;
+}
+.s4-zone-head h3 {
+  margin: 0 0 4px;
+  font-size: 16px;
+  font-weight: 800;
+  color: #fff;
+}
+.zone-name {
+  color: var(--gold);
+}
+.zone-en {
+  font-family: var(--ff-en);
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(245,243,239,.4);
+  letter-spacing: .06em;
+  margin-left: 8px;
+}
+.s4-zone-head p {
+  font-size: 12px;
+  color: rgba(245,243,239,.55);
+  margin: 0 0 10px;
+  line-height: 1.4;
+}
+
+/* zone photos */
+.s4-zone-photos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.s4-zone-photos--single {
+  grid-template-columns: 1fr;
+}
+.s4-zone-photos figure {
+  margin: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+.s4-zone-photos img {
+  width: 100%;
+  height: auto;
+  display: block;
+  aspect-ratio: 16/10;
+  object-fit: cover;
+}
+.s4-zone-photos figcaption {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(transparent, rgba(0,0,0,.7));
+}
+
+/* zone table */
+.s4-zone-tbl {
+  width: 100%;
+  border-collapse: collapse;
+}
+.s4-zone-tbl tr {
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+.s4-zone-tbl tr:last-child {
+  border-bottom: none;
+}
+.s4-zone-tbl td {
+  padding: 5px 4px;
+  font-size: 12px;
+  color: rgba(245,243,239,.75);
+  vertical-align: top;
+  line-height: 1.4;
+}
+.zt-n {
+  width: 28px;
+  color: var(--gold);
+  font-weight: 700;
+  text-align: center;
+  flex-shrink: 0;
+}
+.zt-nm {
+  width: 100px;
+  font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
+}
+
+/* disclaimer — inside s4-zones grid, spans full width */
+.s4-park-disclaimer {
+  grid-column: 1 / -1;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255,255,255,.06);
+}
+.s4-park-disclaimer p {
+  font-size: 9px;
+  color: rgba(245,243,239,.3);
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* ── S4B · 송암 문화 복지 센터 ─────────── */
+.s4b {
+  background: var(--dark);
+  display: flex;
+  align-items: center;
+  padding: 0;
+}
+.s4b-inner {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: calc(var(--hd-h) + 32px) 80px 48px;
+}
+.s4b-head { margin-bottom: 28px; }
+.s4b-head h2 { margin-top: 4px; }
+
+.s4b-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+/* image */
+.s4b-img {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.08);
+}
+.s4b-img img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.s4b-img-cap {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(transparent, rgba(0,0,0,.65));
+}
+
+/* info */
+.s4b-info {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 12px;
+  padding: 28px 24px;
+}
+.s4b-zone-head h3 {
+  margin: 0 0 6px;
+  font-size: 20px;
+  font-weight: 800;
+  color: #fff;
+}
+.s4b-zone-head p {
+  font-size: 14px;
+  color: rgba(245,243,239,.55);
+  margin: 0 0 20px;
+  line-height: 1.5;
+}
+
+/* table */
+.s4b-tbl {
+  width: 100%;
+  border-collapse: collapse;
+}
+.s4b-tbl tr {
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+.s4b-tbl tr:last-child { border-bottom: none; }
+.s4b-tbl td {
+  padding: 10px 6px;
+  font-size: 14px;
+  color: rgba(245,243,239,.75);
+  vertical-align: top;
+  line-height: 1.5;
+}
+.s4b-tbl .zt-n {
+  width: 28px;
+  color: var(--gold);
+  font-weight: 700;
+  text-align: center;
+}
+.s4b-tbl .zt-nm {
+  width: 130px;
+  font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
+}
+
+/* disclaimer */
+.s4b-disclaimer {
+  max-width: 900px;
+  margin: 16px auto 0;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255,255,255,.06);
+}
+.s4b-disclaimer p {
+  font-size: 9px;
+  color: rgba(245,243,239,.3);
+  line-height: 1.7;
+  margin: 0;
+}
 
 /* ═══════════════════════════════════════════════════════
    HOOK — 긴급 혜택 안내
@@ -1424,7 +1773,7 @@ body.mobile-mode .s4 { height: auto; min-height: 0; }
 
 .s5-img {
   position: absolute; inset: 0;
-  background: url('../assets/img/brand-building.jpg') center/cover no-repeat;
+  background: url('../assets/img/brand-building3.jpg') center/cover no-repeat;
 }
 
 .s5-dim {
@@ -1906,7 +2255,7 @@ body.mobile-mode .s4 { height: auto; min-height: 0; }
   width: 100%;
   max-width: 1480px;
   margin: 0 auto;
-  padding: 80px 80px 60px;
+  padding: 100px 80px 60px;
 }
 
 /* Head */
@@ -2558,6 +2907,12 @@ body.mobile-mode .s2b {
   margin: 0 auto;
   padding: 80px 64px 32px;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+  padding-top: var(--hd-h, 70px);
+  box-sizing: border-box;
 }
 
 /* 헤더 */
@@ -2610,6 +2965,42 @@ body.mobile-mode .s2b {
 .s2b-inner--chart .s2b-chart {
   max-width: min(90vw, 1100px);
   width: 100%;
+}
+.s2b-inner--chart .s2b-chart-sub {
+  font-size: 15px;
+  padding: 20px 32px;
+}
+.s2b-inner--chart .s2b-bars {
+  gap: 48px;
+  margin-top: 12px;
+  margin-bottom: 32px;
+}
+.s2b-inner--chart .s2b-bar-label {
+  font-size: 16px;
+  padding: 10px 28px;
+  margin-bottom: 24px;
+}
+.s2b-inner--chart .s2b-bar-wrap {
+  height: 280px;
+  gap: 28px;
+  padding-top: 56px;
+}
+.s2b-inner--chart .s2b-bar {
+  max-width: 120px;
+}
+.s2b-inner--chart .s2b-bar-tag {
+  font-size: 14px;
+  margin-top: 14px;
+}
+.s2b-inner--chart .s2b-bar-premium {
+  font-size: 13px;
+}
+.s2b-inner--chart .s2b-bar-premium b {
+  font-size: 16px;
+  padding: 6px 14px;
+}
+.s2b-inner--chart .s2b-source {
+  font-size: 12px;
 }
 .s2b-inner--chart .s2b-disclaimers {
   max-width: min(90vw, 1100px);
@@ -3205,7 +3596,7 @@ body.mobile-mode .s2b {
   /* ── S2B 초품아 학세권 ────────────────── */
   body.mobile-mode .s2b { height: auto; }
   body.mobile-mode .s2b .overlay-panel { border-bottom: none; }
-  .s2b-inner { padding: 48px 20px; }
+  .s2b-inner { padding: 48px 20px; min-height: 0; display: block; }
   .s2b-inner--chart { min-height: 0; display: block; }
   .s2b-head { margin-bottom: 28px; }
   .s2b-head h2 { font-size: 22px; line-height: 1.4; }
@@ -3351,6 +3742,46 @@ body.mobile-mode .s2b {
   }
   .s4-map { border-radius: 14px 14px 0 0; }
   .s4-map-info { padding: 10px 16px; font-size: 11px; }
+
+  /* ── S4 Park Intro (모바일) ────────────── */
+  .s4--park .s4-inner {
+    padding: calc(var(--hd-h) + 20px) 16px 32px;
+  }
+  .s4-park-map {
+    max-width: 100%;
+    margin-bottom: 24px;
+    border-radius: 10px;
+  }
+  .s4-zones {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .s4-zone {
+    padding: 16px;
+    border-radius: 10px;
+  }
+  .s4-zone-head h3 { font-size: 16px; }
+  .zone-en { font-size: 10px; }
+  .s4-zone-head p { font-size: 12px; margin-bottom: 12px; }
+  .s4-zone-photos { gap: 8px; }
+  .s4-zone-tbl td { font-size: 12px; padding: 7px 4px; }
+  .zt-nm { width: 80px; }
+  .s4-park-disclaimer { margin-top: 20px; }
+
+  /* ── S4B 문화 복지 센터 (모바일) ──────── */
+  .s4b-inner { padding: calc(var(--hd-h) + 20px) 16px 32px; }
+  .s4b-head { margin-bottom: 20px; }
+  .s4b-head h2 { font-size: clamp(22px, 5vw, 32px); }
+  .s4b-content {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .s4b-img { border-radius: 10px; }
+  .s4b-info { padding: 16px; border-radius: 10px; }
+  .s4b-zone-head h3 { font-size: 17px; }
+  .s4b-zone-head p { font-size: 12px; margin-bottom: 14px; }
+  .s4b-tbl td { font-size: 12px; padding: 8px 4px; }
+  .s4b-tbl .zt-nm { width: 110px; }
 
   /* ── SFP 평형안내 (2x2 그리드) ─────────── */
   .sfp-inner { padding: calc(var(--hd-h) + 24px) 16px 40px; }
