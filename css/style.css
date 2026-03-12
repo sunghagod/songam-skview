@@ -2478,6 +2478,7 @@ footer::before {
 .ft-info p { font-size: 12px; color: rgba(245,243,239,.38); line-height: 1.8; letter-spacing: .02em; }
 .ft-info .ft-sm { font-size: 11px; margin-top: 4px; }
 .ft-copy { font-family: var(--ff-en); font-size: 10px; letter-spacing: .1em; color: rgba(245,243,239,.2); text-transform: uppercase; white-space: nowrap; }
+.ft-contact { display: block; margin-top: 10px; font-size: 12px; letter-spacing: .03em; color: rgba(200,180,140,.7); }
 
 /* ═══════════════════════════════════════════════════════
    OVERLAY PANEL SYSTEM
