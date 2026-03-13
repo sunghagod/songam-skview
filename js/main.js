@@ -622,13 +622,7 @@
     clearTimeout(toastTimer);
     toastTimer = setTimeout(function () { toast.classList.remove('show'); }, 3200);
   }
-  if (form) {
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      showToast();
-      form.reset();
-    });
-  }
+  /* form submit은 form.js에서 처리 */
 
   /* ══════════════════════════════════════════════════════
      KEYBOARD NAV

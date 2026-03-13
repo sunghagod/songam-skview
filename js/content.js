@@ -24,12 +24,7 @@
       if (!/^[a-zA-Z0-9\-_]+$/.test(cid)) return;
       var el = document.querySelector('[data-cid="' + cid + '"]');
       if (!el) return;
-      // Security 모듈 사용 가능 시 새니타이즈, 아니면 textContent
-      if (window.Security && window.Security.sanitizeHTML) {
-        el.innerHTML = window.Security.sanitizeHTML(data[cid]);
-      } else {
-        el.textContent = data[cid];
-      }
+      el.textContent = data[cid];
     });
   }
 
@@ -53,7 +48,7 @@
 
       /* bg 이미지 (data-cid-bg) */
       var el = document.querySelector('[data-cid-bg="' + cid + '"]');
-      if (el) el.style.backgroundImage = 'url(' + url + ')';
+      if (el) el.style.backgroundImage = "url('" + url + "')";
 
       /* src 이미지 (data-cid-img) */
       var img = document.querySelector('[data-cid-img="' + cid + '"]');

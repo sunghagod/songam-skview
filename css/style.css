@@ -647,7 +647,7 @@ body.mobile-mode .sec { height: auto; min-height: 100svh; width: 100%; }
 .s1-img-inner {
   position: absolute; inset: 0;
   background: linear-gradient(135deg, #1a2a1e 0%, #0f1f14 50%, #2a1a0a 100%);
-  background-image: url('../assets/img/brand-building3.jpg');
+  background-image: url('../assets/img/brand-building3.webp');
   background-size: cover; background-position: center;
   transform-origin: center;
 }
@@ -1012,10 +1012,10 @@ body.mobile-mode .sec { height: auto; min-height: 100svh; width: 100%; }
   content: ''; position: absolute; inset: 0;
   background: linear-gradient(to top, rgba(11,11,11,.7) 0%, rgba(11,11,11,.1) 50%, transparent 100%);
 }
-.pc1 { background: url('../assets/img/premium-gym.jpg') center/cover no-repeat; }
-.pc2 { background: url('../assets/img/premium-fitness.jpg') center/cover no-repeat; }
-.pc3 { background: url('../assets/img/premium-cafe.jpg') center/cover no-repeat; }
-.pc4 { background: url('../assets/img/premium-park.jpg') center/cover no-repeat; }
+.pc1 { background: url('../assets/img/premium-gym.webp') center/cover no-repeat; }
+.pc2 { background: url('../assets/img/premium-fitness.webp') center/cover no-repeat; }
+.pc3 { background: url('../assets/img/premium-cafe.webp') center/cover no-repeat; }
+.pc4 { background: url('../assets/img/premium-park.webp') center/cover no-repeat; }
 
 .pcard-body {
   padding: 24px 24px 28px;
@@ -1773,7 +1773,7 @@ body.mobile-mode .s4 { height: auto; min-height: 0; }
 
 .s5-img {
   position: absolute; inset: 0;
-  background: url('../assets/img/brand-building3.jpg') center/cover no-repeat;
+  background: url('../assets/img/brand-building3.webp') center/cover no-repeat;
 }
 
 .s5-dim {
@@ -2827,10 +2827,10 @@ body.mobile-mode .slide { height: auto; min-height: 100svh; }
   content: ''; position: absolute; inset: 0;
   background: linear-gradient(to top, rgba(11,11,11,.5) 0%, transparent 60%);
 }
-.li0 { background: url('../assets/img/loc-nature.jpg') center/cover no-repeat; }
-.li1 { background: url('../assets/img/loc-transport-map.png') center/cover no-repeat; }
-.li2 { background: url('../assets/img/loc-park-aerial.png') center/cover no-repeat; }
-.li3 { background: url('../assets/img/site-plan.jpg') center/cover no-repeat; }
+.li0 { background: url('../assets/img/loc-nature.webp') center/cover no-repeat; }
+.li1 { background: url('../assets/img/loc-transport-map.webp') center/cover no-repeat; }
+.li2 { background: url('../assets/img/loc-park-aerial.webp') center/cover no-repeat; }
+.li3 { background: url('../assets/img/site-plan.webp') center/cover no-repeat; }
 
 .s2-panel .loc-info {
   padding: 36px 40px;
