@@ -431,7 +431,7 @@ body.mobile-mode .sec { height: auto; min-height: 100svh; width: 100%; }
 .s0-bg {
   position: absolute; inset: 0;
   background: linear-gradient(135deg, #0d1a14 0%, #0B0B0B 45%, #1a1208 100%);
-  background-image: url('../assets/img/hero-bg.jpg');
+  background-image: url('../assets/img/hero-bg.webp');
   background-size: cover; background-position: center;
 }
 .s0-bg::before {
@@ -789,7 +789,7 @@ body.mobile-mode .sec { height: auto; min-height: 100svh; width: 100%; }
 .s2-bg {
   position: absolute; inset: 0;
   background: linear-gradient(135deg, #0a1520 0%, #0B0B0B 55%, #151005 100%);
-  background-image: url('../assets/img/loc-aerial.jpg');
+  background-image: url('../assets/img/loc-aerial.webp');
   background-size: cover; background-position: center;
 }
 .s2-veil {
@@ -962,7 +962,7 @@ body.mobile-mode .sec { height: auto; min-height: 100svh; width: 100%; }
 .s3::after {
   content: '';
   position: absolute; inset: 0; z-index: 0;
-  background: url('../assets/img/premium-bg.jpg') center/cover no-repeat;
+  background: url('../assets/img/premium-bg.webp') center/cover no-repeat;
   opacity: .08;
   pointer-events: none;
 }
@@ -1237,12 +1237,12 @@ body.mobile-mode .s4 { height: auto; min-height: 0; }
 .s4-card-ico { display: none; }
 
 /* Background images */
-.cc1 { background-image: url('../assets/img/comm-fitness.jpg'); }
-.cc2 { background-image: url('../assets/img/comm-cafe.jpg'); }
-.cc3 { background-image: url('../assets/img/premium-landscape.jpg'); }
-.cc4 { background-image: url('../assets/img/loc-nature.jpg'); }
-.cc5 { background-image: url('../assets/img/comm-vr.jpg'); }
-.cc6 { background-image: url('../assets/img/comm-cafe.jpg'); }
+.cc1 { background-image: url('../assets/img/comm-fitness.webp'); }
+.cc2 { background-image: url('../assets/img/comm-cafe.webp'); }
+.cc3 { background-image: url('../assets/img/premium-landscape.webp'); }
+.cc4 { background-image: url('../assets/img/loc-nature.webp'); }
+.cc5 { background-image: url('../assets/img/comm-vr.webp'); }
+.cc6 { background-image: url('../assets/img/comm-cafe.webp'); }
 
 /* ── S4 Park Intro Override ────────── */
 .s4--park {
@@ -3567,7 +3567,7 @@ body.mobile-mode .s2b {
   body.mobile-mode .s0-panel::before {
     content: '';
     position: absolute; inset: 0;
-    background: #8aafc8 url('../assets/img/hero-bg-m.png') center bottom / cover no-repeat !important;
+    background: #8aafc8 url('../assets/img/hero-bg-m.webp') center bottom / cover no-repeat !important;
     z-index: 0;
   }
   body.mobile-mode .s0-panel::after {
