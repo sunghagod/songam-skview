@@ -9,7 +9,7 @@
 
   /* ── Google Apps Script 배포 URL ─────────────
      admin 페이지 설정 또는 아래에 직접 입력      */
-  var FALLBACK_URL = 'https://script.google.com/macros/s/AKfycbx-EFIV7S47mTAv6UFx-y1VXMvx0bT10iB2-f4JfTEcq4t_MU9l04gxELZfDAciJJAF/exec';
+  var FALLBACK_URL = 'https://script.google.com/macros/s/AKfycbzzvEqpUIRTG87DeS2K0jKTJJIdlWQRskcUsMr3s7X6YSZVv0UZA9kpdXrWxXuoB9Rs/exec';
 
   /* ── 폼 요소 ─────────────────────────────── */
   var form      = document.getElementById('form');
