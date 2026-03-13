@@ -8,25 +8,27 @@ function doPost(e) {
 
     // 헤더가 없으면 첫 행에 자동 생성
     if (sheet.getLastRow() === 0) {
-      sheet.appendRow(['타임스탬프', '이름', '연락처', '관심평형', '문의내용']);
-      sheet.getRange(1, 1, 1, 5).setFontWeight('bold');
+      sheet.appendRow(['타임스탬프', '이름', '연락처', '관심평형', '방문희망일', '희망시간대', '문의내용']);
+      sheet.getRange(1, 1, 1, 7).setFontWeight('bold');
       sheet.setFrozenRows(1);
     }
 
     var data = JSON.parse(e.postData.contents);
 
     sheet.appendRow([
-      new Date(),           // A: 타임스탬프
-      data.name    || '',   // B: 이름
-      data.phone   || '',   // C: 연락처
-      data.size    || '',   // D: 관심평형
-      data.message || ''    // E: 문의내용
+      new Date(),               // A: 타임스탬프
+      data.name       || '',    // B: 이름
+      data.phone      || '',    // C: 연락처
+      data.size       || '',    // D: 관심평형
+      data.visit_date || '',    // E: 방문희망일
+      data.visit_time || '',    // F: 희망시간대
+      data.message    || ''     // G: 문의내용
     ]);
 
     // 최신순 정렬 (헤더 제외)
     var lastRow = sheet.getLastRow();
     if (lastRow > 2) {
-      sheet.getRange(2, 1, lastRow - 1, 5).sort({ column: 1, ascending: false });
+      sheet.getRange(2, 1, lastRow - 1, 7).sort({ column: 1, ascending: false });
     }
 
     return ContentService

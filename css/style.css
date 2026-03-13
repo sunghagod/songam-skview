@@ -2122,6 +2122,13 @@ body.mobile-mode .s4 { height: auto; min-height: 0; }
   color: var(--cream);
 }
 
+/* Date input calendar icon color */
+.fg input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.75) sepia(0.3) saturate(2) hue-rotate(5deg);
+  cursor: pointer;
+}
+.fg input[type="date"] { cursor: pointer; }
+
 /* Textarea — boxed style */
 .fg--ta::after { display: none; }
 .fg textarea {

@@ -65,10 +65,12 @@
   /* ── 안전한 데이터 수집 ───────────────────── */
   function collectData() {
     var S = window.Security;
-    var nameVal  = form.querySelector('[name="name"]').value.trim();
-    var phoneVal = form.querySelector('[name="phone"]').value.trim();
-    var sizeVal  = form.querySelector('[name="size"]').value;
-    var msgVal   = form.querySelector('[name="message"]').value.trim();
+    var nameVal      = form.querySelector('[name="name"]').value.trim();
+    var phoneVal     = form.querySelector('[name="phone"]').value.trim();
+    var sizeVal      = form.querySelector('[name="size"]').value;
+    var visitDateVal = form.querySelector('[name="visit_date"]').value;
+    var visitTimeVal = form.querySelector('[name="visit_time"]').value;
+    var msgVal       = form.querySelector('[name="message"]').value.trim();
 
     // Security 모듈 있으면 검증된 값 사용
     if (S && S.validate.name) {
@@ -88,11 +90,19 @@
     var allowedSizes = ['', '84A', '84B', '84C', '108', 'etc'];
     if (allowedSizes.indexOf(sizeVal) === -1) sizeVal = '';
 
+    var allowedTimes = ['', '10-12', '12-14', '14-16', '16-18', 'other'];
+    if (allowedTimes.indexOf(visitTimeVal) === -1) visitTimeVal = '';
+
+    // 날짜 형식 검증 (YYYY-MM-DD)
+    if (visitDateVal && !/^\d{4}-\d{2}-\d{2}$/.test(visitDateVal)) visitDateVal = '';
+
     return {
-      name:    nameVal,
-      phone:   phoneVal,
-      size:    sizeVal,
-      message: msgVal
+      name:       nameVal,
+      phone:      phoneVal,
+      size:       sizeVal,
+      visit_date: visitDateVal,
+      visit_time: visitTimeVal,
+      message:    msgVal
     };
   }
 
