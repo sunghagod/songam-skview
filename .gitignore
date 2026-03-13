@@ -12,6 +12,7 @@ Thumbs.db
 # Build / Deploy
 .wrangler/
 node_modules/
+dist/
 
 # Screenshots (개발용)
 screenshot*.png
@@ -31,8 +32,10 @@ songam-*.png
 check-*.png
 *.bak-school
 
-# Sensitive
+# Secrets
 .env
+.env.*
 .env.local
 *.pem
 *.key
+credentials.json

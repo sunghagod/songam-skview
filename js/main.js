@@ -555,9 +555,14 @@
   }
 
   if (cursorEl) {
+    var cursorIdle = null;
     document.addEventListener('mousemove', function (e) {
       cX = e.clientX; cY = e.clientY;
       if (!rafC) moveCursor();
+      clearTimeout(cursorIdle);
+      cursorIdle = setTimeout(function () {
+        if (rafC) { cancelAnimationFrame(rafC); rafC = null; }
+      }, 3000);
     });
     var interactables = 'a,button,[data-go],input,select,textarea,.tab,.ccard,.pcard,.dot,.ov-dot,.hs-dot';
     document.addEventListener('mouseover', function (e) {
@@ -566,16 +571,6 @@
     document.addEventListener('mouseout', function (e) {
       if (e.target.closest(interactables)) cursorEl.classList.remove('hover');
     });
-    new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        if (en.isIntersecting) {
-          var theme = en.target.dataset.theme;
-          cursorEl.classList.toggle('light', theme === 'light');
-        }
-      });
-    }, { threshold: 0.5 }).observe && SECTIONS.forEach(function (s) {
-      /* simple theme observer for cursor */
-    });
   }
 
   /* ══════════════════════════════════════════════════════
@@ -583,13 +578,17 @@
      ══════════════════════════════════════════════════════ */
   function closeMmenu() {
     if (mmenu) mmenu.classList.remove('open');
-    if (ham) ham.classList.remove('open');
+    if (ham) { ham.classList.remove('open'); ham.setAttribute('aria-expanded', 'false'); }
   }
   if (ham) {
     ham.addEventListener('click', function () {
       var open = mmenu && mmenu.classList.contains('open');
       if (open) closeMmenu();
-      else { if (mmenu) mmenu.classList.add('open'); ham.classList.add('open'); }
+      else {
+        if (mmenu) mmenu.classList.add('open');
+        ham.classList.add('open');
+        ham.setAttribute('aria-expanded', 'true');
+      }
     });
   }
 
@@ -744,7 +743,6 @@
         window.addEventListener('touchend',   onTouchEnd,   { passive: true });
         goTo(0);
       }
-      if (typeof moveSl === 'function') moveSl(slOff);
     }, 250);
   });
 

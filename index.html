@@ -29,29 +29,29 @@
     <a class="logo logo-img" id="logoLink">
       <img src="assets/img/logo_on.png" alt="송암공원 중흥S-클래스 SK VIEW" class="logo-image">
     </a>
-    <nav class="gnb">
-      <a data-go="1">단지소개</a>
-      <a data-go="2">학세권</a>
-      <a data-go="3">커뮤니티</a>
-      <a data-go="4">평형안내</a>
-      <a data-go="7" class="gnb-cta">관심고객</a>
+    <nav class="gnb" aria-label="메인 내비게이션">
+      <a data-go="1" role="button" tabindex="0">단지소개</a>
+      <a data-go="2" role="button" tabindex="0">학세권</a>
+      <a data-go="3" role="button" tabindex="0">커뮤니티</a>
+      <a data-go="4" role="button" tabindex="0">평형안내</a>
+      <a data-go="7" role="button" tabindex="0" class="gnb-cta">관심고객</a>
     </nav>
     <div class="hd-right">
       <a href="tel:15333592" class="hd-tel"><i class="fa-solid fa-phone"></i><span>1533-3592</span></a>
-      <button class="ham" id="ham"><span></span><span></span><span></span></button>
+      <button class="ham" id="ham" aria-label="메뉴 열기" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
   </div>
 </header>
 
 <!-- ── 도트 네비 ──────────────────────────── -->
-<nav class="dots" id="dots">
-  <span class="dot on" data-go="0"></span>
-  <span class="dot" data-go="1"></span>
-  <span class="dot" data-go="2"></span>
-  <span class="dot" data-go="3"></span>
-  <span class="dot" data-go="4"></span>
-  <span class="dot" data-go="5"></span>
-  <span class="dot" data-go="6"></span>
+<nav class="dots" id="dots" aria-label="페이지 네비게이션">
+  <span class="dot on" data-go="0" role="button" aria-label="히어로"></span>
+  <span class="dot" data-go="1" role="button" aria-label="단지소개"></span>
+  <span class="dot" data-go="2" role="button" aria-label="학세권"></span>
+  <span class="dot" data-go="3" role="button" aria-label="커뮤니티"></span>
+  <span class="dot" data-go="4" role="button" aria-label="평형안내"></span>
+  <span class="dot" data-go="5" role="button" aria-label="혜택안내"></span>
+  <span class="dot" data-go="6" role="button" aria-label="관심고객"></span>
 </nav>
 
 <!-- ── 모바일 메뉴 ────────────────────────── -->
@@ -712,8 +712,8 @@
             <textarea name="message" rows="3" placeholder="궁금하신 점이 있으시면 자유롭게 작성해주세요."></textarea>
           </div>
           <div class="fg fg-chk">
-            <label>
-              <input type="checkbox" required>
+            <label for="privacy-agree">
+              <input type="checkbox" id="privacy-agree" required>
               <span class="chk"></span>
               <span><span class="req">[필수]</span> 개인정보 수집·이용 동의</span>
             </label>
