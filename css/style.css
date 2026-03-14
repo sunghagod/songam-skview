@@ -2362,14 +2362,13 @@ body.mobile-mode .s4 { height: auto; min-height: 0; }
   color: var(--gold);
   letter-spacing: -0.02em;
   margin-bottom: 16px;
+  white-space: nowrap;
 }
-.sfp-info h3 small {
-  display: block;
-  font-size: 15px;
+.sfp-info h3 .pyeong {
+  font-size: 0.4em;
   font-weight: 600;
   color: rgba(192,155,106,.7);
-  margin-left: 0;
-  margin-top: 8px;
+  margin-left: 6px;
   letter-spacing: .06em;
 }
 .sfp-desc {
@@ -3804,7 +3803,7 @@ body.mobile-mode .s2b {
   .sfp-panel.active { display: block !important; }
   .sfp-img { border-radius: 6px; margin-bottom: 10px; }
   .sfp-info h3 { font-size: 14px; margin-bottom: 6px; }
-  .sfp-info h3 small { font-size: 11px; }
+  .sfp-info h3 .pyeong { font-size: 11px; }
   .sfp-panel {
     background: rgba(255,255,255,.04);
     border: 1px solid rgba(255,255,255,.08);
@@ -3881,7 +3880,7 @@ body.mobile-mode .s2b {
   }
   .sfp-modal-content .sfp-img { margin-bottom: 16px; }
   .sfp-modal-content .sfp-info h3 { font-size: clamp(22px, 5vw, 30px); margin-bottom: 10px; }
-  .sfp-modal-content .sfp-info h3 small { font-size: 14px; }
+  .sfp-modal-content .sfp-info h3 .pyeong { font-size: 14px; }
   .sfp-modal-content .sfp-desc { display: block; font-size: 13px; margin-bottom: 18px; line-height: 1.8; color: rgba(245,243,239,.7); }
   .sfp-modal-content .sfp-specs { display: block; margin-bottom: 18px; }
   .sfp-modal-content .sfp-spec { display: flex; padding: 10px 0; font-size: 13px; border-bottom: 1px solid rgba(255,255,255,.08); }
