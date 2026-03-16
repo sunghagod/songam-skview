@@ -19,6 +19,18 @@
   var resultEl  = document.getElementById('formResult');
   var btnText   = '관심고객 등록하기 <i class="fa-solid fa-arrow-right"></i>';
 
+  /* ── UTM 파라미터 수집 ───────────────────── */
+  function getUtmParams() {
+    var params = new URLSearchParams(window.location.search);
+    return {
+      utm_source:   params.get('utm_source')   || '',
+      utm_medium:   params.get('utm_medium')   || '',
+      utm_campaign: params.get('utm_campaign') || '',
+      utm_content:  params.get('utm_content')  || '',
+      utm_term:     params.get('utm_term')     || ''
+    };
+  }
+
   /* ── Script URL: admin 저장값 우선 ─────────── */
   function getScriptUrl() {
     try {
@@ -96,13 +108,21 @@
     // 날짜 형식 검증 (YYYY-MM-DD)
     if (visitDateVal && !/^\d{4}-\d{2}-\d{2}$/.test(visitDateVal)) visitDateVal = '';
 
+    var utm = getUtmParams();
+
     return {
-      name:       nameVal,
-      phone:      phoneVal,
-      size:       sizeVal,
-      visit_date: visitDateVal,
-      visit_time: visitTimeVal,
-      message:    msgVal
+      name:         nameVal,
+      phone:        phoneVal,
+      size:         sizeVal,
+      visit_date:   visitDateVal,
+      visit_time:   visitTimeVal,
+      message:      msgVal,
+      utm_source:   utm.utm_source,
+      utm_medium:   utm.utm_medium,
+      utm_campaign: utm.utm_campaign,
+      utm_content:  utm.utm_content,
+      utm_term:     utm.utm_term,
+      page_url:     window.location.href
     };
   }
 
