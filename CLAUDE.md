@@ -13,7 +13,8 @@
 ## 배포
 - **호스팅**: Cloudflare Pages
 - **GitHub**: https://github.com/sunghagod/songam-skview (main 브랜치 = production)
-- **도메인**: songam-skview.com (OG 메타태그 기준)
+- **프로덕션 URL**: https://songam-skview.com (커스텀 도메인, Cloudflare DNS)
+- **Pages 기본 URL**: https://songam-skview.pages.dev
 - **로컬 서버**: `cd "C:\Users\sungh\OneDrive\Desktop\송암공원" && python -m http.server 8080` → http://localhost:8080
 
 ## 파일 구조
