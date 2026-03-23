@@ -472,16 +472,42 @@
 
 
   <!-- ========================================
-       SFP · 평형 안내 (Floor Plans)
+       SFP · 단지 배치도 + 평형 안내
        ======================================== -->
-  <section class="sec sfp" data-theme="dark">
-    <div class="sfp-inner">
-      <div class="sfp-head">
-        <p class="sfp-label" data-fx="fade-up" data-delay="0.05" data-pre="0.2" data-main="0.7"><span class="sfp-label-line"></span>UNIT PLAN</p>
-        <h2 data-fx="fade-up" data-delay="0.1" data-pre="0.2" data-main="0.9">평형 안내 <span class="sfp-tap-hint">터치하세요!</span></h2>
-        <p class="sfp-sub" data-fx="fade-up" data-delay="0.25" data-pre="0.2" data-main="0.8">총 4개 타입 1,575세대 — 라이프스타일에 맞는 평형을 선택하세요</p>
+  <section class="sec sfp" data-theme="dark" data-overlay="on">
+    <div class="ov-progress sfp-ov">
+      <span class="ov-dot on"></span>
+      <span class="ov-dot"></span>
+    </div>
+    <div class="overlay-stage">
+
+      <!-- panel 0 : 단지 배치도 -->
+      <div class="overlay-panel sfp-overlay-panel" data-step="0" data-header="dark">
+        <div class="sfp-inner sfp-inner--siteplan">
+          <div class="sfp-head">
+            <p class="sfp-label" data-fx="fade-up" data-delay="0.05" data-pre="0.2" data-main="0.7"><span class="sfp-label-line"></span>SITE PLAN</p>
+            <h2 data-fx="fade-up" data-delay="0.1" data-pre="0.2" data-main="0.9">단지 배치도</h2>
+            <p class="sfp-sub" data-fx="fade-up" data-delay="0.25" data-pre="0.2" data-main="0.8">17개동 1,575세대 — 4개 타입별 동 배치 현황</p>
+          </div>
+          <div class="siteplan-wrap" data-fx="fade-up" data-delay="0.35" data-pre="0.2" data-main="0.9">
+            <div class="siteplan-img" onclick="document.getElementById('lightbox-sp').classList.add('active')">
+              <img src="assets/img/site-plan.webp" alt="단지 배치도" loading="lazy">
+              <div class="siteplan-zoom"><i class="fa-solid fa-search-plus"></i> 클릭하여 확대</div>
+            </div>
+          </div>
+          <p class="siteplan-disc" data-fx="fade-up" data-delay="0.6" data-pre="0.2" data-main="0.7">※ 상기 단지배치도는 소비자의 이해를 돕기 위해 제작된 CG컷으로 실제와 차이가 있을 수 있습니다.</p>
+        </div>
       </div>
-      <div class="sfp-tabs" data-fx="fade-up" data-delay="0.35" data-pre="0.2" data-main="0.8">
+
+      <!-- panel 1 : 평형 안내 -->
+      <div class="overlay-panel sfp-overlay-panel" data-step="1" data-header="dark">
+        <div class="sfp-inner">
+          <div class="sfp-head">
+            <p class="sfp-label" data-fx="fade-up" data-delay="0.05" data-pre="0.2" data-main="0.7"><span class="sfp-label-line"></span>UNIT PLAN</p>
+            <h2 data-fx="fade-up" data-delay="0.1" data-pre="0.2" data-main="0.9">평형 안내 <span class="sfp-tap-hint">터치하세요!</span></h2>
+            <p class="sfp-sub" data-fx="fade-up" data-delay="0.25" data-pre="0.2" data-main="0.8">총 4개 타입 1,575세대 — 라이프스타일에 맞는 평형을 선택하세요</p>
+          </div>
+          <div class="sfp-tabs" data-fx="fade-up" data-delay="0.35" data-pre="0.2" data-main="0.8">
         <button class="sfp-tab active" data-fptab="0">84㎡ A (34평)</button>
         <button class="sfp-tab" data-fptab="1">84㎡ B (34평)</button>
         <button class="sfp-tab" data-fptab="2">84㎡ C (34평)</button>
@@ -586,7 +612,19 @@
         </div>
       </div>
     </div>
+      </div><!-- /overlay-panel panel1 -->
+
+    </div><!-- /overlay-stage -->
   </section>
+
+
+  <!-- 라이트박스: 단지 배치도 확대 -->
+  <div class="lightbox" id="lightbox-sp" onclick="if(event.target===this)this.classList.remove('active')">
+    <button class="lightbox-close" onclick="document.getElementById('lightbox-sp').classList.remove('active')">&times;</button>
+    <div class="lightbox-body">
+      <img class="lightbox-img" src="assets/img/site-plan.webp" alt="단지 배치도 확대" loading="lazy">
+    </div>
+  </div>
 
 
   <!-- ========================================

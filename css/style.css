@@ -2258,6 +2258,62 @@ body.mobile-mode .s4 { height: auto; min-height: 0; }
   overflow-y: auto;
 }
 
+/* ── SFP overlay panels ────────────────────── */
+.sfp .overlay-stage { width: 100%; height: 100%; position: relative; }
+.sfp .sfp-overlay-panel {
+  position: absolute; inset: 0;
+  display: flex; align-items: flex-start;
+  opacity: 0; pointer-events: none;
+  transition: opacity .45s ease;
+  overflow-y: auto;
+}
+.sfp .sfp-overlay-panel.is-active {
+  opacity: 1; pointer-events: auto;
+}
+.sfp .sfp-ov {
+  position: absolute; right: 28px; top: 50%;
+  transform: translateY(-50%); z-index: 10;
+}
+
+/* ── 단지 배치도 (panel 0) ─────────────────── */
+.sfp-inner--siteplan {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  min-height: 100vh;
+}
+.sfp-inner--siteplan .sfp-head { text-align: center; margin-bottom: 28px; }
+
+.siteplan-wrap {
+  width: 100%; max-width: 1100px;
+  margin: 0 auto;
+}
+.siteplan-img {
+  position: relative; cursor: pointer;
+  border: 1px solid rgba(192,155,106,.2);
+  overflow: hidden;
+  transition: border-color .3s;
+}
+.siteplan-img:hover { border-color: var(--gold); }
+.siteplan-img img {
+  width: 100%; height: auto;
+  display: block;
+}
+.siteplan-zoom {
+  position: absolute; bottom: 16px; right: 16px;
+  background: rgba(11,11,11,.7); color: var(--gold);
+  font-size: 12px; padding: 8px 16px;
+  backdrop-filter: blur(6px);
+  pointer-events: none;
+  transition: opacity .3s;
+}
+.siteplan-img:hover .siteplan-zoom { opacity: .6; }
+
+.siteplan-disc {
+  text-align: center;
+  font-size: 11px; color: rgba(245,243,239,.3);
+  margin-top: 16px; letter-spacing: .01em;
+}
+
 .sfp-inner {
   width: 100%;
   max-width: 1480px;
@@ -3790,8 +3846,33 @@ body.mobile-mode .s2b {
   .s4b-tbl td { font-size: 12px; padding: 8px 4px; }
   .s4b-tbl .zt-nm { width: 110px; }
 
+  /* ── SFP 모바일: overlay → 일반 흐름 ──── */
+  .sfp .overlay-stage {
+    position: static !important;
+    height: auto !important;
+    display: flex; flex-direction: column;
+  }
+  .sfp .sfp-overlay-panel {
+    position: static !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    display: flex !important;
+    min-height: auto !important;
+    height: auto !important;
+  }
+  .sfp .sfp-ov { display: none; }
+  .sfp-inner--siteplan {
+    min-height: auto !important;
+    padding: calc(var(--hd-h) + 24px) 16px 30px;
+  }
+  .sfp-inner--siteplan .sfp-head { margin-bottom: 18px; }
+  .siteplan-img { border: 1px solid rgba(192,155,106,.15); }
+  .siteplan-zoom { font-size: 11px; padding: 6px 12px; bottom: 10px; right: 10px; }
+  .siteplan-disc { font-size: 10px; margin-top: 10px; margin-bottom: 10px; }
+
   /* ── SFP 평형안내 (2x2 그리드) ─────────── */
-  .sfp-inner { padding: calc(var(--hd-h) + 24px) 16px 40px; }
+  .sfp-inner { padding: 20px 16px 40px; }
   .sfp-head { margin-bottom: 20px; }
   .sfp-label { font-size: 11px; margin-bottom: 10px; gap: 10px; }
   .sfp-label-line { width: 28px; }
