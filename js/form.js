@@ -135,7 +135,7 @@
     // 허니팟 봇 탐지: 숨겨진 필드에 값이 있으면 봇
     if (S && S.honeypot && S.honeypot.isFilled(form)) {
       // 봇에게는 성공한 것처럼 보여줌 (재시도 방지)
-      showResult('success', '관심고객 등록이 완료되었습니다.\n빠른 시일 내에 연락드리겠습니다.');
+      showResult('success', '예약이 완료되었습니다.\n담당자가 빠르게 연락드리겠습니다.');
       form.reset();
       return;
     }
