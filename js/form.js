@@ -180,7 +180,7 @@
     })
     .then(function () {
       setLoading(false);
-      showResult('success', '관심고객 등록이 완료되었습니다.\n빠른 시일 내에 연락드리겠습니다.');
+      showResult('success', '예약이 완료되었습니다.\n담당자가 빠르게 연락드리겠습니다.');
       form.reset();
     })
     .catch(function () {
