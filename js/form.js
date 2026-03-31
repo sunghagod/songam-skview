@@ -189,6 +189,17 @@
     });
   });
 
+  /* ── 개인정보 상세 토글 ───────────────────── */
+  var privBtn = document.getElementById('privacyToggle');
+  var privBox = document.getElementById('privacyDetail');
+  if (privBtn && privBox) {
+    privBtn.addEventListener('click', function () {
+      var open = privBox.classList.toggle('open');
+      privBtn.classList.toggle('open', open);
+      privBtn.firstChild.textContent = open ? '접기 ' : '내용보기 ';
+    });
+  }
+
   /* ── UI 헬퍼 ─────────────────────────────── */
   function setLoading(on) {
     btn.disabled = on;

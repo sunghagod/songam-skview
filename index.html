@@ -671,6 +671,7 @@
        S5 · CONTACT  (Premium Dark)
        ======================================== -->
   <section class="sec s5" data-theme="dark">
+    <div class="s5-contact-area">
 
     <!-- 좌측: 비주얼 + 정보 -->
     <div class="s5-left">
@@ -786,6 +787,24 @@
               <span class="chk"></span>
               <span><span class="req">[필수]</span> 개인정보 수집·이용 동의</span>
             </label>
+            <button type="button" class="privacy-toggle" id="privacyToggle">내용보기 <i class="fa-solid fa-chevron-down"></i></button>
+            <div class="privacy-detail" id="privacyDetail">
+              <div class="privacy-detail-inner">
+                <h4>개인정보 수집·이용 동의서</h4>
+                <table class="privacy-tbl">
+                  <tr><th>수집 목적</th><td>관심고객 등록, 분양 상담 안내 및 방문 예약 관리</td></tr>
+                  <tr><th>수집 항목</th><td>이름, 연락처, 관심 평형, 방문 희망일시, 문의사항, 접속 정보(접속 URL, 유입 경로, 접속 시간)</td></tr>
+                  <tr><th>보유 기간</th><td>수집일로부터 <b>1년</b> (보유 기간 경과 시 지체 없이 파기)</td></tr>
+                  <tr><th>파기 방법</th><td>전자적 파일: 복구 불가능한 방법으로 영구 삭제<br>서면 자료: 분쇄 또는 소각</td></tr>
+                  <tr><th>처리 위탁</th><td>수집된 정보는 Google LLC의 클라우드 서비스를 통해 안전하게 저장·처리됩니다.</td></tr>
+                </table>
+                <ul class="privacy-notes">
+                  <li>귀하는 개인정보 수집·이용에 대한 동의를 거부할 권리가 있으며, 동의 거부 시 관심고객 등록이 제한됩니다.</li>
+                  <li>수집된 개인정보는 상기 목적 외의 용도로 이용되지 않으며, 제3자에게 제공되지 않습니다.</li>
+                  <li>개인정보 관련 문의: 대표번호 <b>1533-3592</b> / 이메일 <b>sunghagod@gmail.com</b></li>
+                </ul>
+              </div>
+            </div>
           </div>
           <button type="submit" class="btn-submit">
             <span>관심고객 등록하기</span> <i class="fa-solid fa-arrow-right"></i>
@@ -793,15 +812,10 @@
         </form>
       </div>
     </div>
+    </div><!-- /.s5-contact-area -->
 
-  </section>
-
-
-  <!-- ========================================
-       S6 · FOOTER
-       ======================================== -->
-  <section class="sec s6" data-theme="dark">
-    <footer>
+    <!-- ── Footer (S5 내부) ── -->
+    <footer class="s5-footer">
       <div class="ft-top">
         <div class="ft-logo">
           <img src="assets/img/logo_on.webp" alt="송암공원 중흥S-클래스 SK VIEW" class="logo-image logo-image--ft">
@@ -833,6 +847,7 @@
         <span class="ft-contact">홈페이지 제작 문의 sunghagod@gmail.com</span>
       </div>
     </footer>
+
   </section>
 
 </div><!-- /#wrap -->

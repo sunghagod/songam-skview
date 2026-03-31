@@ -305,10 +305,13 @@
       }
     }
 
+    /* 마지막 섹션 진입 시 스크롤 위치 리셋 */
+    if (entering) entering.scrollTop = 0;
+
     /* UI 즉시 업데이트 */
     _updateDots(idx);
     applyHeaderTheme();
-    floatBtn && floatBtn.classList.toggle('show', idx > 0 && idx < SEC_COUNT - 1);
+    floatBtn && floatBtn.classList.toggle('show', idx > 0);
     closeMmenu();
 
     /* afterLoad — 전환 완료 후 FX 실행 */
@@ -405,6 +408,26 @@
       }
     }
 
+    /* 마지막 섹션: 내부 스크롤 허용 (S5+Footer 통합) */
+    if (curIdx === SEC_COUNT - 1) {
+      var d = normDelta(e);
+      var goUp = d < 0;
+      /* 위로 스크롤 + 최상단이면 이전 섹션으로 */
+      if (goUp && sec.scrollTop <= 0) {
+        wheelAcc += d;
+        clearTimeout(wheelTimer);
+        wheelTimer = setTimeout(function () { wheelAcc = 0; }, WHEEL_RESET_MS);
+        if (Math.abs(wheelAcc) < WHEEL_THRESHOLD) { e.preventDefault(); return; }
+        wheelAcc = 0;
+        isFPMoving = true;
+        block(SCROLL_SPEED);
+        goTo(curIdx - 1);
+        e.preventDefault();
+      }
+      /* 그 외에는 자연스러운 내부 스크롤 허용 — preventDefault 안 함 */
+      return;
+    }
+
     /* 일반 섹션 누적 */
     wheelAcc += normDelta(e);
     clearTimeout(wheelTimer);
@@ -432,6 +455,16 @@
     var down = dy > 0;
 
     var sec = SECTIONS[curIdx];
+
+    /* 마지막 섹션: 내부 스크롤 허용 */
+    if (curIdx === SEC_COUNT - 1) {
+      if (!down && sec.scrollTop <= 0) {
+        isFPMoving = true; block(SCROLL_SPEED);
+        goTo(curIdx - 1);
+      }
+      return;
+    }
+
     if (isOverlay(sec)) {
       ensureOverlay(curIdx);
       var st = overlayState[curIdx];
