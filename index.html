@@ -381,8 +381,10 @@
       </div>
 
       <!-- 공원 배치도 -->
-      <div class="s4-park-map" data-fx="fade-up" data-delay="0.4" data-pre="0.2" data-main="0.9">
+      <div class="s4-park-map" data-fx="fade-up" data-delay="0.4" data-pre="0.2" data-main="0.9"
+           onclick="document.getElementById('lightbox-park').classList.add('active')">
         <img src="assets/img/site-plan-park-satellite.png" alt="송암공원 입지 위성사진" loading="lazy">
+        <div class="s2b-map-zoom"><i class="fa-solid fa-search-plus"></i> 클릭하여 확대</div>
       </div>
 
       <!-- 솔빛마당 + 늘빛마당 -->
@@ -616,15 +618,6 @@
 
     </div><!-- /overlay-stage -->
   </section>
-
-
-  <!-- 라이트박스: 단지 배치도 확대 -->
-  <div class="lightbox" id="lightbox-sp" onclick="if(event.target===this)this.classList.remove('active')">
-    <button class="lightbox-close" onclick="document.getElementById('lightbox-sp').classList.remove('active')">&times;</button>
-    <div class="lightbox-body">
-      <img class="lightbox-img" src="assets/img/site-plan.webp" alt="단지 배치도 확대" loading="lazy">
-    </div>
-  </div>
 
 
   <!-- ========================================
@@ -877,6 +870,22 @@
   <button class="lightbox-close" onclick="document.getElementById('lightbox').classList.remove('active')">&times;</button>
   <div class="lightbox-body">
     <img class="lightbox-img" src="assets/img/site-plan-park.webp" alt="학군 지도 확대" loading="lazy">
+  </div>
+</div>
+
+<!-- ── 라이트박스 (단지 배치도 확대) ──────── -->
+<div class="lightbox" id="lightbox-sp" onclick="if(event.target===this)this.classList.remove('active')">
+  <button class="lightbox-close" onclick="document.getElementById('lightbox-sp').classList.remove('active')">&times;</button>
+  <div class="lightbox-body">
+    <img class="lightbox-img" src="assets/img/site-plan.webp" alt="단지 배치도 확대" loading="lazy">
+  </div>
+</div>
+
+<!-- ── 라이트박스 (공원 위성사진 확대) ────── -->
+<div class="lightbox" id="lightbox-park" onclick="if(event.target===this)this.classList.remove('active')">
+  <button class="lightbox-close" onclick="document.getElementById('lightbox-park').classList.remove('active')">&times;</button>
+  <div class="lightbox-body">
+    <img class="lightbox-img" src="assets/img/site-plan-park-satellite.png" alt="송암공원 위성사진 확대" loading="lazy">
   </div>
 </div>
 

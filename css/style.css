@@ -1256,11 +1256,13 @@ body.mobile-mode .s4 { height: auto; min-height: 0; }
 
 /* park map */
 .s4-park-map {
+  position: relative;
   width: 100%;
   max-width: 800px;
   margin: 0 auto 16px;
   border-radius: 10px;
   overflow: hidden;
+  cursor: pointer;
   border: 1px solid rgba(255,255,255,.08);
   background: rgba(255,255,255,.03);
 }
