@@ -1,7 +1,7 @@
 /* Font Awesome 6 - Minimal (solid only, 29 icons) */
 @font-face{font-family:"Font Awesome 6 Free";font-style:normal;font-weight:900;font-display:block;src:url(webfonts/fa-solid-900.woff2) format("woff2"),url(webfonts/fa-solid-900.ttf) format("truetype")}
 .fa,.fas,.fa-solid{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;display:var(--fa-display,inline-block);font-style:normal;font-variant:normal;line-height:1;text-rendering:auto}
-.fa,.fas,.fa-solid{font-family:var(--fa-style-family,"Font Awesome 6 Free");font-weight:var(--fa-style,900)}
+.fa,.fas,.fa-solid{font-family:"Font Awesome 6 Free";font-weight:900}
 @keyframes fa-spin{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}}
 .fa-spin{-webkit-animation-delay:var(--fa-animation-delay,0s);animation-delay:var(--fa-animation-delay,0s);-webkit-animation-direction:var(--fa-animation-direction,normal);animation-direction:var(--fa-animation-direction,normal)}
 .fa-arrow-right:before{content:"\f061"}
