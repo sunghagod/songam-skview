@@ -53,7 +53,8 @@
   var gnbLinks = Array.prototype.slice.call(document.querySelectorAll('.gnb a'));
   var ham      = document.getElementById('ham');
   var mmenu    = document.getElementById('mmenu');
-  var floatBtn = document.getElementById('floatBtn');
+  var floatBtn   = document.getElementById('floatBtn');
+  var floatKakao = document.getElementById('floatKakao');
   var toast    = document.getElementById('toast');
   var form     = document.getElementById('form');
   var logoLink = document.getElementById('logoLink');
@@ -279,18 +280,36 @@
   /* ══════════════════════════════════════════════════════
      FULLPAGE SCROLL
      ══════════════════════════════════════════════════════ */
+  /* ── clip-path reveal 섹션 전환 ───────────────────── */
+  function clipReveal(entering, direction) {
+    if (!entering || !window.gsap || isMobile) return;
+    /* direction: 1=아래로(다음), -1=위로(이전) */
+    var from = direction > 0
+      ? 'inset(100% 0 0 0)'   /* 아래에서 올라옴 */
+      : 'inset(0 0 100% 0)';  /* 위에서 내려옴 */
+    gsap.fromTo(entering,
+      { clipPath: from },
+      { clipPath: 'inset(0 0 0 0)', duration: 0.9,
+        ease: 'power4.inOut', clearProps: 'clipPath' }
+    );
+  }
+
   function goTo(idx, skipAnim) {
     idx = Math.max(0, Math.min(idx, SEC_COUNT - 1));
     if (idx === curIdx) return;
 
     var prev = curIdx;
+    var direction = idx > prev ? 1 : -1;
     curIdx   = idx;
 
     /* wrap 이동 */
     wrap.style.transform = 'translateY(' + (-idx * 100) + 'vh)';
 
-    /* 진입 섹션 prep */
+    /* clip-path reveal (PC only) */
     var entering = SECTIONS[idx];
+    if (!skipAnim) clipReveal(entering, direction);
+
+    /* 진입 섹션 prep */
     if (entering) {
       if (isOverlay(entering)) {
         var st = ensureOverlay(idx);
@@ -312,6 +331,7 @@
     _updateDots(idx);
     applyHeaderTheme();
     floatBtn && floatBtn.classList.toggle('show', idx > 0);
+    floatKakao && floatKakao.classList.toggle('show', idx > 0);
     closeMmenu();
 
     /* afterLoad — 전환 완료 후 FX 실행 */
@@ -556,6 +576,7 @@
         _updateDots(idx);
         if (idx === 1) runCounters();
         if (floatBtn) floatBtn.classList.toggle('show', idx > 0 && idx < SEC_COUNT - 1);
+        if (floatKakao) floatKakao.classList.toggle('show', idx > 0 && idx < SEC_COUNT - 1);
       });
     }, { threshold: 0.35 });
 
@@ -828,7 +849,7 @@
       clone.style.gridTemplateColumns = '1fr';
       clone.style.gap = '20px';
       // 숨겨진 요소 모두 표시
-      var hidden = clone.querySelectorAll('.sfp-desc, .sfp-specs, .sfp-features, .sfp-cta');
+      var hidden = clone.querySelectorAll('.sfp-desc, .sfp-specs, .sfp-features, .sfp-cta, .sfp-cta-wrap');
       for (var i = 0; i < hidden.length; i++) {
         hidden[i].style.display = '';
       }
@@ -910,6 +931,97 @@
   })();
 
   /* ══════════════════════════════════════════════════════
+     PARTICLE NOISE (히어로 배경)
+     ══════════════════════════════════════════════════════ */
+  function initParticleNoise() {
+    var hero = document.querySelector('.s0');
+    if (!hero) return;
+
+    var canvas = document.createElement('canvas');
+    canvas.className = 'particle-canvas';
+    hero.appendChild(canvas);
+
+    var ctx   = canvas.getContext('2d');
+    var dpr   = Math.min(window.devicePixelRatio || 1, 2);
+    var particles = [];
+    var PARTICLE_COUNT = 60;
+    var rafId = null;
+
+    function resize() {
+      canvas.width  = hero.offsetWidth  * dpr;
+      canvas.height = hero.offsetHeight * dpr;
+      canvas.style.width  = hero.offsetWidth  + 'px';
+      canvas.style.height = hero.offsetHeight + 'px';
+      ctx.scale(dpr, dpr);
+    }
+
+    function createParticle() {
+      return {
+        x:  Math.random() * hero.offsetWidth,
+        y:  Math.random() * hero.offsetHeight,
+        r:  Math.random() * 1.5 + 0.5,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: -Math.random() * 0.4 - 0.1,
+        a:  Math.random() * 0.3 + 0.05,
+        life: Math.random() * 200 + 100,
+        age: 0
+      };
+    }
+
+    function init() {
+      resize();
+      particles = [];
+      for (var i = 0; i < PARTICLE_COUNT; i++) {
+        var p = createParticle();
+        p.age = Math.random() * p.life;
+        particles.push(p);
+      }
+    }
+
+    function draw() {
+      var w = hero.offsetWidth;
+      var h = hero.offsetHeight;
+      ctx.clearRect(0, 0, w, h);
+
+      for (var i = particles.length - 1; i >= 0; i--) {
+        var p = particles[i];
+        p.x   += p.vx;
+        p.y   += p.vy;
+        p.age += 1;
+
+        /* fade in/out over life */
+        var t = p.age / p.life;
+        var alpha = t < 0.2 ? t / 0.2 : t > 0.8 ? (1 - t) / 0.2 : 1;
+        alpha *= p.a;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(192,155,106,' + alpha.toFixed(3) + ')';
+        ctx.fill();
+
+        if (p.age >= p.life || p.y < -10 || p.x < -10 || p.x > w + 10) {
+          particles[i] = createParticle();
+        }
+      }
+
+      rafId = requestAnimationFrame(draw);
+    }
+
+    init();
+    draw();
+
+    window.addEventListener('resize', function () {
+      resize();
+    });
+
+    /* prefers-reduced-motion 대응 */
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      cancelAnimationFrame(rafId);
+      canvas.style.display = 'none';
+    }
+  }
+
+  /* ══════════════════════════════════════════════════════
      BOOT
      ══════════════════════════════════════════════════════ */
   document.addEventListener('DOMContentLoaded', function () {
@@ -962,7 +1074,11 @@
       _updateDots(0);
       applyHeaderTheme();
       floatBtn && floatBtn.classList.remove('show');
+      floatKakao && floatKakao.classList.remove('show');
     }
+
+    /* 파티클 노이즈 초기화 */
+    initParticleNoise();
   });
 
 })();

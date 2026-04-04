@@ -316,6 +316,7 @@ body.mobile-mode #wrap { position: static; }
   position: relative; width: 100vw; height: 100vh;
   overflow: hidden; display: flex;
   align-items: center; justify-content: center;
+  will-change: clip-path;
 }
 body.mobile-mode .sec { height: auto; min-height: 100svh; width: 100%; }
 
@@ -364,6 +365,20 @@ body.mobile-mode .sec { height: auto; min-height: 100svh; width: 100%; }
   background: rgba(192,155,106,.08);
   transform: translateY(-3px);
 }
+.btn-kakao {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 17px 36px;
+  background: #FEE500; color: #3B1E1E;
+  font-size: 15px; font-weight: 700;
+  letter-spacing: .04em;
+  border-radius: 2px;
+  transition: background .3s, transform .25s; cursor: pointer;
+}
+.btn-kakao:hover {
+  background: #F5DC00;
+  transform: translateY(-3px);
+}
+.btn-kakao svg { flex-shrink: 0; }
 
 /* ── FLOAT BTN ──────────────────────────────────────── */
 .float-btn {
@@ -406,6 +421,19 @@ body.mobile-mode .sec { height: auto; min-height: 100svh; width: 100%; }
 .float-btn__center i { font-size: 16px; color: #fff; }
 .float-btn__center span { font-size: 13px; font-weight: 800; text-align: center; line-height: 1.2; letter-spacing: .03em; color: #fff; }
 
+/* ── 카카오 플로팅 버튼 ─────────────────────── */
+.float-kakao {
+  position: fixed; right: 10px; bottom: 152px; z-index: 799;
+  width: 52px; height: 52px; border-radius: 50%;
+  background: #FEE500; color: #3B1E1E;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 16px rgba(254,229,0,.4);
+  transition: opacity .3s, transform .3s, box-shadow .3s;
+  opacity: 0; pointer-events: none;
+}
+.float-kakao.show { opacity: 1; pointer-events: auto; }
+.float-kakao:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(254,229,0,.55); }
+
 /* ── TOAST ──────────────────────────────────────────── */
 .toast {
   position: fixed; bottom: 36px; left: 50%;
@@ -442,6 +470,16 @@ body.mobile-mode .sec { height: auto; min-height: 100svh; width: 100%; }
 .s0-veil {
   position: absolute; inset: 0;
   background: linear-gradient(to right, rgba(11,11,11,.78) 0%, rgba(11,11,11,.45) 55%, rgba(11,11,11,.25) 100%);
+}
+
+/* ── 파티클 노이즈 캔버스 ──────────────────────────── */
+.particle-canvas {
+  position: absolute; inset: 0; z-index: 1;
+  pointer-events: none; opacity: 0.7;
+  mix-blend-mode: screen;
+}
+@media (prefers-reduced-motion: reduce) {
+  .particle-canvas { display: none; }
 }
 
 .s0-body {
@@ -1713,6 +1751,23 @@ body.mobile-mode .s4 { height: auto; min-height: 0; }
   0%, 100% { box-shadow: 0 4px 20px rgba(192,155,106,.25); }
   50% { box-shadow: 0 6px 32px rgba(192,155,106,.4); }
 }
+.shook-cta-wrap {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.shook-cta--kakao {
+  background: #FEE500;
+  color: #3B1E1E;
+  animation: none;
+  box-shadow: 0 4px 20px rgba(254,229,0,.25);
+}
+.shook-cta--kakao:hover {
+  background: #F5DC00;
+  box-shadow: 0 10px 40px rgba(254,229,0,.45);
+}
+.shook-cta--kakao svg { flex-shrink: 0; }
 
 /* ═══════════════════════════════════════════════════════
    IMAGE LIGHTBOX — 입지 이미지 확대
@@ -1886,6 +1941,21 @@ body.mobile-mode .s4 { height: auto; min-height: 0; }
   color: #fff;
   letter-spacing: .02em;
 }
+.s5-card--kakao svg {
+  width: 40px; height: 40px;
+  padding: 10px;
+  border: 1px solid rgba(254,229,0,.35);
+  background: rgba(254,229,0,.1);
+  border-radius: 2px;
+  flex-shrink: 0;
+  color: #FEE500;
+  transition: border-color .3s, background .3s;
+  box-sizing: border-box;
+}
+.s5-card--kakao:hover svg {
+  border-color: #FEE500;
+  background: rgba(254,229,0,.18);
+}
 
 /* ── 분양안내 (데스크탑 좌측) ──────────────── */
 .s5-sale {
@@ -2036,6 +2106,21 @@ body.mobile-mode .s4 { height: auto; min-height: 0; }
   font-weight: 600;
   margin-left: 2px;
 }
+.s5-ci-kakao {
+  color: #FEE500;
+  transition: opacity .3s;
+}
+.s5-ci-kakao:hover { opacity: .8; }
+.s5-ci-kakao svg {
+  width: 28px; height: 28px;
+  padding: 7px;
+  background: rgba(254,229,0,.12);
+  border: 1px solid rgba(254,229,0,.3);
+  border-radius: 6px;
+  flex-shrink: 0;
+  color: #FEE500;
+}
+.s5-ci-kakao b { color: #FEE500; }
 } /* end @media 1024 for s5-closing */
 
 /* ── Form Header ────────────────────────── */
@@ -2576,6 +2661,19 @@ body.mobile-mode .s4 { height: auto; min-height: 0; }
   background: var(--dark4);
   border-color: rgba(192,155,106,.3);
 }
+.sfp-cta-wrap {
+  display: flex;
+  gap: 8px;
+}
+.sfp-cta-wrap .sfp-cta { flex: 1; }
+.sfp-cta--kakao {
+  gap: 6px;
+  background: #FEE500 !important;
+  color: #3B1E1E !important;
+  border-color: #FEE500 !important;
+}
+.sfp-cta--kakao:hover { background: #F5DC00 !important; border-color: #F5DC00 !important; }
+.sfp-cta--kakao svg { flex-shrink: 0; color: #3B1E1E; }
 
 /* ═══════════════════════════════════════════════════════
    S6 — FOOTER
@@ -3552,6 +3650,7 @@ body.mobile-mode .s2b {
   .scroll-ind { display: none; }
 
   /* 플로팅 버튼 */
+  .float-kakao { right: 6px; bottom: 128px; width: 44px; height: 44px; }
   .float-btn { right: 6px; bottom: 12px; width: 100px; height: 100px; }
   .float-btn__center { width: 60px; height: 60px; }
   .float-btn__center i { font-size: 13px; }
@@ -3576,7 +3675,7 @@ body.mobile-mode .s2b {
     margin-top: 36px; flex-direction: row; gap: 12px;
     align-self: flex-start;
   }
-  .btn-gold, .btn-line {
+  .btn-gold, .btn-line, .btn-kakao {
     justify-content: center; padding: 14px 24px; font-size: 12px;
   }
 
@@ -3972,6 +4071,7 @@ body.mobile-mode .s2b {
   .sfp-spec em { font-size: 13px; }
   .sfp-features { display: none; }
   .sfp-cta { display: none; }
+  .sfp-cta-wrap { display: none; }
   .sfp-panel { cursor: pointer; }
   .sfp-tap-hint {
     display: inline-block;
@@ -4040,7 +4140,9 @@ body.mobile-mode .s2b {
   .sfp-modal-content .sfp-spec span { font-size: 12px; min-width: 70px; }
   .sfp-modal-content .sfp-spec b { font-size: 13px; }
   .sfp-modal-content .sfp-features { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; align-items: center; }
-  .sfp-modal-content .sfp-cta { display: block; padding: 15px; font-size: 14px; text-align: center; }
+  .sfp-modal-content .sfp-cta { display: flex; padding: 15px; font-size: 14px; text-align: center; justify-content: center; }
+  .sfp-modal-content .sfp-cta-wrap { display: flex !important; gap: 8px; }
+  .sfp-modal-content .sfp-cta-wrap .sfp-cta { flex: 1; }
 
   /* ── HOOK 긴급혜택 ────────────────────── */
   .shook-inner { padding: calc(var(--hd-h) + 28px) 16px 48px; min-height: 100svh; }
@@ -4056,6 +4158,7 @@ body.mobile-mode .s2b {
   .shook-card-main { font-size: clamp(20px, 6vw, 28px); }
   .shook-card-main em { font-size: 1.3em; }
   .shook-cta { padding: 18px 36px; font-size: 16px; width: 100%; justify-content: center; border-radius: 16px; }
+  .shook-cta-wrap { flex-direction: column; gap: 12px; }
 
   /* ── S5 Contact ────────────────────────── */
   .s5-contact-area { grid-template-columns: 1fr; }
@@ -4095,7 +4198,7 @@ body.mobile-mode .s2b {
   .s0-body h1 .t1 { font-size: clamp(32px, 9vw, 46px); }
   .s0-body h1 .t2 { font-size: clamp(38px, 10.5vw, 56px); }
   .s0-btns { margin-top: 28px; }
-  .btn-gold, .btn-line { padding: 14px 24px; font-size: 12px; }
+  .btn-gold, .btn-line, .btn-kakao { padding: 14px 24px; font-size: 12px; }
 
   .stats { gap: 0; }
   .stats hr { margin: 0; }
