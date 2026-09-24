@@ -3,12 +3,11 @@
  * 진월더리브 방식 완전 재현
  *
  * ── 핵심 시스템 ───────────────────────────────────────
- *  1. fullPage Scroll  (wheel accumulator + translate3d)
+ *  1. 일반 스크롤 (IntersectionObserver 기반 — fullPage 스냅 비활성화)
  *  2. overlay-panel    (섹션 내 단계별 wheel 전환)
  *  3. hslide           (섹션 내 수평 슬라이드)
  *  4. GSAP 2-step FX   (prepFx/playFxIn)
  *  5. header data-theme (섹션·슬라이드별)
- *  6. Custom cursor
  *  7. Mobile (IO + normal scroll)
  *  8. Number counter, Form+Toast, Keyboard nav
  */
@@ -24,7 +23,11 @@
   var WHEEL_THRESHOLD  = 20;     // 누적 wheel 임계값
   var WHEEL_RESET_MS   = 100;    // wheel 누적 리셋 타이머
   var COOLDOWN_MS      = 60;     // afterLoad 쿨다운
-  var MOBILE_BP        = 768;    // 모바일 기준 px
+  /* 섹션 스냅(fullPage) 비활성화 — 전 해상도에서 일반 스크롤 사용.
+     Infinity면 isMobile이 항상 true가 되어 IntersectionObserver 기반
+     자연 스크롤 경로(initMobile)를 타고, wheel 하이재킹을 등록하지 않음.
+     스냅을 되살리려면 768로 되돌릴 것. */
+  var MOBILE_BP        = Infinity;
 
   /* ══════════════════════════════════════════════════════
      STATE
@@ -54,7 +57,6 @@
   var ham      = document.getElementById('ham');
   var mmenu    = document.getElementById('mmenu');
   var floatBtn   = document.getElementById('floatBtn');
-  var floatKakao = document.getElementById('floatKakao');
   var toast    = document.getElementById('toast');
   var form     = document.getElementById('form');
   var logoLink = document.getElementById('logoLink');
@@ -331,7 +333,6 @@
     _updateDots(idx);
     applyHeaderTheme();
     floatBtn && floatBtn.classList.toggle('show', idx > 0);
-    floatKakao && floatKakao.classList.toggle('show', idx > 0);
     closeMmenu();
 
     /* afterLoad — 전환 완료 후 FX 실행 */
@@ -576,7 +577,6 @@
         _updateDots(idx);
         if (idx === 1) runCounters();
         if (floatBtn) floatBtn.classList.toggle('show', idx > 0 && idx < SEC_COUNT - 1);
-        if (floatKakao) floatKakao.classList.toggle('show', idx > 0 && idx < SEC_COUNT - 1);
       });
     }, { threshold: 0.35 });
 
@@ -590,41 +590,6 @@
   function destroyMobile() {
     document.body.classList.remove('mobile-mode');
     if (mobileIO) { mobileIO.disconnect(); mobileIO = null; }
-  }
-
-  /* ══════════════════════════════════════════════════════
-     CUSTOM CURSOR
-     ══════════════════════════════════════════════════════ */
-  var cursorEl   = document.getElementById('cursor');
-  var cRing      = cursorEl ? cursorEl.querySelector('.cursor-ring') : null;
-  var cDot       = cursorEl ? cursorEl.querySelector('.cursor-dot')  : null;
-  var cX = 0, cY = 0, rX = 0, rY = 0, rafC = null;
-
-  function moveCursor() {
-    rX += (cX - rX) * 0.14;
-    rY += (cY - rY) * 0.14;
-    if (cDot)  { cDot.style.left  = cX + 'px'; cDot.style.top  = cY + 'px'; }
-    if (cRing) { cRing.style.left = rX + 'px'; cRing.style.top = rY + 'px'; }
-    rafC = requestAnimationFrame(moveCursor);
-  }
-
-  if (cursorEl) {
-    var cursorIdle = null;
-    document.addEventListener('mousemove', function (e) {
-      cX = e.clientX; cY = e.clientY;
-      if (!rafC) moveCursor();
-      clearTimeout(cursorIdle);
-      cursorIdle = setTimeout(function () {
-        if (rafC) { cancelAnimationFrame(rafC); rafC = null; }
-      }, 3000);
-    });
-    var interactables = 'a,button,[data-go],input,select,textarea,.tab,.ccard,.pcard,.dot,.ov-dot,.hs-dot';
-    document.addEventListener('mouseover', function (e) {
-      if (e.target.closest(interactables)) cursorEl.classList.add('hover');
-    });
-    document.addEventListener('mouseout', function (e) {
-      if (e.target.closest(interactables)) cursorEl.classList.remove('hover');
-    });
   }
 
   /* ══════════════════════════════════════════════════════
@@ -1074,7 +1039,6 @@
       _updateDots(0);
       applyHeaderTheme();
       floatBtn && floatBtn.classList.remove('show');
-      floatKakao && floatKakao.classList.remove('show');
     }
 
     /* 파티클 노이즈 초기화 */
