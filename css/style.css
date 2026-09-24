@@ -377,6 +377,17 @@ body.mobile-mode .s4-inner {
   padding-bottom: 64px;
 }
 
+/* Contact: 폼 카드가 뷰포트보다 길어 세로 중앙 정렬 시 상·하단이 헤더/화면에 잘림.
+   위에서부터 쌓고 헤더 높이만큼 띄운다. */
+body.mobile-mode .s5-right {
+  align-items: flex-start;
+  overflow-y: visible;
+}
+body.mobile-mode .s5-form-wrap {
+  margin-top: calc(var(--hd-h) + 40px);
+  margin-bottom: 64px;
+}
+
 /* ── BUTTONS ────────────────────────────────────────── */
 .btn-gold {
   display: inline-flex; align-items: center; gap: 12px;
@@ -4248,6 +4259,7 @@ body.mobile-mode .s2b {
   .s5-right { min-height: 100svh; align-items: flex-start; border-left: none; }
   .s5-form-wrap {
     max-width: none; padding: calc(var(--hd-h) + 32px) 28px 48px;
+    margin-top: 0; margin-bottom: 0;
     background: none; border: none; border-radius: 0; box-shadow: none;
   }
   .s5-form-wrap::before { display: none; }
